@@ -542,6 +542,11 @@ button { font: inherit; cursor: pointer; }
 .ph:has(.ph-link):hover img { transform: scale(1.03); }
 .ph img { transition: transform 0.5s var(--ease); }
 
+/* Contact form status message */
+.form-status { margin: 1.1rem 0 0; font-size: 0.9rem; line-height: 1.5; min-height: 1.2em; }
+.form-status--ok { color: var(--accent); }
+.form-status--err { color: #ff6a4d; }
+
 /* ============================================================
    Lightbox gallery
    ============================================================ */

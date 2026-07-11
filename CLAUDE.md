@@ -19,7 +19,7 @@ No framework, no build step, no package manager.
   step, framework, or npm dependency without a strong reason.
 - Design system lives in `assets/css/style.css`. Behavior lives in
   `assets/js/main.js` (mobile nav, scroll-reveal, gallery lightbox, contact-form
-  mailto fallback, footer year) and `assets/js/gate.js` (the access gate). Keep it
+  FormSubmit AJAX handler, footer year) and `assets/js/gate.js` (the access gate). Keep it
   progressive: pages must stay legible with JavaScript disabled.
 - House voice uses em dashes and all-caps letter-spaced labels. Match the existing
   editorial tone; do not strip em dashes in this repo.

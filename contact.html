@@ -112,9 +112,17 @@
         <p style="color:var(--ink-faint);font-size:0.9rem">Prefer to reach me directly? Email <a href="mailto:hello@quentinfears.com">hello@quentinfears.com</a>, or find me on <a href="https://www.instagram.com/mrqfears/" target="_blank" rel="noopener">Instagram</a>.</p>
       </aside>
 
-      <form id="contact-form" class="reveal" novalidate>
-        <!-- To wire a real backend, set action="" to a form endpoint (Formspree, Basin, Netlify Forms, etc.).
-             Left blank, the form composes an email via the visitor's mail client. See ASSETS.md. -->
+      <form id="contact-form" class="reveal" action="https://formsubmit.co/hello@quentinfears.com" method="POST">
+        <!-- Backend: FormSubmit (formsubmit.co) — no account or key needed. Submissions
+             are emailed to the address in the action above; change it to route anywhere.
+             The FIRST submission triggers a one-time activation email to that address —
+             click its link once to confirm, then it's live. JS posts to the /ajax/
+             endpoint for inline success; with JS off, it submits normally. See ASSETS.md. -->
+        <input type="hidden" name="_subject" value="New inquiry — quentinfears.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <!-- honeypot: bots fill this; humans never see it -->
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <div class="field">
           <label>What's this about?</label>
           <div class="seg" role="radiogroup" aria-label="Inquiry type">
@@ -151,6 +159,7 @@
         </div>
 
         <button type="submit" class="btn btn--gold">Send inquiry <span class="btn__arrow">&rarr;</span></button>
+        <p class="form-status" role="status" aria-live="polite"></p>
       </form>
 
     </div>

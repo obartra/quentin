@@ -77,7 +77,18 @@ the **exact verbatim wording** from the current Press & Testimonials page before
 They're flagged with an HTML comment in `index.html`.
 
 ## Contact form endpoint
-`contact.html`'s form has a blank `action`, so it falls back to composing an email via
-the visitor's mail client (`hello@quentinfears.com` — change this address in
-`assets/js/main.js`). To collect submissions without a mail client, set the form's
-`action` to a form endpoint (Formspree, Basin, Netlify Forms) and add `method="POST"`.
+`contact.html`'s form submits through **FormSubmit** (`formsubmit.co`) — no account or
+API key. Submissions are emailed to the address in the form's `action`
+(`https://formsubmit.co/hello@quentinfears.com`); change that email to route anywhere.
+
+- **One-time activation:** the FIRST real submission triggers a confirmation email to
+  that address — click its link once and the form is live. Until then FormSubmit holds
+  submissions.
+- JS (`assets/js/main.js`) posts to the `/ajax/` endpoint and shows an inline success or
+  error message; with JavaScript off, the form does a normal POST to the same endpoint.
+- A hidden `_honey` honeypot filters bots; `_subject` is set to include the inquiry type.
+- Alternatives if you'd rather: swap the `action` to a **Formspree** endpoint (same fetch
+  works), point it at a **Google Form** `formResponse` URL, or — if you ever host on
+  **Netlify** instead of GitHub Pages — add `data-netlify="true"` + a hidden `form-name`
+  and Netlify captures it natively (JS auto-detects a non-FormSubmit action and lets it
+  POST normally).
