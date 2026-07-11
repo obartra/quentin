@@ -171,15 +171,18 @@ home page, then re-optimize (JPEG, ~2400px wide).
   `.github/workflows/deploy.yml`. Live (gated, pre-launch) at
   https://obartra.github.io/quentin/.
 
-## Weekly routine: sync the site from new @mrqfears Instagram content
+## Weekly routine: curate the site from new @mrqfears Instagram content
 
-**Status: DRAFT — not yet scheduled.** Operating procedure for a recurring weekly
-agent that keeps the site fresh with worthwhile new content from Quentin's Instagram
-(@mrqfears). Ship mode is auto-merge to live: content lives in Keystatic collections
-under `content/*.yaml`, and pushing to `main` builds and deploys, so the routine
-edits the YAML directly and commits to `main` — no PR. `instagram-ledger.json` (repo
-root) is the source of truth for what has already been handled; never process the
-same post twice.
+Operating procedure for a recurring weekly agent that keeps the site current with
+Quentin's Instagram (@mrqfears). **The site is a curated portfolio, not a feed.**
+The weekly run is an editorial pass over the whole site with the new material in
+hand — not an ingest job. Nothing gets in just because it is new; new work competes
+with what is already there, and the run is as much about replacing and trimming as
+adding. Ship mode is auto-merge to live for content edits: content lives in
+Keystatic collections under `content/*.yaml`, and pushing to `main` builds and
+deploys, so the routine edits the YAML directly and commits to `main` — no PR.
+`instagram-ledger.json` (repo root) is the source of truth for what has already
+been considered; never process the same post twice.
 
 Instagram tooling in `tools/` (stdlib-only except the authed one):
 
@@ -192,18 +195,27 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
 
 ### Steps
 
-1. **Detect:** `python3 tools/instagram_new_since.py`. If nothing is listed, stop.
-2. **Judge** each new post from its caption + image(s), then route:
+1. **Detect:** `python3 tools/instagram_new_since.py` to list posts newer than the
+   ledger. An empty list does not end the run — the critical review in step 3 still
+   happens.
+2. **Judge** each new post from its caption + image(s) *against what the site
+   already shows*. The bar is the site's existing best content, and the default
+   verdict is **skip**. For a post that clears the bar, route it:
    - **Thought piece** (a style-POV caption, a lesson, a press mention — most recent
-     reels are this) → append a `{ title, body }` item under `notes.items` in
+     reels are this) → a `{ title, body }` item under `notes.items` in
      `content/ideas.yaml` (title = the hook, body = the idea, lightly edited from the
      caption).
-   - **Photoshoot / styled images** → add the image(s) to `public/assets/img/gallery/`
-     and append `{ src, cap }` entries to the matching set in `content/galleries.yaml`
+   - **Photoshoot / styled images** → image(s) in `public/assets/img/gallery/`
+     and `{ src, cap }` entries in the matching set in `content/galleries.yaml`
      (keys: `editorial`, `menswear`, `celebrity`, …); for a headline piece, a case in
      `content/work.yaml`.
    - **Hosting / on-camera** (Sheen Talk Live, panels, TV) → `content/speak.yaml`.
    - **Personal, off-brand, low-quality, or redundant** → skip.
+
+   When the target section is at its budget (below), the incorporation is a
+   **replacement**: the new item goes in and the section's weakest item comes out in
+   the same commit. Appending past the budget needs a reason recorded in the ledger
+   (e.g. a genuinely new body of work opening a new theme).
 
    **Video (reels)** live in `reels.items` on `content/ideas.yaml` (rendered by the
    vertical player on the Ideas page). Default is *poster + caption + a "Watch on
@@ -214,27 +226,65 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    the produced files under `public/assets/`, and set `videoSrc`. Self-hosting is a
    deliberate, occasional choice — never auto-host every reel.
 
-   Incorporate only high-confidence, on-brand items; when unsure, skip. Cap at
-   **≤ 2 incorporations per week**.
-3. **Prepare assets:** download at full resolution, optimize per `ASSETS.md`
+   Incorporate only high-confidence, on-brand items; when unsure, skip.
+3. **Critical review of the site** — every run, even with zero new posts. Read the
+   built site the way a first-time booker would (build it and skim each page's
+   rendered content, not just the YAML) and look for cruft:
+   - the weakest item in any section this run is adding to — prefer replace over
+     grow;
+   - stale or dated copy: "recent"/"upcoming" claims that have lapsed, past-tense
+     events still framed as future, counts or superlatives the content no longer
+     supports;
+   - redundancy — two gallery images making the same visual point, two Ideas notes
+     circling the same thought; keep the stronger one;
+   - anything that reads as filler: an item that would not be missed weakens the
+     items around it.
+   Trim what fails the review. Removing an image means deleting its YAML entry
+   (leave the file in `public/assets/img/`; unreferenced files do not ship weight
+   into pages and the image may earn its way back). Shrinking a section below its
+   budget is fine when the content is weak.
+4. **Prepare assets:** download at full resolution, optimize per `ASSETS.md`
    (gallery squares ~1000×1000, portraits ~1200×1500, < ~300 KB), save as `.jpg`
    under `public/assets/img/…`. Reference them in YAML as `assets/img/…` (the
    public-relative path the site uses).
-4. **Edit the YAML** to Keystatic's shape, matching existing entries exactly; keep
+5. **Edit the YAML** to Keystatic's shape, matching existing entries exactly; keep
    gallery `key`s valid so the lightbox and validators stay in sync.
-5. **Update `instagram-ledger.json`:** append every considered post (`shortcode`,
-   `date`, `decision`, `target`, one-line `reason`) and advance `reviewed_through`.
-6. **Publish:** `npm run build`, then `python3 tools/validate_site.py dist` and
+6. **Update `instagram-ledger.json`:** append every considered post (`shortcode`,
+   `date`, `decision` — one of `add` / `replace` / `skip` — `target`, one-line
+   `reason`, and for a replace, what came out and why it lost). Site edits from
+   step 3 that are not tied to a post go under `trimmed` with the same shape.
+   Advance `reviewed_through`.
+7. **Publish:** `npm run build`, then `python3 tools/validate_site.py dist` and
    `python3 tools/seo_check.py dist` (same as CI); commit to `main` and confirm the
-   Pages deploy succeeds.
+   Pages deploy succeeds. The commit message summarizes adds, replacements, and
+   trims so the week's editorial decisions are auditable at a glance.
+
+### Section budgets
+
+Steady-state sizes — the signal to replace rather than append. These are ceilings
+for unattended growth, not targets to fill:
+
+- Gallery sets (`content/galleries.yaml`): **8 images each**
+- Ideas notes (`content/ideas.yaml` `notes.items`): **4–6** · Ideas reels
+  (`reels.items`): **3–4**
+- Work cases (`content/work.yaml`): **4** · styling archive: **8**
 
 ### Guardrails
 
+- **≤ 3 content changes per run** (adds + replacements + trims combined). The bias
+  is toward doing less: a run that changes nothing is a valid outcome, not a
+  failure.
+- **Content only auto-merges.** YAML edits and optimized images commit straight to
+  `main`. Anything structural — a new page or section, removing a whole case study,
+  layout/code/CSS changes, reworking a page's story — is out of scope for the
+  unattended run: open a PR describing the proposal instead, and say why, so a human
+  decides.
 - On-brand and professional only; honor the personal-site / no-employer and
   no-confidential-work rules above, and keep the house voice (em dashes, editorial
   tone). No private individuals without clear professional context.
 - Idempotent via the ledger. Prefer skipping when unsure — a weekly cadence makes a
-  miss harmless.
+  miss harmless, and a skipped post can still be incorporated by a later run if it
+  keeps mattering.
 - Optimize every image. Do not run `fetch_instagram_authed.py` in the unattended
   routine — its Keychain prompt needs a human at the Mac.
 
