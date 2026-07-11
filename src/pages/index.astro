@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
+import Picture from '../components/Picture.astro';
 import { reader, SITE_ORIGIN, OG_IMAGE } from '../lib/content';
 
 const home = await reader.singletons.home.readOrThrow();
@@ -60,6 +61,8 @@ const jsonLd = {
   author="Quentin Fears"
   navCurrent={null}
   jsonLd={jsonLd}
+  heroPreload={home.hero.image.src}
+  heroPreloadSizes="(min-width: 900px) 42vw, 92vw"
 >
 
   <!-- ============ HERO ============ -->
@@ -82,7 +85,7 @@ const jsonLd = {
         </div>
       </div>
       <figure class="ph ph--hero reveal" data-tag={home.hero.image.tag} data-label={home.hero.image.label}>
-        <img src={home.hero.image.src} alt={home.hero.image.alt} loading="eager" onerror="this.remove()">
+        <Picture src={home.hero.image.src} alt={home.hero.image.alt} loading="eager" fetchpriority="high" sizes="(min-width: 900px) 42vw, 92vw" onerror="this.remove()" />
       </figure>
     </div>
   </section>
@@ -141,7 +144,7 @@ const jsonLd = {
   <section class="section">
     <div class="wrap idea-feature">
       <figure class="ph ph--wide reveal" data-tag={home.speakTeaser.image.tag} data-label={home.speakTeaser.image.label}>
-        <img src={home.speakTeaser.image.src} alt={home.speakTeaser.image.alt} loading="lazy" onerror="this.remove()">
+        <Picture src={home.speakTeaser.image.src} alt={home.speakTeaser.image.alt} loading="lazy" sizes="(min-width: 760px) 46vw, 92vw" onerror="this.remove()" />
       </figure>
       <div class="reveal">
         <p class="eyebrow">{home.speakTeaser.eyebrow}</p>

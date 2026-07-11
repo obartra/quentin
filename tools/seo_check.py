@@ -54,7 +54,7 @@ REQUIRED_LINK_ASSETS = [
 
 # Required meta by <meta property="..."> (Open Graph) and <meta name="...">.
 REQUIRED_OG = ["og:title", "og:description", "og:type", "og:url", "og:image", "og:site_name"]
-REQUIRED_NAME_META = ["description", "robots", "twitter:card"]
+REQUIRED_NAME_META = ["description", "robots", "twitter:card", "viewport"]
 
 # Directory to validate. The site is built by Astro into `dist/`, so validate
 # that by default when it exists. Pass an explicit path as the first argument to
@@ -109,6 +109,11 @@ def check_page(page, html, sitemap_locs):
     if not head:
         err(page, "no <head> found")
         return
+
+    # <html lang> is a baseline SEO + accessibility signal.
+    htmltag = re.search(r"<html\b[^>]*>", html, re.IGNORECASE)
+    if not htmltag or not re.search(r'\blang="[^"]+"', htmltag.group(0)):
+        err(page, "missing <html lang> attribute")
 
     metas = [parse_attrs(t) for t in find_tags(head, "meta")]
     by_prop = {m["property"]: m.get("content", "") for m in metas if "property" in m}
@@ -192,11 +197,13 @@ def check_page(page, html, sitemap_locs):
     if len(h1s) != 1:
         err(page, f"expected exactly one <h1>, found {len(h1s)}")
 
-    # Images should have alt text
+    # Images should have alt text and explicit dimensions (no layout shift).
     for img in find_tags(html, "img"):
         a = parse_attrs(img)
         if "alt" not in a:
             err(page, f"<img> without alt attribute: {img[:70]}...")
+        if "width" not in a or "height" not in a:
+            err(page, f"<img> without width/height (layout shift risk): {img[:70]}...")
 
     # JSON-LD: at least one block, each valid JSON, each keyed to BASE
     blocks = re.findall(

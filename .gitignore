@@ -26,3 +26,9 @@ public/assets/img/site-dump/
 # Local scratch
 scratch_shots/
 .__preview.html
+
+# Pristine image sources for tools/optimize_images.py
+public/assets/img/.orig/
+
+# Lighthouse CI output
+.lighthouseci/

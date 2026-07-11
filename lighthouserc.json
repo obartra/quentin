@@ -1,0 +1,36 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "python3 -m http.server 8299 --directory dist",
+      "startServerReadyPattern": "Serving HTTP",
+      "url": [
+        "http://localhost:8299/index.html",
+        "http://localhost:8299/work.html",
+        "http://localhost:8299/ideas.html",
+        "http://localhost:8299/speak.html",
+        "http://localhost:8299/about.html",
+        "http://localhost:8299/contact.html"
+      ],
+      "numberOfRuns": 3,
+      "settings": {
+        "formFactor": "mobile",
+        "screenEmulation": { "mobile": true }
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.95 }],
+        "categories:seo": ["error", { "minScore": 1.0 }],
+        "categories:accessibility": ["error", { "minScore": 0.95 }],
+        "categories:best-practices": ["error", { "minScore": 0.95 }],
+        "largest-contentful-paint": ["error", { "maxNumericValue": 2000 }],
+        "cumulative-layout-shift": ["error", { "maxNumericValue": 0.05 }],
+        "total-blocking-time": ["error", { "maxNumericValue": 200 }],
+        "modern-image-formats": "error",
+        "unsized-images": "error",
+        "uses-responsive-images": ["warn", { "minScore": 0.9 }]
+      }
+    },
+    "upload": { "target": "filesystem", "outputDir": ".lighthouseci" }
+  }
+}
