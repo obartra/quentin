@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script>document.documentElement.classList.add('js');</script>
+  <script>document.documentElement.classList.add('js');if(sessionStorage.getItem('qf-access')!=='1')document.documentElement.classList.add('locked');</script>
   <title>Contact &amp; Book — Quentin Fears</title>
   <meta name="description" content="Contact Quentin Fears for corporate creative direction, speaking, media and hosting, or personal styling. One form, routed to the right conversation.">
   <meta property="og:title" content="Contact &amp; Book — Quentin Fears">
@@ -134,6 +134,7 @@
   </div>
 </footer>
 
+<script src="assets/js/gate.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
