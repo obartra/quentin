@@ -1,0 +1,24 @@
+---
+interface Props {
+  heading: string;
+  body: string;
+  buttonLabel: string;
+  buttonHref: string;
+  /** Home wraps the button in a centered btn-row; other pages place it directly. */
+  centered?: boolean;
+}
+const { heading, body, buttonLabel, buttonHref, centered = false } = Astro.props;
+---
+<section class="section cta-band">
+  <div class="wrap reveal">
+    <h2>{heading}</h2>
+    <p>{body}</p>
+    {centered ? (
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn--gold" href={buttonHref}>{buttonLabel} <span class="btn__arrow">&rarr;</span></a>
+      </div>
+    ) : (
+      <a class="btn btn--gold" href={buttonHref}>{buttonLabel} <span class="btn__arrow">&rarr;</span></a>
+    )}
+  </div>
+</section>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { reader, SITE_ORIGIN } from '../lib/content';
+import { personMinimal, breadcrumb } from '../lib/jsonld';
+
+const contact = await reader.singletons.contact.readOrThrow();
+const s = await reader.singletons.settings.readOrThrow();
+const O = SITE_ORIGIN;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ContactPage',
+      '@id': `${O}/contact.html#webpage`,
+      url: `${O}/contact.html`,
+      name: contact.seo.ogTitle,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      mainEntity: { '@id': `${O}/#person` },
+      inLanguage: 'en',
+    },
+    personMinimal({ email: s.email, sameAs: [s.instagram, s.linkedin] }),
+    breadcrumb([
+      { name: 'Home', item: `${O}/` },
+      { name: 'Contact', item: `${O}/contact.html` },
+    ]),
+  ],
+};
+---
+<BaseLayout
+  pagePath="contact.html"
+  title={contact.seo.title}
+  description={contact.seo.description}
+  ogTitle={contact.seo.ogTitle}
+  ogDescription={contact.seo.ogDescription}
+  ogType={contact.seo.ogType}
+  navCurrent="contact"
+  jsonLd={jsonLd}
+>
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">{contact.hero.eyebrow}</p>
+      <h1>{contact.hero.heading}</h1>
+      <p>{contact.hero.intro}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(1.5rem,3vw,2.5rem)">
+    <div class="wrap contact-grid">
+
+      <aside class="contact-aside reveal">
+        <dl>
+          {contact.inquiries.map((q) => (
+            <Fragment><dt>{q.asideTitle}</dt><dd>{q.asideBody}</dd></Fragment>
+          ))}
+        </dl>
+        <p style="color:var(--ink-faint);font-size:0.9rem" set:html={contact.directLine}></p>
+      </aside>
+
+      <form id="contact-form" class="reveal" action={`https://formsubmit.co/${s.email}`} method="POST">
+        <!-- Backend: FormSubmit (formsubmit.co) — no account or key needed. Submissions
+             are emailed to the address in the action above; change it via settings.email.
+             The FIRST submission triggers a one-time activation email to that address —
+             click its link once to confirm, then it's live. JS posts to the /ajax/
+             endpoint for inline success; with JS off, it submits normally. See ASSETS.md. -->
+        <input type="hidden" name="_subject" value="New inquiry — quentinfears.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <!-- honeypot: bots fill this; humans never see it -->
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+        <div class="field">
+          <label>What's this about?</label>
+          <div class="seg" role="radiogroup" aria-label="Inquiry type">
+            {contact.inquiries.map((q, i) => (
+              <Fragment><input type="radio" id={`inq-${i}`} name="inquiry" value={q.radioValue} checked={i === 0}><label for={`inq-${i}`}>{q.radioLabel}</label></Fragment>
+            ))}
+          </div>
+        </div>
+
+        <div class="grid cols-2" style="gap:0 1.5rem">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="org">Company / organization</label>
+            <input type="text" id="org" name="org" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="message">Tell me about the project, event, or goal</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--gold">Send inquiry <span class="btn__arrow">&rarr;</span></button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,92 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_ORIGIN, OG_IMAGE } from '../lib/content';
+
+interface Props {
+  /** Relative page file, '' for home, e.g. 'work.html'. Drives canonical + og:url. */
+  pagePath: string;
+  title: string;
+  description: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogType?: string;
+  author?: string;
+  navCurrent?: 'work' | 'ideas' | 'speak' | 'about' | 'contact' | null;
+  /** Any JSON-serialisable JSON-LD graph; must reference SITE_ORIGIN. */
+  jsonLd: unknown;
+}
+
+const {
+  pagePath,
+  title,
+  description,
+  ogTitle,
+  ogDescription,
+  ogType = 'website',
+  author,
+  navCurrent = null,
+  jsonLd,
+} = Astro.props;
+
+const canonical = pagePath === '' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}/${pagePath}`;
+const jsonLdString = JSON.stringify(jsonLd, null, 2);
+
+// The gate/interaction scripts are shipped as-is from public/assets and must stay
+// relative so they resolve under both the GitHub Pages subpath and the apex
+// domain. Passing the src as an expression keeps Vite's dev-time module scanner
+// from trying to resolve them as bundled imports; the emitted HTML is identical.
+const gateSrc = 'assets/js/gate.js';
+const mainSrc = 'assets/js/main.js';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script is:inline>document.documentElement.classList.add('js');if(sessionStorage.getItem('qf-access')!=='1')document.documentElement.classList.add('locked');</script>
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  {author && <meta name="author" content={author}>}
+  <meta property="og:title" content={ogTitle}>
+  <meta property="og:description" content={ogDescription}>
+  <meta property="og:type" content={ogType}>
+  <meta property="og:site_name" content="Quentin Fears">
+  <meta property="og:url" content={canonical}>
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content={OG_IMAGE}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Quentin Fears — Fashion Creative Leader, Visual Strategist, Speaker & Host">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={ogTitle}>
+  <meta name="twitter:description" content={ogDescription}>
+  <meta name="twitter:image" content={OG_IMAGE}>
+  <meta name="twitter:image:alt" content="Quentin Fears — Fashion Creative Leader">
+  <!-- Private preview: noindex while the password gate is up. At launch, remove the gate and restore: content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0b0b0c">
+  <link rel="canonical" href={canonical}>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="application/ld+json" is:inline set:html={jsonLdString}></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<Header current={navCurrent} />
+
+<main id="main">
+  <slot />
+</main>
+
+<Footer />
+
+<slot name="after-footer" />
+<script src={gateSrc} is:inline></script>
+<script src={mainSrc} is:inline></script>
+</body>
+</html>

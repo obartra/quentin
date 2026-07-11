@@ -1,0 +1,29 @@
+seo:
+  title: "Contact & Book — Quentin Fears"
+  description: "Contact Quentin Fears for corporate creative direction, speaking, media and hosting, or personal styling. One form, routed to the right conversation."
+  ogTitle: "Contact & Book — Quentin Fears"
+  ogDescription: "Corporate creative direction, speaking, media, or personal styling."
+  ogType: "website"
+hero:
+  eyebrow: "Contact & book"
+  heading: "Tell me what you have in mind."
+  intro: "Shaping a brand, programming an event, casting a host, or investing in how you show up — whatever it is, tell me about it and I'll come back to you."
+inquiries:
+  - asideTitle: "Corporate & enterprise"
+    asideBody: "Creative direction, visual strategy, and campaign consulting."
+    radioValue: "Corporate"
+    radioLabel: "Corporate & enterprise"
+  - asideTitle: "Speaking"
+    asideBody: "Keynotes, panels, workshops, and moderation."
+    radioValue: "Speaking"
+    radioLabel: "Speaking"
+  - asideTitle: "Media & hosting"
+    asideBody: "On-camera hosting, correspondence, and interviews."
+    radioValue: "Media & hosting"
+    radioLabel: "Media & hosting"
+  - asideTitle: "Personal styling"
+    asideBody: "Selective individual clients and wardrobe direction."
+    radioValue: "Personal styling"
+    radioLabel: "Personal styling"
+directLine: |
+  Prefer to reach me directly? Email <a href="mailto:hello@quentinfears.com">hello@quentinfears.com</a>, or find me on <a href="https://www.instagram.com/mrqfears/" target="_blank" rel="noopener">Instagram</a>.

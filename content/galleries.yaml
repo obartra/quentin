@@ -1,0 +1,41 @@
+sets:
+  - key: "editorial"
+    images:
+      - { src: "assets/img/gallery/g-editorial-1.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-2.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-3.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-4.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-5.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-6.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-7.jpg", cap: "Editorial" }
+      - { src: "assets/img/gallery/g-editorial-8.jpg", cap: "Editorial" }
+  - key: "menswear"
+    images:
+      - { src: "assets/img/gallery/g-menswear-1.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-2.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-3.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-4.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-5.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-6.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-7.jpg", cap: "Menswear editorial" }
+      - { src: "assets/img/gallery/g-menswear-8.jpg", cap: "Menswear editorial" }
+  - key: "celebrity"
+    images:
+      - { src: "assets/img/gallery/g-celebrity-1.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-2.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-3.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-4.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-5.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-6.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-7.jpg", cap: "Celebrity & red carpet" }
+      - { src: "assets/img/gallery/g-celebrity-8.jpg", cap: "Celebrity & red carpet" }
+  - key: "commercial"
+    images:
+      - { src: "assets/img/gallery/g-commercial-1.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-2.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-3.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-4.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-5.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-6.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-7.jpg", cap: "Campaign & commercial" }
+      - { src: "assets/img/gallery/g-commercial-8.jpg", cap: "Campaign & commercial" }

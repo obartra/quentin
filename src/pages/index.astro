@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import { reader, SITE_ORIGIN, OG_IMAGE } from '../lib/content';
+
+const home = await reader.singletons.home.readOrThrow();
+const s = await reader.singletons.settings.readOrThrow();
+const O = SITE_ORIGIN;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${O}/#person`,
+      name: 'Quentin Fears',
+      url: `${O}/`,
+      jobTitle: 'Fashion Creative Leader & Visual Strategist',
+      description:
+        'Fashion creative leader, visual strategist, speaker, and host who helps brands and people communicate who they are through style.',
+      image: OG_IMAGE,
+      sameAs: [s.instagram, s.linkedin],
+      knowsAbout: [
+        'Fashion styling',
+        'Visual merchandising',
+        'Creative direction',
+        'Editorial art direction',
+        'Personal styling',
+        'Public speaking',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${O}/#website`,
+      url: `${O}/`,
+      name: 'Quentin Fears',
+      inLanguage: 'en',
+      publisher: { '@id': `${O}/#person` },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${O}/#webpage`,
+      url: `${O}/`,
+      name: home.seo.title,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      primaryImageOfPage: OG_IMAGE,
+      inLanguage: 'en',
+    },
+  ],
+};
+---
+<BaseLayout
+  pagePath=""
+  title={home.seo.title}
+  description={home.seo.description}
+  ogTitle={home.seo.ogTitle}
+  ogDescription={home.seo.ogDescription}
+  ogType={home.seo.ogType}
+  author="Quentin Fears"
+  navCurrent={null}
+  jsonLd={jsonLd}
+>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="reveal">
+        <p class="eyebrow hero__eyebrow">{home.hero.eyebrow}</p>
+        <h1>Quentin<br>Fears</h1>
+        <p class="hero__role">{home.hero.role}</p>
+        <p class="hero__philo">{home.hero.philosophy}</p>
+        <div class="btn-row">
+          {home.hero.buttons.map((b) => (
+            <a
+              class={b.solid ? 'btn btn--solid' : 'btn'}
+              href={b.href}
+              target={b.external ? '_blank' : undefined}
+              rel={b.external ? 'noopener' : undefined}
+            >{b.label}{b.solid && <Fragment> <span class="btn__arrow">&rarr;</span></Fragment>}</a>
+          ))}
+        </div>
+      </div>
+      <figure class="ph ph--hero reveal" data-tag={home.hero.image.tag} data-label={home.hero.image.label}>
+        <img src={home.hero.image.src} alt={home.hero.image.alt} loading="eager" onerror="this.remove()">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ PROOF STRIP ============ -->
+  <section class="proof">
+    <div class="wrap">
+      <div class="proof__grid">
+        {home.proof.map((p) => (
+          <div class="proof__item reveal">
+            <p class="proof__num">{p.num}</p>
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE IDEA ============ -->
+  <section class="section belief">
+    <div class="wrap reveal">
+      <p class="eyebrow eyebrow--muted">{home.belief.eyebrow}</p>
+      <blockquote set:html={home.belief.quote}></blockquote>
+      <cite>{home.belief.cite}</cite>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ SELECTED WORK ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{home.selectedWork.eyebrow}</p>
+        <h2>{home.selectedWork.heading}</h2>
+        <p>{home.selectedWork.intro}</p>
+      </div>
+
+      <div class="grid cols-3">
+        {home.selectedWork.cards.map((c) => (
+          <a class="fcard reveal" href={c.href} style="text-decoration:none">
+            <span class="fcard__tag">{c.tag}</span>
+            <h3>{c.title}</h3>
+            <p>{c.body}</p>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:2.5rem" class="reveal"><a class="link-more" href={home.selectedWork.moreHref}>{home.selectedWork.moreLabel} <span>&rarr;</span></a></p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ SPEAK TEASER ============ -->
+  <section class="section">
+    <div class="wrap idea-feature">
+      <figure class="ph ph--wide reveal" data-tag={home.speakTeaser.image.tag} data-label={home.speakTeaser.image.label}>
+        <img src={home.speakTeaser.image.src} alt={home.speakTeaser.image.alt} loading="lazy" onerror="this.remove()">
+      </figure>
+      <div class="reveal">
+        <p class="eyebrow">{home.speakTeaser.eyebrow}</p>
+        <h2 class="display" style="font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin-bottom:1.2rem">{home.speakTeaser.heading}</h2>
+        <p class="lead" style="margin-bottom:1.8rem">{home.speakTeaser.lead}</p>
+        <a class="link-more" href={home.speakTeaser.linkHref}>{home.speakTeaser.linkLabel} <span>&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{home.testimonials.eyebrow}</p>
+        <h2>{home.testimonials.heading}</h2>
+      </div>
+      <div class="quotes">
+        {home.testimonials.items.map((t) => (
+          <blockquote class="qcard reveal">
+            <p>{t.quote}</p>
+            <cite><b>{t.name}</b>{t.role}</cite>
+          </blockquote>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRESS ============ -->
+  <section class="section--tight" style="border-block:1px solid var(--line)">
+    <div class="wrap">
+      <p class="eyebrow eyebrow--muted" style="text-align:center;margin-bottom:2rem">{home.press.eyebrow}</p>
+      <div class="press reveal">
+        {home.press.logos.map((l) => <span>{l}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA BAND ============ -->
+  <Cta
+    heading={home.cta.heading}
+    body={home.cta.body}
+    buttonLabel={home.cta.buttonLabel}
+    buttonHref={home.cta.buttonHref}
+    centered={true}
+  />
+
+</BaseLayout>

@@ -32,7 +32,15 @@ import os
 import re
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Directory to validate. The site is built by Astro into `dist/`, so validate
+# that by default when it exists. Pass an explicit path as the first argument to
+# override (e.g. a different output dir); falls back to the repo root otherwise.
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if len(sys.argv) > 1:
+    ROOT = os.path.abspath(sys.argv[1])
+else:
+    _dist = os.path.join(_REPO_ROOT, "dist")
+    ROOT = _dist if os.path.isdir(_dist) else _REPO_ROOT
 
 ATTR_REF = re.compile(r'(?:href|src)\s*=\s*["\']([^"\']*)["\']', re.IGNORECASE)
 ID_ATTR = re.compile(r'\bid\s*=\s*["\']([^"\']+)["\']', re.IGNORECASE)
