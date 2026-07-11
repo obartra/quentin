@@ -213,23 +213,25 @@ button { font: inherit; cursor: pointer; }
   display: flex; align-items: flex-end;
   isolation: isolate;
 }
+/* Tag + label are FALLBACKS shown only when no image covers the slot.
+   A loaded <img> (z-index 2) paints over both. */
 .ph::before {
   content: attr(data-tag);
-  position: absolute; top: 1rem; left: 1rem; z-index: 2;
+  position: absolute; top: 1rem; left: 1rem; z-index: 1;
   text-transform: uppercase; letter-spacing: 0.24em; font-size: 0.6rem; font-weight: 700;
   color: var(--accent); background: rgba(11,11,12,0.5);
   padding: 0.35rem 0.6rem; border: 1px solid var(--line);
 }
 .ph::after {
   content: attr(data-label);
-  position: relative; z-index: 2;
+  position: relative; z-index: 1;
   padding: 1.1rem 1.2rem;
   font-family: var(--serif); font-size: clamp(1rem, 1.6vw, 1.35rem);
   line-height: 1.2; color: var(--ink-soft);
   text-shadow: 0 1px 20px rgba(0,0,0,0.6);
 }
 .ph img {
-  position: absolute; inset: 0; z-index: 1;
+  position: absolute; inset: 0; z-index: 2;
   width: 100%; height: 100%; object-fit: cover;
 }
 .ph[data-tag=""]::before { display: none; }
