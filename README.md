@@ -55,4 +55,25 @@ No build step required.
 - [ ] Replace testimonial quotes with verbatim wording from the existing site.
 - [ ] Have Quentin's manager/comms review the Walmart bio language.
 - [ ] Set the contact form endpoint and update the contact email.
-- [ ] Set the real domain in the `og:` meta tags if desired.
+- [x] Set the real domain in the `og:` / canonical / sitemap tags (`https://quentinfears.com`). If the
+      site launches on a different domain, find-and-replace `quentinfears.com` across the HTML,
+      `robots.txt`, and `sitemap.xml`.
+- [ ] Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools after launch.
+- [ ] Optional: replace the generated `assets/img/og-cover.jpg` share card and the JSON-LD
+      `Person.image` with a real photo of Quentin once the leader-mode portrait exists.
+
+## SEO
+
+Technical SEO is built in and self-contained (no external calls):
+
+- **Per page:** unique `<title>` + meta description, canonical URL, Open Graph + Twitter Card
+  tags, and a `robots` directive (`index, follow, max-image-preview:large`).
+- **Structured data:** JSON-LD on every page — a shared `Person` entity (`#person`) plus
+  `WebSite`, `ProfilePage` (about), `ContactPage` (contact), `CollectionPage` (work), and
+  `BreadcrumbList` on subpages.
+- **Social share card:** `assets/img/og-cover.jpg` (1200×630), generated from the brand palette.
+- **Icons:** `favicon.svg` (scalable), `favicon.ico`, `apple-touch-icon.png`, and PWA icons via
+  `site.webmanifest`.
+- **Crawl:** `robots.txt` points at `sitemap.xml`, which lists all six pages.
+
+Everything is keyed to `https://quentinfears.com`; change that string if the domain differs.
