@@ -135,7 +135,7 @@ const jsonLd = {
       <div class="grid cols-3">
         {speak.media.episodes.map((e) => (
           <a class="fcard media-card reveal" href={e.href} target="_blank" rel="noopener">
-            <figure class="ph media-card__thumb" data-tag="Episode"><Picture src={e.thumbSrc} alt={e.thumbAlt} loading="lazy" sizes="(min-width: 760px) 30vw, 46vw" /></figure>
+            <figure class="ph media-card__thumb" data-tag="Episode"><Picture src={e.thumbSrc} alt={e.thumbAlt} loading="lazy" sizes="(min-width: 760px) 30vw, 46vw" onerror="this.remove()" /></figure>
             <span class="fcard__tag">{e.tag}</span>
             <h3>{e.title}</h3>
             <p>{e.body}</p>
