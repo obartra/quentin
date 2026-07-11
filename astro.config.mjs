@@ -7,11 +7,11 @@ import { defineConfig } from 'astro/config';
 //     no admin. Deploys to GitHub Pages. This is the canonical site.
 //  2. Local dev    — `npm run dev` (nothing set): admin at /keystatic in local
 //     storage mode (edits the content/ files); site pages render normally.
-//  3. Hosted admin — `npm run build:admin` (ADMIN_HOST=netlify, KEYSTATIC_STORAGE=
-//     github): the same app with the Keystatic admin as SSR routes behind a
-//     serverless adapter, so a non-technical editor can edit from a browser. The
-//     admin commits to the repo, which triggers the Pages deploy. See
-//     docs/hosted-admin.md.
+//  3. Hosted admin — `npm run build:admin` (ADMIN_HOST=netlify): the same app with
+//     the Keystatic admin as SSR routes behind a serverless adapter, so a
+//     non-technical editor can edit from a browser. Storage auto-selects to GitHub
+//     for any build (see keystatic.config.ts), so the admin commits to the repo,
+//     which triggers the Pages deploy. See docs/hosted-admin.md.
 const enableAdmin = process.env.KEYSTATIC_ADMIN !== '0';
 const adminHost = process.env.ADMIN_HOST; // 'netlify' builds the hosted admin
 const buildingAdmin = Boolean(adminHost);
