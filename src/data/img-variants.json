@@ -120,6 +120,30 @@
       640
     ]
   },
+  "assets/img/reel-character.jpg": {
+    "height": 1280,
+    "width": 720,
+    "widths": [
+      400,
+      720
+    ]
+  },
+  "assets/img/reel-closet.jpg": {
+    "height": 1280,
+    "width": 720,
+    "widths": [
+      400,
+      720
+    ]
+  },
+  "assets/img/reel-possibilities.jpg": {
+    "height": 1280,
+    "width": 720,
+    "widths": [
+      400,
+      720
+    ]
+  },
   "assets/img/speak-reel.jpg": {
     "height": 608,
     "width": 1080,
