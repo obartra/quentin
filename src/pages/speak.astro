@@ -52,6 +52,16 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- ON STAGE -->
+  <section class="section--tight" style="padding-top:clamp(1.5rem,3vw,2.5rem);padding-bottom:0">
+    <div class="wrap">
+      <figure class="ph ph--wide reveal" data-tag={speak.stage.image.tag} data-label={speak.stage.image.label}>
+        <img src={speak.stage.image.src} alt={speak.stage.image.alt} loading="lazy">
+      </figure>
+      <p style="margin-top:1rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{speak.stage.caption}</p>
+    </div>
+  </section>
+
   <!-- REEL -->
   <section class="section" id="reel" style="padding-top:clamp(2rem,4vw,3rem)">
     <div class="wrap">
