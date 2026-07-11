@@ -1,0 +1,8 @@
+{
+  "profile": "mrqfears",
+  "reviewed_through": "2026-06-19",
+  "_note": "Posts dated on/before reviewed_through were part of the initial bulk pull to the instagram-images branch and are NOT treated as new. Each weekly run considers posts newer than this date (and any shortcode not already listed below). Decisions are add | replace | skip; a replace also records what came out and why it lost. Site edits from the critical-review step that are not tied to a post (stale copy fixed, weak/redundant items removed) go under trimmed. After each run, advance reviewed_through to the newest post seen and append every considered post.",
+  "incorporated": [],
+  "skipped": [],
+  "trimmed": []
+}

@@ -97,6 +97,33 @@
     });
   });
 
+  /* ---- Reel card: swap poster for a self-hosted <video> on click ---- */
+  var vreels = document.querySelectorAll(".reel-card[data-video]");
+  vreels.forEach(function (r) {
+    function play() {
+      if (r.dataset.played) return;
+      r.dataset.played = "1";
+      var media = r.querySelector(".reel-card__media");
+      if (!media) return;
+      var v = document.createElement("video");
+      v.src = r.getAttribute("data-video");
+      var poster = r.getAttribute("data-poster");
+      if (poster) v.poster = poster;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.setAttribute("playsinline", "");
+      v.preload = "metadata";
+      v.className = "reel-card__video";
+      media.innerHTML = "";
+      media.appendChild(v);
+    }
+    r.addEventListener("click", play);
+    r.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); }
+    });
+  });
+
   /* ---- Lightbox galleries (Work page) ---- */
   var galData = document.getElementById("gallery-data");
   var triggers = document.querySelectorAll("[data-gallery]");
