@@ -361,6 +361,13 @@ export default config({
           },
           { label: 'Hero' }
         ),
+        stage: fields.object(
+          {
+            image: photo('On-stage photo'),
+            caption: fields.text({ label: 'Caption', multiline: true }),
+          },
+          { label: 'On stage' }
+        ),
         reel: fields.object(
           {
             youtubeId: fields.text({ label: 'YouTube video id' }),
