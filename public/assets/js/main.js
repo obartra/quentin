@@ -38,25 +38,41 @@
     reveals.forEach(function (el) { el.classList.add("is-in"); });
   }
 
-  /* ---- Contact form: friendly no-backend fallback via mailto ---- */
+  /* ---- Contact form: submit to FormSubmit (formsubmit.co) via AJAX, inline status.
+     No-JS visitors get a normal POST to the same endpoint. ---- */
   var form = document.getElementById("contact-form");
   if (form) {
+    var status = form.querySelector(".form-status");
+    var action = form.getAttribute("action") || "";
+    var ajax = action.replace("formsubmit.co/", "formsubmit.co/ajax/");
     form.addEventListener("submit", function (e) {
-      // If the form has a real action endpoint configured, let it submit normally.
-      if (form.getAttribute("action") && form.getAttribute("action").indexOf("mailto:") !== 0) return;
+      // let it POST normally if the endpoint isn't a FormSubmit URL (e.g. Netlify)
+      if (action.indexOf("formsubmit.co/") === -1) return;
       e.preventDefault();
+      var honey = form.querySelector('[name="_honey"]');
+      if (honey && honey.value) return; // bot
+      if (typeof form.checkValidity === "function" && !form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      var btn = form.querySelector('button[type="submit"]');
       var data = new FormData(form);
-      var type = data.get("inquiry") || "General";
-      var name = data.get("name") || "";
-      var org = data.get("org") || "";
-      var email = data.get("email") || "";
-      var message = data.get("message") || "";
-      var subject = encodeURIComponent("[" + type + "] Inquiry from " + name);
-      var body = encodeURIComponent(
-        "Inquiry type: " + type + "\nName: " + name + "\nOrganization: " + org +
-        "\nEmail: " + email + "\n\n" + message
-      );
-      window.location.href = "mailto:hello@quentinfears.com?subject=" + subject + "&body=" + body;
+      data.set("_subject", "[" + (data.get("inquiry") || "General") + "] New inquiry — quentinfears.com");
+      var label = btn ? btn.innerHTML : "";
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+      if (status) { status.textContent = ""; status.className = "form-status"; }
+      fetch(ajax, { method: "POST", body: data, headers: { Accept: "application/json" } })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && (res.success === true || res.success === "true")) {
+            form.reset();
+            if (status) { status.textContent = "Thanks — your message is on its way. I'll be in touch soon."; status.className = "form-status form-status--ok"; }
+          } else { throw new Error((res && res.message) || "failed"); }
+        })
+        .catch(function () {
+          if (status) { status.textContent = "Something went wrong — please email hello@quentinfears.com directly."; status.className = "form-status form-status--err"; }
+        })
+        .finally(function () { if (btn) { btn.disabled = false; btn.innerHTML = label; } });
     });
   }
 

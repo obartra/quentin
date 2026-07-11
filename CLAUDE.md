@@ -30,7 +30,7 @@ unchanged. The build is a static export deployed to GitHub Pages.
   no server or database.
 - **The design system and behavior are unchanged and self-contained.** CSS in
   `public/assets/css/style.css`; behavior in `public/assets/js/main.js` (mobile nav,
-  scroll-reveal, gallery lightbox, contact-form mailto fallback, footer year) and
+  scroll-reveal, gallery lightbox, contact-form FormSubmit AJAX handler, footer year) and
   `public/assets/js/gate.js` (the access gate). No external fonts, scripts, or CDNs —
   it must keep working offline and under a strict CSP. Pages stay legible with
   JavaScript disabled. Everything in `public/` ships verbatim into `dist/`.

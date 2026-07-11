@@ -62,7 +62,7 @@ Setup is in [docs/hosted-admin.md](docs/hosted-admin.md).
 
 - **Style continuity:** near-black canvas, warm off-white ink, high-contrast fashion
   serif for display (Didone/Bodoni register via a resilient system stack), clean
-  grotesque sans for UI, all-caps letter-spaced labels, and a restrained champagne accent.
+  grotesque sans for UI, all-caps letter-spaced labels, and a restrained fuchsia accent.
 - **Self-contained:** no external fonts, scripts, or CDNs — works offline and inside a
   strict CSP. Fonts degrade gracefully (Didot → Bodoni → Playfair → Georgia).
 - **Responsive & accessible:** mobile nav, skip link, reduced-motion support, keyboard-
