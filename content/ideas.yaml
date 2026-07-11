@@ -35,6 +35,35 @@ notes:
       body: "Good style work makes people reach higher without making them feel shut out. Accessible and aspirational are not opposites."
     - title: "Confidence is a skill"
       body: "How you walk into a room can be practiced. Clothing is the fastest lever I know — and it works before you say a word."
+reels:
+  eyebrow: "In motion"
+  heading: "Short reels, same throughline."
+  intro: "Quick style ideas from the feed — tap to play."
+  items:
+    - poster:
+        src: "assets/img/reel-possibilities.jpg"
+        alt: "Quentin Fears reel — style is about possibilities"
+        tag: "Reel"
+        label: "Instagram reel"
+      caption: "Style isn't about outfits — it's about possibilities. Every piece has more than one life."
+      permalink: "https://www.instagram.com/p/DaiPc-DhCht/"
+      videoSrc: "assets/video/reel-possibilities.mp4"
+    - poster:
+        src: "assets/img/reel-character.jpg"
+        alt: "Quentin Fears reel — character development, not outfit changes"
+        tag: "Reel"
+        label: "Instagram reel"
+      caption: "Not outfit changes — character development. Same person, different edit."
+      permalink: "https://www.instagram.com/p/DZ5BlpcRzZv/"
+      videoSrc: "assets/video/reel-character.mp4"
+    - poster:
+        src: "assets/img/reel-closet.jpg"
+        alt: "Quentin Fears reel — a closet cleanse can be a soul cleanse"
+        tag: "Reel"
+        label: "Instagram reel"
+      caption: "Sometimes making room in your closet is the first step to making room in your life."
+      permalink: "https://www.instagram.com/p/DaDUZ38xI72/"
+      videoSrc: ""
 formats:
   eyebrow: "Signature formats"
   heading: "Three series I keep coming back to."

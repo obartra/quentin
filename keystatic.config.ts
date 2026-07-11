@@ -326,6 +326,30 @@ export default config({
           },
           { label: 'Notes on style' }
         ),
+        reels: fields.object(
+          {
+            eyebrow: fields.text({ label: 'Eyebrow' }),
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            items: fields.array(
+              fields.object({
+                poster: photo('Poster still (vertical, ~1080x1920)'),
+                caption: fields.text({ label: 'Caption / idea', multiline: true }),
+                permalink: fields.text({
+                  label: 'Instagram permalink',
+                  description: 'https://www.instagram.com/p/<code>/ — used as the link when no self-hosted video is set',
+                }),
+                videoSrc: fields.text({
+                  label: 'Self-hosted video path (optional)',
+                  description:
+                    'e.g. assets/video/reel-x.mp4 (produced by tools/prepare_reel.py). Blank = the poster links out to Instagram instead.',
+                }),
+              }),
+              { label: 'Reels', itemLabel: (p) => (p.fields.caption.value || 'Reel').slice(0, 48) }
+            ),
+          },
+          { label: 'Reels' }
+        ),
         formats: fields.object(
           {
             eyebrow: fields.text({ label: 'Eyebrow' }),

@@ -205,6 +205,15 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    - **Hosting / on-camera** (Sheen Talk Live, panels, TV) → `content/speak.yaml`.
    - **Personal, off-brand, low-quality, or redundant** → skip.
 
+   **Video (reels)** live in `reels.items` on `content/ideas.yaml` (rendered by the
+   vertical player on the Ideas page). Default is *poster + caption + a "Watch on
+   Instagram" link* — add the item with `videoSrc` blank, so no video bytes enter the
+   repo. To self-host a standout reel instead, fetch its `.mp4`
+   (`fetch_instagram_authed.py --videos`), run `python3 tools/prepare_reel.py
+   <source.mp4> --name reel-<slug> --caption "…" --permalink "…"` (needs ffmpeg), drop
+   the produced files under `public/assets/`, and set `videoSrc`. Self-hosting is a
+   deliberate, occasional choice — never auto-host every reel.
+
    Incorporate only high-confidence, on-brand items; when unsure, skip. Cap at
    **≤ 2 incorporations per week**.
 3. **Prepare assets:** download at full resolution, optimize per `ASSETS.md`

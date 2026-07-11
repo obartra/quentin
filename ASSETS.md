@@ -13,6 +13,14 @@
 > Larry Sims `WR8hbFuHeqg`, Angela Robinson `7EeeYig__4o`, Tanisha Long `LtZsCVGCOaI`.
 > To reuse elsewhere, embed `https://www.youtube-nocookie.com/embed/<id>`.
 >
+> **Instagram reels** appear on the **Ideas** page (`reels.items` in
+> `content/ideas.yaml`). Each is either a poster + caption that links to Instagram
+> (the default — no video bytes stored) or a self-hosted `<video>` at
+> `public/assets/video/reel-*.mp4` with a poster at `public/assets/img/reel-*.jpg`.
+> Produce the self-hosted pair with `python3 tools/prepare_reel.py <source.mp4>
+> --name reel-<slug> …` (compact H.264, ~1-2 MB each). Both play via a CSP-safe
+> click-to-load — no external embed script.
+>
 > To change any image: drop a replacement at the same path in `assets/img/` (or
 > pick a different file from the `site-images` branch) and it appears — no code
 > change needed.
