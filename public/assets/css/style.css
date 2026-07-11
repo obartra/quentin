@@ -503,7 +503,7 @@ button { font: inherit; cursor: pointer; }
 .seg input:checked + label { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .contact-aside dt { font-family: var(--serif); font-size: 1.2rem; margin-bottom: 0.3rem; }
 .contact-aside dd { margin: 0 0 1.6rem; color: var(--ink-soft); }
-.contact-aside a { color: var(--accent); }
+.contact-aside a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ============================================================
    Footer
@@ -513,7 +513,7 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 760px) { .foot-top { grid-template-columns: 1.4fr 1fr 1fr; } }
 .foot-brand .wordmark { font-size: 1rem; }
 .foot-brand p { color: var(--ink-soft); margin-top: 1.2rem; max-width: 34ch; }
-.foot-col h4 { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.66rem; color: var(--ink-faint); margin-bottom: 1.1rem; font-weight: 700; }
+.foot-col h2 { text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.66rem; color: var(--ink-faint); margin-bottom: 1.1rem; font-weight: 700; }
 .foot-col a { display: block; color: var(--ink-soft); padding-block: 0.4rem; transition: color 0.3s var(--ease); }
 .foot-col a:hover { color: var(--ink); }
 .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-top: 2rem; border-top: 1px solid var(--line); }

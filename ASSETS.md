@@ -69,6 +69,7 @@ direction — since the current site shows almost everyone except him in that ro
 | `assets/img/archive-ladygunn.jpg` | Work — archive | Ladygunn editorial image. |
 | `assets/img/idea-time.jpg` | Ideas | Portrait or TIME feature visual. |
 | `assets/img/speak-reel.jpg` | Speak | Poster frame for the speaking reel. |
+| `assets/img/speak-stage.jpg` | Speak (`stage` section) | Quentin speaking on stage (100 Black Men of America conference). |
 | `assets/img/about-portrait.jpg` | About | A strong editorial portrait of Quentin. |
 
 ## Video — the speaking reel

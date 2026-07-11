@@ -65,14 +65,15 @@ Netlify → Site → **Settings → Environment variables**. Add:
 
 | Variable                          | Value                                                      |
 | --------------------------------- | --------------------------------------------------------- |
-| `KEYSTATIC_STORAGE`               | `github`                                                  |
 | `KEYSTATIC_GITHUB_CLIENT_ID`      | from the GitHub App                                       |
 | `KEYSTATIC_GITHUB_CLIENT_SECRET`  | from the GitHub App                                       |
 | `KEYSTATIC_SECRET`                | a random 32-byte hex string (`openssl rand -hex 32`)      |
 | `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`| the GitHub App slug (e.g. `quentinfears-content`)         |
 
-`netlify.toml` already sets `ADMIN_HOST=netlify` via the build command, so you do not
-need to add that. Redeploy after setting the variables.
+You do **not** need to set a storage variable: the admin auto-selects GitHub storage
+for any build (`import.meta.env.DEV` in `keystatic.config.ts`), and `netlify.toml`
+already passes `ADMIN_HOST=netlify` via the build command. Redeploy after setting the
+variables above.
 
 ### 4. Use it
 
@@ -84,9 +85,8 @@ need to add that. Redeploy after setting the variables.
 
 ## Notes
 
-- **The `main` config already points at the repo.** `keystatic.config.ts` uses
-  `repo: 'obartra/quentin'` when `KEYSTATIC_STORAGE=github`. Change it if the repo
-  moves.
+- **The config already points at the repo.** `keystatic.config.ts` uses
+  `repo: 'obartra/quentin'` for GitHub storage. Change it if the repo moves.
 - **Local editing still works** with no setup: `npm run dev` → `/keystatic` uses
   local file storage and never touches GitHub. Contributors who have the repo checked
   out can use that instead of the hosted admin.

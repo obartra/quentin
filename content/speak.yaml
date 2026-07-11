@@ -9,6 +9,13 @@ hero:
   heading: "A fashion voice, on any stage."
   intro: "I make style make sense — for a leadership summit, a fashion school, a panel, a podcast, or a camera. I keynote, moderate, teach, and host, and I bring both a point of view and the on-set years to back it up."
   buttonLabel: "Book Quentin"
+stage:
+  image:
+    src: "assets/img/speak-stage.jpg"
+    alt: "Quentin Fears speaking on stage at the 100 Black Men of America national conference"
+    tag: "On stage"
+    label: "100 Black Men of America — National Conference"
+  caption: "On stage at the 100 Black Men of America National Conference."
 reel:
   youtubeId: "7EeeYig__4o"
   ariaLabel: "Play: Quentin Fears hosting on Sheen Talk Live"

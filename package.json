@@ -9,10 +9,11 @@
     "start": "astro dev",
     "admin": "astro dev",
     "build": "KEYSTATIC_ADMIN=0 astro build",
-    "build:admin": "KEYSTATIC_STORAGE=github ADMIN_HOST=netlify astro build",
+    "build:admin": "ADMIN_HOST=netlify astro build",
     "preview": "astro preview",
     "validate": "python3 tools/validate_site.py dist && python3 tools/seo_check.py dist",
-    "check": "npm run build && npm run validate"
+    "check": "npm run build && npm run validate",
+    "lh": "npm run build && python3 tools/build_lighthouse_snapshot.py dist && lhci autorun"
   },
   "dependencies": {
     "@astrojs/netlify": "^6.6.5",
@@ -24,6 +25,7 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.14.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "tsx": "^4.23.0"

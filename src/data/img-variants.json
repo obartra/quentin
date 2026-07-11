@@ -1,0 +1,183 @@
+{
+  "assets/img/about-portrait.jpg": {
+    "height": 1188,
+    "width": 891,
+    "widths": [
+      400,
+      800,
+      891
+    ]
+  },
+  "assets/img/archive-01.jpg": {
+    "height": 1199,
+    "width": 900,
+    "widths": [
+      400,
+      800,
+      900
+    ]
+  },
+  "assets/img/archive-02.jpg": {
+    "height": 1200,
+    "width": 900,
+    "widths": [
+      400,
+      800,
+      900
+    ]
+  },
+  "assets/img/archive-03.jpg": {
+    "height": 1200,
+    "width": 900,
+    "widths": [
+      400,
+      800,
+      900
+    ]
+  },
+  "assets/img/archive-04.jpg": {
+    "height": 1200,
+    "width": 900,
+    "widths": [
+      400,
+      800,
+      900
+    ]
+  },
+  "assets/img/archive-05.jpg": {
+    "height": 525,
+    "width": 393,
+    "widths": [
+      393
+    ]
+  },
+  "assets/img/archive-06.jpg": {
+    "height": 1200,
+    "width": 900,
+    "widths": [
+      400,
+      800,
+      900
+    ]
+  },
+  "assets/img/archive-07.jpg": {
+    "height": 1200,
+    "width": 899,
+    "widths": [
+      400,
+      800,
+      899
+    ]
+  },
+  "assets/img/archive-08.jpg": {
+    "height": 910,
+    "width": 683,
+    "widths": [
+      400,
+      683
+    ]
+  },
+  "assets/img/hero-portrait.jpg": {
+    "height": 1250,
+    "width": 1000,
+    "widths": [
+      400,
+      800,
+      1000
+    ]
+  },
+  "assets/img/idea-time.jpg": {
+    "height": 910,
+    "width": 683,
+    "widths": [
+      400,
+      683
+    ]
+  },
+  "assets/img/media-angela.jpg": {
+    "height": 360,
+    "width": 640,
+    "widths": [
+      400,
+      640
+    ]
+  },
+  "assets/img/media-larry.jpg": {
+    "height": 360,
+    "width": 640,
+    "widths": [
+      400,
+      640
+    ]
+  },
+  "assets/img/media-tanisha.jpg": {
+    "height": 360,
+    "width": 640,
+    "widths": [
+      400,
+      640
+    ]
+  },
+  "assets/img/speak-reel.jpg": {
+    "height": 608,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/speak-stage.jpg": {
+    "height": 674,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/speak-still.jpg": {
+    "height": 675,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/work-celebrity.jpg": {
+    "height": 1349,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/work-editorial.jpg": {
+    "height": 1349,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/work-enterprise.jpg": {
+    "height": 1350,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
+  "assets/img/work-time.jpg": {
+    "height": 988,
+    "width": 791,
+    "widths": [
+      400,
+      791
+    ]
+  }
+}

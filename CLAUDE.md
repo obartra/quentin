@@ -53,11 +53,13 @@ Three build shapes from one project (see the header comment in
 - **Public site:** `npm run build` sets `KEYSTATIC_ADMIN=0`, so the Keystatic + React
   integrations and the SSR `/keystatic` routes are skipped. The deployed site is a
   pure static export (GitHub Pages). Keep it that way.
-- **Hosted admin:** `npm run build:admin` (`ADMIN_HOST=netlify`,
-  `KEYSTATIC_STORAGE=github`) builds the same app with the admin as SSR routes behind
-  the Netlify adapter and GitHub storage, so a non-technical editor edits from a
-  browser and Save commits to the repo. Storage is env-driven in
-  [keystatic.config.ts](keystatic.config.ts). Setup:
+- **Hosted admin:** `npm run build:admin` (`ADMIN_HOST=netlify`) builds the same app
+  with the admin as SSR routes behind the Netlify adapter, so a non-technical editor
+  edits from a browser and Save commits to the repo. Storage auto-selects in
+  [keystatic.config.ts](keystatic.config.ts) via `import.meta.env.DEV`: `local` under
+  `astro dev`, `github` for any build. (Use `import.meta.env.DEV`, not `process.env` —
+  the config is bundled into the browser admin, where a `process.env` check is
+  undefined and would wrongly fall back to local.) Setup:
   [docs/hosted-admin.md](docs/hosted-admin.md). The adapter belongs to this build
   only; never let it leak into the public `npm run build`.
 

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
+import Picture from '../components/Picture.astro';
 import { reader, SITE_ORIGIN } from '../lib/content';
 import { personMinimal, breadcrumb } from '../lib/jsonld';
 
@@ -60,7 +61,7 @@ const jsonLd = {
       {work.cases.map((c, i) => (
         <article class={i % 2 === 1 ? 'case case--flip reveal' : 'case reveal'}>
           <figure class="ph ph--portrait case__media" data-tag={c.image.tag} data-label={c.image.label}>
-            <img src={c.image.src} alt={c.image.alt} loading="lazy" onerror="this.remove()">{c.gallery && <button type="button" class="ph-link" data-gallery={c.gallery} aria-label={`Open ${c.gallery} gallery`}><span class="go">View</span></button>}
+            <Picture src={c.image.src} alt={c.image.alt} loading="lazy" sizes="(min-width: 820px) 48vw, 92vw" onerror="this.remove()" />{c.gallery && <button type="button" class="ph-link" data-gallery={c.gallery} aria-label={`Open ${c.gallery} gallery`}><span class="go">View</span></button>}
           </figure>
           <div>
             <div class="case__kicker"><span class="case__idx">{pad(i + 1)}</span><span class="case__tag">{c.tag}</span></div>
@@ -90,7 +91,7 @@ const jsonLd = {
       </div>
       <div class="archive">
         {work.archive.items.map((it) => (
-          <figure class="ph ph--tall reveal"><img src={it.src} alt={it.alt} loading="lazy"><button type="button" class="ph-link" data-gallery={it.gallery} aria-label={`Open ${it.gallery} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
+          <figure class="ph ph--tall reveal"><Picture src={it.src} alt={it.alt} loading="lazy" sizes="(min-width: 1000px) 23vw, (min-width: 680px) 31vw, 46vw" /><button type="button" class="ph-link" data-gallery={it.gallery} aria-label={`Open ${it.gallery} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
         ))}
       </div>
       <p style="margin-top:2rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{work.archive.footnote}</p>

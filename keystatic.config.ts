@@ -9,16 +9,18 @@ import { config, fields, singleton } from '@keystatic/core';
  * (and the SEO / validator invariants) stay intact while the words become
  * no-code-editable at /keystatic.
  *
- * Storage is env-driven:
- *   - default (local dev): `local` — edits write the content/ files in this repo.
- *   - `KEYSTATIC_STORAGE=github` (the hosted admin): commits straight to the repo
- *     via the GitHub App, which triggers the GitHub Pages deploy. See
- *     docs/hosted-admin.md for the one-time GitHub App + Netlify setup.
+ * Storage selects automatically:
+ *   - `astro dev` (local editing): `local` — edits write the content/ files here.
+ *   - any build (the hosted admin): `github` — commits straight to the repo via the
+ *     GitHub App, which triggers the GitHub Pages deploy. See docs/hosted-admin.md.
+ *
+ * This uses `import.meta.env.DEV` (not process.env): Vite inlines it into the
+ * browser bundle, so the admin UI picks the right mode client-side. A process.env
+ * check would be undefined in the browser and always fall back to local.
  */
-const storage =
-  process.env.KEYSTATIC_STORAGE === 'github'
-    ? ({ kind: 'github', repo: 'obartra/quentin' } as const)
-    : ({ kind: 'local' } as const);
+const storage = import.meta.env.DEV
+  ? ({ kind: 'local' } as const)
+  : ({ kind: 'github', repo: 'obartra/quentin' } as const);
 
 // --- Reusable field groups ---------------------------------------------------
 
@@ -384,6 +386,13 @@ export default config({
             buttonLabel: fields.text({ label: 'Button label' }),
           },
           { label: 'Hero' }
+        ),
+        stage: fields.object(
+          {
+            image: photo('On-stage photo'),
+            caption: fields.text({ label: 'Caption', multiline: true }),
+          },
+          { label: 'On stage' }
         ),
         reel: fields.object(
           {
