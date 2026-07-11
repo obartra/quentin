@@ -19,9 +19,9 @@
   /* Lines & accent */
   --line:      rgba(243, 239, 230, 0.13);
   --line-2:    rgba(243, 239, 230, 0.28);
-  --accent:      #f0612e;   /* warm editorial orange — the single accent */
-  --accent-deep: #b8481f;
-  --accent-soft: rgba(240, 97, 46, 0.14);
+  --accent:      #f72c9c;   /* editorial fuchsia, sampled from his Glamour + Sheen branding: the single accent */
+  --accent-deep: #c4166f;
+  --accent-soft: rgba(247, 44, 156, 0.14);
 
   /* Type */
   --serif: "Didot", "Bodoni MT", "Playfair Display", "Hoefler Text", "Times New Roman", Georgia, serif;
@@ -207,7 +207,7 @@ button { font: inherit; cursor: pointer; }
 .ph {
   position: relative; margin: 0; overflow: hidden;
   background:
-    radial-gradient(120% 90% at 20% 10%, rgba(240,97,46,0.13), transparent 55%),
+    radial-gradient(120% 90% at 20% 10%, rgba(247,44,156,0.13), transparent 55%),
     linear-gradient(155deg, #26242a 0%, #17161a 48%, #0e0e11 100%);
   border: 1px solid var(--line);
   display: flex; align-items: flex-end;
@@ -573,7 +573,7 @@ button { font: inherit; cursor: pointer; }
 .locked .site-head, .locked main, .locked .site-foot { visibility: hidden; }
 .gate {
   position: fixed; inset: 0; z-index: 9999;
-  background: radial-gradient(120% 90% at 30% 8%, rgba(240,97,46,0.12), transparent 55%), var(--bg);
+  background: radial-gradient(120% 90% at 30% 8%, rgba(247,44,156,0.12), transparent 55%), var(--bg);
   display: flex; align-items: center; justify-content: center; padding: var(--gut);
 }
 .gate__card { max-width: 400px; width: 100%; text-align: center; }

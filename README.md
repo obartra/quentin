@@ -1,7 +1,7 @@
 # quentinfears.com — repositioned site
 
 ![Stack: HTML · CSS · JS](https://img.shields.io/badge/stack-HTML%20%C2%B7%20CSS%20%C2%B7%20JS-0b0b0c?style=flat-square&labelColor=0b0b0c)
-![Build: none](https://img.shields.io/badge/build-none-f0612e?style=flat-square&labelColor=0b0b0c)
+![Build: none](https://img.shields.io/badge/build-none-f72c9c?style=flat-square&labelColor=0b0b0c)
 ![Deploy: any static host](https://img.shields.io/badge/deploy-any%20static%20host-0b0b0c?style=flat-square&labelColor=0b0b0c)
 ![Dependencies: zero](https://img.shields.io/badge/dependencies-0-0b0b0c?style=flat-square&labelColor=0b0b0c)
 
