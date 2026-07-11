@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>document.documentElement.classList.add('js');</script>
+  <title>Contact &amp; Book — Quentin Fears</title>
+  <meta name="description" content="Contact Quentin Fears for corporate creative direction, speaking, media and hosting, or personal styling. One form, routed to the right conversation.">
+  <meta property="og:title" content="Contact &amp; Book — Quentin Fears">
+  <meta property="og:description" content="Corporate creative direction, speaking, media, or personal styling.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Quentin Fears">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="wordmark" href="index.html">Quentin&nbsp;<b>Fears</b></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <a href="work.html">Work</a>
+      <a href="ideas.html">Ideas</a>
+      <a href="speak.html">Speak</a>
+      <a href="about.html">About</a>
+      <a class="nav__cta" href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">Contact &amp; book</p>
+      <h1>Tell me what you have in mind.</h1>
+      <p>Shaping a brand, programming an event, casting a host, or investing in how you show up — whatever it is, tell me about it and I'll come back to you.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(1.5rem,3vw,2.5rem)">
+    <div class="wrap contact-grid">
+
+      <aside class="contact-aside reveal">
+        <dl>
+          <dt>Corporate &amp; enterprise</dt>
+          <dd>Creative direction, visual strategy, and campaign consulting.</dd>
+          <dt>Speaking</dt>
+          <dd>Keynotes, panels, workshops, and moderation.</dd>
+          <dt>Media &amp; hosting</dt>
+          <dd>On-camera hosting, correspondence, and interviews.</dd>
+          <dt>Personal styling</dt>
+          <dd>Selective individual clients and wardrobe direction.</dd>
+        </dl>
+        <p style="color:var(--ink-faint);font-size:0.9rem">Prefer to reach me directly? Email <a href="mailto:hello@quentinfears.com">hello@quentinfears.com</a>, or find me on <a href="https://www.instagram.com/mrqfears/" target="_blank" rel="noopener">Instagram</a>.</p>
+      </aside>
+
+      <form id="contact-form" class="reveal" novalidate>
+        <!-- To wire a real backend, set action="" to a form endpoint (Formspree, Basin, Netlify Forms, etc.).
+             Left blank, the form composes an email via the visitor's mail client. See ASSETS.md. -->
+        <div class="field">
+          <label>What's this about?</label>
+          <div class="seg" role="radiogroup" aria-label="Inquiry type">
+            <input type="radio" id="i-corp" name="inquiry" value="Corporate" checked>
+            <label for="i-corp">Corporate &amp; enterprise</label>
+            <input type="radio" id="i-speak" name="inquiry" value="Speaking">
+            <label for="i-speak">Speaking</label>
+            <input type="radio" id="i-media" name="inquiry" value="Media &amp; hosting">
+            <label for="i-media">Media &amp; hosting</label>
+            <input type="radio" id="i-personal" name="inquiry" value="Personal styling">
+            <label for="i-personal">Personal styling</label>
+          </div>
+        </div>
+
+        <div class="grid cols-2" style="gap:0 1.5rem">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="org">Company / organization</label>
+            <input type="text" id="org" name="org" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="message">Tell me about the project, event, or goal</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--gold">Send inquiry <span class="btn__arrow">&rarr;</span></button>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="wordmark">Quentin&nbsp;<b>Fears</b></span>
+        <p>I help brands and people use style to say who they are — and who they're becoming.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="work.html">Work</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="speak.html">Speak &amp; Host</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <a href="https://www.instagram.com/mrqfears/" target="_blank" rel="noopener">Instagram &rarr; @mrqfears</a>
+        <a href="https://www.linkedin.com/in/quentin-fears-158a5024/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="contact.html">Book to speak</a>
+        <a href="contact.html">Corporate inquiry</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="tagline">Don't just wear clothes — wear confidence.</p>
+      <p>&copy; <span data-year>2026</span> Quentin Fears. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
