@@ -1,0 +1,31 @@
+{
+  "name": "quentinfears-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "quentinfears.com — Astro build with a Keystatic content admin, output identical to the hand-authored static site.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "admin": "astro dev",
+    "build": "KEYSTATIC_ADMIN=0 astro build",
+    "build:admin": "KEYSTATIC_STORAGE=github ADMIN_HOST=netlify astro build",
+    "preview": "astro preview",
+    "validate": "python3 tools/validate_site.py dist && python3 tools/seo_check.py dist",
+    "check": "npm run build && npm run validate"
+  },
+  "dependencies": {
+    "@astrojs/netlify": "^6.6.5",
+    "@astrojs/react": "^4.2.0",
+    "@keystatic/astro": "^5.0.0",
+    "@keystatic/core": "^0.5.0",
+    "astro": "^5.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "tsx": "^4.23.0"
+  }
+}

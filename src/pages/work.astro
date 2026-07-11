@@ -1,0 +1,112 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import { reader, SITE_ORIGIN } from '../lib/content';
+import { personMinimal, breadcrumb } from '../lib/jsonld';
+
+const work = await reader.singletons.work.readOrThrow();
+const galleries = await reader.singletons.galleries.readOrThrow();
+const O = SITE_ORIGIN;
+
+// Build the lightbox JSON from the galleries singleton, keyed by gallery key.
+const galleryData = Object.fromEntries(
+  galleries.sets.map((set) => [set.key, set.images.map((im) => ({ src: im.src, cap: im.cap }))])
+);
+const galleryJson = JSON.stringify(galleryData);
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${O}/work.html#webpage`,
+      url: `${O}/work.html`,
+      name: work.seo.ogTitle,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      inLanguage: 'en',
+    },
+    personMinimal(),
+    breadcrumb([
+      { name: 'Home', item: `${O}/` },
+      { name: 'Work', item: `${O}/work.html` },
+    ]),
+  ],
+};
+---
+<BaseLayout
+  pagePath="work.html"
+  title={work.seo.title}
+  description={work.seo.description}
+  ogTitle={work.seo.ogTitle}
+  ogDescription={work.seo.ogDescription}
+  ogType={work.seo.ogType}
+  navCurrent="work"
+  jsonLd={jsonLd}
+>
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">{work.hero.eyebrow}</p>
+      <h1>{work.hero.heading}</h1>
+      <p>{work.hero.intro}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      {work.cases.map((c, i) => (
+        <article class={i % 2 === 1 ? 'case case--flip reveal' : 'case reveal'}>
+          <figure class="ph ph--portrait case__media" data-tag={c.image.tag} data-label={c.image.label}>
+            <img src={c.image.src} alt={c.image.alt} loading="lazy" onerror="this.remove()">{c.gallery && <button type="button" class="ph-link" data-gallery={c.gallery} aria-label={`Open ${c.gallery} gallery`}><span class="go">View</span></button>}
+          </figure>
+          <div>
+            <div class="case__kicker"><span class="case__idx">{pad(i + 1)}</span><span class="case__tag">{c.tag}</span></div>
+            <h3>{c.title}</h3>
+            <dl class="case__meta">
+              {c.meta.map((m) => (
+                <div><dt>{m.dt}</dt><dd set:html={m.dd}></dd></div>
+              ))}
+            </dl>
+            {c.footerKind === 'note' && <p class="attribution">{c.footerText}</p>}
+            {c.footerKind === 'link' && <a class="link-more" href={c.footerHref}>{c.footerText} <span>&rarr;</span></a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ STYLING ARCHIVE ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{work.archive.eyebrow}</p>
+        <h2>{work.archive.heading}</h2>
+        <p>{work.archive.intro}</p>
+      </div>
+      <div class="archive">
+        {work.archive.items.map((it) => (
+          <figure class="ph ph--tall reveal"><img src={it.src} alt={it.alt} loading="lazy"><button type="button" class="ph-link" data-gallery={it.gallery} aria-label={`Open ${it.gallery} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
+        ))}
+      </div>
+      <p style="margin-top:2rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{work.archive.footnote}</p>
+
+    </div>
+  </section>
+
+  <Cta
+    heading={work.cta.heading}
+    body={work.cta.body}
+    buttonLabel={work.cta.buttonLabel}
+    buttonHref={work.cta.buttonHref}
+  />
+
+  <Fragment slot="after-footer">
+    <script id="gallery-data" type="application/json" is:inline set:html={galleryJson}></script>
+  </Fragment>
+
+</BaseLayout>

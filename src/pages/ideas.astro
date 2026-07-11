@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import { reader, SITE_ORIGIN } from '../lib/content';
+import { personMinimal, breadcrumb } from '../lib/jsonld';
+
+const ideas = await reader.singletons.ideas.readOrThrow();
+const O = SITE_ORIGIN;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${O}/ideas.html#webpage`,
+      url: `${O}/ideas.html`,
+      name: ideas.seo.ogTitle,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      inLanguage: 'en',
+    },
+    personMinimal(),
+    breadcrumb([
+      { name: 'Home', item: `${O}/` },
+      { name: 'Ideas', item: `${O}/ideas.html` },
+    ]),
+  ],
+};
+---
+<BaseLayout
+  pagePath="ideas.html"
+  title={ideas.seo.title}
+  description={ideas.seo.description}
+  ogTitle={ideas.seo.ogTitle}
+  ogDescription={ideas.seo.ogDescription}
+  ogType={ideas.seo.ogType}
+  navCurrent="ideas"
+  jsonLd={jsonLd}
+>
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">{ideas.hero.eyebrow}</p>
+      <h1>{ideas.hero.heading}</h1>
+      <p>{ideas.hero.intro}</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- FEATURE: TIME -->
+  <section class="section">
+    <div class="wrap idea-feature">
+      <figure class="ph ph--tall reveal" data-tag={ideas.timeFeature.image.tag} data-label={ideas.timeFeature.image.label}>
+        <img src={ideas.timeFeature.image.src} alt={ideas.timeFeature.image.alt} loading="lazy" onerror="this.remove()">
+      </figure>
+      <div class="reveal">
+        <p class="eyebrow">{ideas.timeFeature.eyebrow}</p>
+        <h2 class="display" style="font-size:clamp(1.8rem,3.6vw,2.8rem);margin-bottom:1.4rem">{ideas.timeFeature.heading}</h2>
+        <blockquote class="pullquote">{ideas.timeFeature.pullquote}</blockquote>
+        <p class="attribution">{ideas.timeFeature.attribution}</p>
+        <p class="lead" style="margin-top:1.6rem">{ideas.timeFeature.lead}</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- CLOSET CLEANSE THESIS -->
+  <section class="section belief">
+    <div class="wrap reveal">
+      <p class="eyebrow eyebrow--muted">{ideas.thesis.eyebrow}</p>
+      <blockquote set:html={ideas.thesis.quote}></blockquote>
+      <cite>{ideas.thesis.cite}</cite>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- NOTES -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{ideas.notes.eyebrow}</p>
+        <h2>{ideas.notes.heading}</h2>
+      </div>
+      <div class="notes">
+        {ideas.notes.items.map((n) => (
+          <div class="note reveal">
+            <h3>{n.title}</h3>
+            <p>{n.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- SIGNATURE FORMATS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{ideas.formats.eyebrow}</p>
+        <h2>{ideas.formats.heading}</h2>
+        <p>{ideas.formats.intro}</p>
+      </div>
+      <div class="format-cards">
+        {ideas.formats.items.map((f) => (
+          <div class="fcard reveal">
+            <span class="fcard__tag">{f.tag}</span>
+            <h3>{f.title}</h3>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    heading={ideas.cta.heading}
+    body={ideas.cta.body}
+    buttonLabel={ideas.cta.buttonLabel}
+    buttonHref={ideas.cta.buttonHref}
+  />
+
+</BaseLayout>

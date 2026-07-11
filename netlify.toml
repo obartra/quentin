@@ -1,0 +1,14 @@
+# Netlify config for the HOSTED KEYSTATIC ADMIN only.
+#
+# The canonical public site is deployed to GitHub Pages (see
+# .github/workflows/deploy.yml) and does not use this file. This deploy exists
+# solely to serve the Keystatic admin at /keystatic so a non-technical editor can
+# edit content from a browser; saving commits to the repo, which triggers the
+# Pages deploy. Setup steps and required environment variables are in
+# docs/hosted-admin.md.
+[build]
+  command = "npm run build:admin"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

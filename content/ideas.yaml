@@ -1,0 +1,56 @@
+seo:
+  title: "Ideas — Quentin Fears | Style, identity & perception"
+  description: "Quentin Fears on style as strategy: how clothing shapes identity, perception, and possibility. Featuring his TIME commentary and the closet-cleanse-as-renewal thesis."
+  ogTitle: "Ideas — Quentin Fears"
+  ogDescription: "Style as strategy: identity, perception, and possibility."
+  ogType: "website"
+hero:
+  eyebrow: "Ideas"
+  heading: "Style is a language."
+  intro: "Here's what I believe, and it runs through everything I do: what you wear changes how people read you before you speak. Style is how you tell them who you're becoming."
+timeFeature:
+  image:
+    src: "assets/img/idea-time.jpg"
+    alt: "Quentin Fears in TIME"
+    tag: "TIME"
+    label: "Featured in TIME Magazine"
+  eyebrow: "Featured — TIME"
+  heading: "New rules for office dressing"
+  pullquote: "Before, there was a stuffy sort of, \"we all need to dress this one way\" as part of what it means to be a professional. You would assume someone wearing a suit has a lot of money. Now that's been flipped on its head — the guy in the hoodie makes just as much, or maybe more."
+  attribution: "Quentin Fears — TIME, \"The Return to the Workplace Means New Rules for Office Dressing\""
+  lead: "The real subject isn't hemlines. It's how dress, identity, race, and perception tangle together. Clothing is never neutral. It gets read — and it gets read differently depending on who's wearing it. That's the territory I speak and write about."
+thesis:
+  eyebrow: "A recurring thesis"
+  quote: "Making room in your closet is making room in your <span class=\"accent\">life</span>."
+  cite: "On the closet cleanse as a personal reset"
+notes:
+  eyebrow: "Notes on style"
+  heading: "Short ideas, meant to be repeated."
+  items:
+    - title: "Dress with intent"
+      body: "Every rule of style sits on top of a question most people skip. Who am I becoming, and does this help me get there?"
+    - title: "Release what no longer fits"
+      body: "Letting go of clothes that belonged to an old version of you is one of the quietest, most honest ways to move forward."
+    - title: "Aspiration without intimidation"
+      body: "Good style work makes people reach higher without making them feel shut out. Accessible and aspirational are not opposites."
+    - title: "Confidence is a skill"
+      body: "How you walk into a room can be practiced. Clothing is the fastest lever I know — and it works before you say a word."
+formats:
+  eyebrow: "Signature formats"
+  heading: "Three series I keep coming back to."
+  intro: "The recurring formats that carry these ideas across social, speaking, and — eventually — a book."
+  items:
+    - tag: "Series 01"
+      title: "Dress With Intent"
+      body: "Practical style advice tied to a reason. Never a rule for its own sake."
+    - tag: "Series 02"
+      title: "Behind the Vision"
+      body: "I take a finished piece of work apart: the problem, the story, the constraints, the calls I made."
+    - tag: "Series 03"
+      title: "The Come-Up"
+      body: "Letters to people starting out in fashion — and the working notebook for a book I'm going to write."
+cta:
+  heading: "I bring these ideas to stages, panels, and classrooms."
+  body: "Keynotes, panels, and workshops built from this point of view."
+  buttonLabel: "See talk topics"
+  buttonHref: "speak.html"
