@@ -9,7 +9,7 @@
     "start": "astro dev",
     "admin": "astro dev",
     "build": "KEYSTATIC_ADMIN=0 astro build",
-    "build:admin": "KEYSTATIC_STORAGE=github ADMIN_HOST=netlify astro build",
+    "build:admin": "ADMIN_HOST=netlify astro build",
     "preview": "astro preview",
     "validate": "python3 tools/validate_site.py dist && python3 tools/seo_check.py dist",
     "check": "npm run build && npm run validate"
