@@ -202,7 +202,18 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    happens.
 2. **Judge** each new post from its caption + image(s) *against what the site
    already shows*. The bar is the site's existing best content, and the default
-   verdict is **skip**. For a post that clears the bar, route it:
+   verdict is **skip**.
+
+   **Eligibility gate first, quality second.** Only content about Quentin's
+   professional creative work is eligible: fashion, styling, editorial and
+   campaign imagery, creative leadership, speaking, hosting, and press about that
+   work. Anything personal or off-topic — family, friends, relationships, travel,
+   food, fitness, humor/memes, politics, faith, celebrations, day-in-the-life —
+   is **excluded automatically, before any quality judgment**, no matter how
+   polished it looks. When a post mixes both (say, a personal caption on a styled
+   photo), it is eligible only if it stands on the professional content alone; if
+   the personal part is the point, skip it. For a post that clears the gate,
+   route it:
    - **Thought piece** (a style-POV caption, a lesson, a press mention — most recent
      reels are this) → a `{ title, body }` item under `notes.items` in
      `content/ideas.yaml` (title = the hook, body = the idea, lightly edited from the
@@ -212,7 +223,8 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
      (keys: `editorial`, `menswear`, `celebrity`, …); for a headline piece, a case in
      `content/work.yaml`.
    - **Hosting / on-camera** (Sheen Talk Live, panels, TV) → `content/speak.yaml`.
-   - **Personal, off-brand, low-quality, or redundant** → skip.
+   - **Off-brand, low-quality, or redundant** → skip (personal/off-topic posts
+     never reach this point — they fail the eligibility gate above).
 
    When the target section is at its budget (below), the incorporation is a
    **replacement**: the new item goes in and the section's weakest item comes out in
