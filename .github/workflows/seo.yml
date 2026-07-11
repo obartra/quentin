@@ -1,0 +1,22 @@
+name: SEO check
+
+# Enforces the site's technical-SEO invariants on every change:
+# unique title/description, canonical + Open Graph + Twitter + robots tags,
+# valid JSON-LD, favicon/manifest links, sitemap sync, and the personal-site
+# guard (no employer claims in <head> metadata). See tools/seo_check.py.
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate SEO invariants
+        run: python3 tools/seo_check.py
