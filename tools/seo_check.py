@@ -166,6 +166,19 @@ def check_page(page, html, sitemap_locs):
     if not by_name.get("theme-color"):
         warn(page, "missing <meta name=\"theme-color\">")
 
+    # Gate <-> indexing coupling. A page behind the client-side password gate
+    # is a private preview and should be noindex; a public (ungated) page
+    # should be indexable. This auto-resolves at launch when the gate is
+    # removed and robots is flipped back to index.
+    gated = "gate.js" in html or "qf-access" in head
+    robots_val = by_name.get("robots", "").lower()
+    if gated and "noindex" not in robots_val:
+        warn(page, "page is behind the password gate but robots is not noindex "
+                   "(a private preview should not be indexed)")
+    if not gated and "noindex" in robots_val:
+        warn(page, "page is public (no gate) but robots is noindex "
+                   "(it will not appear in search)")
+
     # Exactly one <h1>
     h1s = re.findall(r"<h1\b", html, re.IGNORECASE)
     if len(h1s) != 1:

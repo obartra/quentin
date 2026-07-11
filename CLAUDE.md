@@ -74,6 +74,16 @@ entry in sync. Editing the visible copy is fine; do not desync the metadata from
 `*.html`, `robots.txt`, and `sitemap.xml`, and update `BASE` in
 [tools/seo_check.py](tools/seo_check.py). The check will confirm consistency.
 
+### Private preview vs launch (indexing)
+
+The site currently sits behind the client-side password gate (`assets/js/gate.js`), so it
+is a **private preview**. While the gate is up, every page is `robots: noindex, nofollow`
+so search engines do not index a password wall. The exact directive to restore is in an
+HTML comment beside each `robots` tag. **At launch:** remove the gate and flip all six
+pages back to `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`,
+then submit the sitemap. The checker warns if a gated page is left indexable, or if an
+ungated page is left `noindex`, so the two stay coupled.
+
 ### What tools/seo_check.py enforces
 
 Per page: exactly one non-empty `<title>`; a meta description; canonical present and

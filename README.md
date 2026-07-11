@@ -58,6 +58,10 @@ No build step required.
 - [x] Set the real domain in the `og:` / canonical / sitemap tags (`https://quentinfears.com`). If the
       site launches on a different domain, find-and-replace `quentinfears.com` across the HTML,
       `robots.txt`, and `sitemap.xml`.
+- [ ] **Flip indexing on at launch.** While the password gate is up the pages are
+      `robots: noindex, nofollow` (a private preview should not be indexed). When the gate
+      comes off, restore `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`
+      on all six pages (the exact string is in an HTML comment next to each `robots` tag).
 - [ ] Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools after launch.
 - [ ] Optional: replace the generated `assets/img/og-cover.jpg` share card and the JSON-LD
       `Person.image` with a real photo of Quentin once the leader-mode portrait exists.
@@ -67,7 +71,8 @@ No build step required.
 Technical SEO is built in and self-contained (no external calls):
 
 - **Per page:** unique `<title>` + meta description, canonical URL, Open Graph + Twitter Card
-  tags, and a `robots` directive (`index, follow, max-image-preview:large`).
+  tags, and a `robots` directive. While the site is behind the password gate this is
+  `noindex, nofollow`; flip it to `index, follow, max-image-preview:large` at launch.
 - **Structured data:** JSON-LD on every page — a shared `Person` entity (`#person`) plus
   `WebSite`, `ProfilePage` (about), `ContactPage` (contact), `CollectionPage` (work), and
   `BreadcrumbList` on subpages.
