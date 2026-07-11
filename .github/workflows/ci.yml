@@ -29,3 +29,5 @@ jobs:
         run: python3 tools/validate_site.py dist
       - name: Validate SEO invariants
         run: python3 tools/seo_check.py dist
+      - name: Validate image budget
+        run: python3 tools/check_images.py

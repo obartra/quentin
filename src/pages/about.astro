@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
+import Picture from '../components/Picture.astro';
 import { reader, SITE_ORIGIN } from '../lib/content';
 import { personMinimal, breadcrumb } from '../lib/jsonld';
 
@@ -51,7 +52,7 @@ const jsonLd = {
   <section class="section" style="padding-top:clamp(1.5rem,3vw,2.5rem)">
     <div class="wrap about-grid">
       <figure class="ph ph--tall reveal" data-tag={about.portrait.tag} data-label={about.portrait.label}>
-        <img src={about.portrait.src} alt={about.portrait.alt} loading="lazy" onerror="this.remove()">
+        <Picture src={about.portrait.src} alt={about.portrait.alt} loading="lazy" sizes="(min-width: 900px) 40vw, 92vw" onerror="this.remove()" />
       </figure>
       <div class="prose reveal" set:html={about.prose}></div>
     </div>
