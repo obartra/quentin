@@ -1,0 +1,5 @@
+# robots.txt for quentinfears.com
+User-agent: *
+Allow: /
+
+Sitemap: https://quentinfears.com/sitemap.xml

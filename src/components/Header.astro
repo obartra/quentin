@@ -1,0 +1,21 @@
+---
+interface Props {
+  current?: 'work' | 'ideas' | 'speak' | 'about' | 'contact' | null;
+}
+const { current = null } = Astro.props;
+---
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="wordmark" href="index.html">Quentin&nbsp;<b>Fears</b></a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <a href="work.html" aria-current={current === 'work' ? 'page' : undefined}>Work</a>
+      <a href="ideas.html" aria-current={current === 'ideas' ? 'page' : undefined}>Ideas</a>
+      <a href="speak.html" aria-current={current === 'speak' ? 'page' : undefined}>Speak</a>
+      <a href="about.html" aria-current={current === 'about' ? 'page' : undefined}>About</a>
+      <a class="nav__cta" href="contact.html" aria-current={current === 'contact' ? 'page' : undefined}>Contact</a>
+    </nav>
+  </div>
+</header>

@@ -1,3 +1,28 @@
-assets/img/site-dump/
-node_modules/
+# OS cruft
 .DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Astro build output & cache
+dist/
+.astro/
+
+# Hosted-admin (Netlify adapter) build output
+.netlify/
+
+# Python tooling cache (tools/fetch_site_images.py)
+__pycache__/
+*.py[cod]
+
+# Downloaded image dump from fetch_site_images.py — large binaries live on the
+# `site-images` branch, not on main.
+public/assets/img/site-dump/
+
+# Local editor / agent tooling
+.claude/
+
+# Local scratch
+scratch_shots/
+.__preview.html

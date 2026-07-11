@@ -1,0 +1,33 @@
+---
+import { reader } from '../lib/content';
+const s = await reader.singletons.settings.readOrThrow();
+---
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="wordmark">Quentin&nbsp;<b>Fears</b></span>
+        <p>{s.footerBlurb}</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="work.html">Work</a>
+        <a href="ideas.html">Ideas</a>
+        <a href="speak.html">Speak &amp; Host</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Connect</h4>
+        <a href={s.instagram} target="_blank" rel="noopener">Instagram &rarr; {s.instagramHandle}</a>
+        <a href={s.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        <a href="contact.html">Book to speak</a>
+        <a href="contact.html">Corporate inquiry</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p class="tagline">{s.tagline}</p>
+      <p>&copy; <span data-year>{s.copyrightYear}</span> {s.copyrightName}. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

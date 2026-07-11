@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import { reader, SITE_ORIGIN } from '../lib/content';
+import { personMinimal, breadcrumb } from '../lib/jsonld';
+
+const speak = await reader.singletons.speak.readOrThrow();
+const O = SITE_ORIGIN;
+const pad = (n: number) => String(n).padStart(2, '0');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': `${O}/speak.html#webpage`,
+      url: `${O}/speak.html`,
+      name: speak.seo.ogTitle,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      inLanguage: 'en',
+    },
+    personMinimal({
+      knowsAbout: ['Keynote speaking', 'Panel moderation', 'On-camera hosting', 'Creative leadership'],
+    }),
+    breadcrumb([
+      { name: 'Home', item: `${O}/` },
+      { name: 'Speak & Host', item: `${O}/speak.html` },
+    ]),
+  ],
+};
+---
+<BaseLayout
+  pagePath="speak.html"
+  title={speak.seo.title}
+  description={speak.seo.description}
+  ogTitle={speak.seo.ogTitle}
+  ogDescription={speak.seo.ogDescription}
+  ogType={speak.seo.ogType}
+  navCurrent="speak"
+  jsonLd={jsonLd}
+>
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">{speak.hero.eyebrow}</p>
+      <h1>{speak.hero.heading}</h1>
+      <p>{speak.hero.intro}</p>
+      <div class="btn-row" style="margin-top:2rem">
+        <a class="btn btn--solid" href="contact.html">{speak.hero.buttonLabel} <span class="btn__arrow">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REEL -->
+  <section class="section" id="reel" style="padding-top:clamp(2rem,4vw,3rem)">
+    <div class="wrap">
+      <div class="reel reveal" data-yt={speak.reel.youtubeId} role="button" tabindex="0" aria-label={speak.reel.ariaLabel}>
+        <figure class="ph" data-tag={speak.reel.image.tag} data-label={speak.reel.image.label}>
+          <img src={speak.reel.image.src} alt={speak.reel.image.alt} loading="lazy">
+        </figure>
+        <span class="reel__play"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#f3efe6"/></svg></span></span>
+      </div>
+      <p style="margin-top:1rem;color:var(--ink-faint);font-size:0.9rem" class="reveal" set:html={speak.reel.caption}></p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- TOPICS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{speak.topics.eyebrow}</p>
+        <h2>{speak.topics.heading}</h2>
+        <p>{speak.topics.intro}</p>
+      </div>
+      <div class="topics">
+        {speak.topics.items.map((t, i) => (
+          <div class="topic reveal">
+            <span class="topic__num">{pad(i + 1)}</span>
+            <h3>{t.title}</h3>
+            <p>{t.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- FORMATS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{speak.formats.eyebrow}</p>
+        <h2>{speak.formats.heading}</h2>
+      </div>
+      <div class="chips reveal" style="gap:0.8rem">
+        {speak.formats.chips.map((c) => <span class="chip">{c}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- MEDIA CREDITS -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{speak.media.eyebrow}</p>
+        <h2>{speak.media.heading}</h2>
+        <p set:html={speak.media.intro}></p>
+      </div>
+      <div class="grid cols-3">
+        {speak.media.episodes.map((e) => (
+          <a class="fcard media-card reveal" href={e.href} target="_blank" rel="noopener">
+            <figure class="ph media-card__thumb" data-tag="Episode"><img src={e.thumbSrc} alt={e.thumbAlt} loading="lazy"></figure>
+            <span class="fcard__tag">{e.tag}</span>
+            <h3>{e.title}</h3>
+            <p>{e.body}</p>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1.5rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{speak.media.footnote}</p>
+
+    </div>
+  </section>
+
+  <Cta
+    heading={speak.cta.heading}
+    body={speak.cta.body}
+    buttonLabel={speak.cta.buttonLabel}
+    buttonHref={speak.cta.buttonHref}
+  />
+
+</BaseLayout>

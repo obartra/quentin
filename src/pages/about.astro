@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Cta from '../components/Cta.astro';
+import { reader, SITE_ORIGIN } from '../lib/content';
+import { personMinimal, breadcrumb } from '../lib/jsonld';
+
+const about = await reader.singletons.about.readOrThrow();
+const s = await reader.singletons.settings.readOrThrow();
+const O = SITE_ORIGIN;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfilePage',
+      '@id': `${O}/about.html#webpage`,
+      url: `${O}/about.html`,
+      name: about.seo.ogTitle,
+      isPartOf: { '@id': `${O}/#website` },
+      about: { '@id': `${O}/#person` },
+      mainEntity: { '@id': `${O}/#person` },
+      inLanguage: 'en',
+    },
+    personMinimal({ sameAs: [s.instagram, s.linkedin] }),
+    breadcrumb([
+      { name: 'Home', item: `${O}/` },
+      { name: 'About', item: `${O}/about.html` },
+    ]),
+  ],
+};
+---
+<BaseLayout
+  pagePath="about.html"
+  title={about.seo.title}
+  description={about.seo.description}
+  ogTitle={about.seo.ogTitle}
+  ogDescription={about.seo.ogDescription}
+  ogType={about.seo.ogType}
+  navCurrent="about"
+  jsonLd={jsonLd}
+>
+
+  <section class="page-hero">
+    <div class="wrap reveal">
+      <p class="eyebrow">{about.hero.eyebrow}</p>
+      <h1 set:html={about.hero.heading}></h1>
+      <p>{about.hero.intro}</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:clamp(1.5rem,3vw,2.5rem)">
+    <div class="wrap about-grid">
+      <figure class="ph ph--tall reveal" data-tag={about.portrait.tag} data-label={about.portrait.label}>
+        <img src={about.portrait.src} alt={about.portrait.alt} loading="lazy" onerror="this.remove()">
+      </figure>
+      <div class="prose reveal" set:html={about.prose}></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- TIMELINE -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <p class="eyebrow">{about.arc.eyebrow}</p>
+        <h2>{about.arc.heading}</h2>
+      </div>
+      <div class="timeline">
+        {about.arc.items.map((t) => (
+          <div class="tl reveal">
+            <span class="tl__year">{t.year}</span>
+            <div><h3>{t.title}</h3><p set:html={t.body}></p></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Cta
+    heading={about.cta.heading}
+    body={about.cta.body}
+    buttonLabel={about.cta.buttonLabel}
+    buttonHref={about.cta.buttonHref}
+  />
+
+</BaseLayout>
