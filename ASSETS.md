@@ -5,6 +5,14 @@ file exists, the tag removes itself and a **tasteful labeled placeholder** shows
 its place (the label describes exactly what belongs there). Drop a correctly-named
 file in and it appears automatically — no code change required.
 
+**Grab everything from the live site automatically:** run
+`python3 tools/fetch_site_images.py` on your own machine (it needs to reach the
+site). It crawls quentinfears.com, downloads every image at full Wix resolution
+into `assets/img/site-dump/`, writes a `manifest.json`, and — by default —
+pushes the dump to a `site-images` branch so Claude can pull it in, view the
+images, and place the good ones. Then just say: "the images are on branch
+site-images". Add `--no-push` to only download.
+
 Reuse the existing photography from the current quentinfears.com portfolio and the
 @mrqfears Instagram grid wherever possible. The one net-new shoot worth commissioning
 is **new portraits of Quentin in "leader mode"** — speaking, directing, on set giving
