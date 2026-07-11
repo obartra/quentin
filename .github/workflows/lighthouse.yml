@@ -1,0 +1,31 @@
+name: Lighthouse
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Build site (Astro -> dist/)
+        run: npm run build
+      - name: De-gate dist for measurement
+        run: python3 tools/build_lighthouse_snapshot.py dist
+      - name: Run Lighthouse CI (asserts performance/SEO/a11y budgets)
+        run: npx lhci autorun
