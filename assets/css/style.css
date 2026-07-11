@@ -331,6 +331,21 @@ button { font: inherit; cursor: pointer; }
 @media (min-width: 680px) { .archive { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1000px) { .archive { grid-template-columns: repeat(4, 1fr); } }
 .archive .ph::after { font-size: 0.9rem; padding: 0.85rem 0.9rem; }
+/* Archive tiles use a persistent caption instead of the fallback label/chip */
+.archive .ph::before, .archive .ph::after { display: none; }
+.archive figure { position: relative; }
+.archive .cap {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 3;
+  padding: 1.4rem 0.85rem 0.7rem;
+  display: flex; flex-direction: column; gap: 0.15rem;
+  background: linear-gradient(to top, rgba(11,11,12,0.85), rgba(11,11,12,0.15) 70%, transparent);
+  pointer-events: none;
+}
+.archive .cap b {
+  color: var(--accent); font-weight: 700; font-size: 0.58rem;
+  text-transform: uppercase; letter-spacing: 0.2em;
+}
+.archive .cap span { color: var(--ink); font-size: 0.85rem; line-height: 1.2; }
 
 /* ============================================================
    Ideas
@@ -357,6 +372,19 @@ button { font: inherit; cursor: pointer; }
 .fcard h3 { font-family: var(--serif); font-size: 1.35rem; margin-bottom: 0.6rem; }
 .fcard p { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
 .fcard__tag { display:block; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.62rem; font-weight: 700; color: var(--accent); margin-bottom: 0.9rem; }
+
+/* Media cards: thumbnail on top, text below (used on Speak) */
+.media-card { padding: 0; overflow: hidden; display: block; }
+.media-card__thumb { aspect-ratio: 16 / 9; border: 0; }
+.media-card__thumb img { transition: transform 0.5s var(--ease); }
+.media-card:hover .media-card__thumb img { transform: scale(1.05); }
+.media-card .fcard__tag { margin: 1.3rem 1.5rem 0.5rem; }
+.media-card h3 { margin: 0 1.5rem 0.5rem; }
+.media-card p { margin: 0 1.5rem 1.5rem; }
+
+/* Reel becomes a YouTube embed on click */
+.reel { display: block; cursor: pointer; }
+.reel iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; }
 
 /* ============================================================
    Speak / topics

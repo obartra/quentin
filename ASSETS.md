@@ -1,5 +1,23 @@
 # Image & media manifest
 
+> **Status (updated):** The slots below are now filled with real images pulled
+> from the live site via `tools/fetch_site_images.py`, selected by vision, and
+> optimized for web (in `assets/img/`, ~3 MB total). The full 88-image source
+> dump lives on the **`site-images`** branch under `assets/img/site-dump/` (it's
+> git-ignored on `main`) if you want to swap any choice — every file maps back to
+> a page in that branch's `manifest.json`.
+>
+> **Videos:** the site's videos are hosted on **YouTube** (his Sheen Talk Live
+> show *The Journey*). They're embedded, not downloaded — the Speak page plays
+> them via click-to-load iframes and links the episodes:
+> Larry Sims `WR8hbFuHeqg`, Angela Robinson `7EeeYig__4o`, Tanisha Long `LtZsCVGCOaI`.
+> To reuse elsewhere, embed `https://www.youtube-nocookie.com/embed/<id>`.
+>
+> To change any image: drop a replacement at the same path in `assets/img/` (or
+> pick a different file from the `site-images` branch) and it appears — no code
+> change needed.
+
+
 Every image on the site is a real `<img>` tag pointing at `assets/img/`. Until a
 file exists, the tag removes itself and a **tasteful labeled placeholder** shows in
 its place (the label describes exactly what belongs there). Drop a correctly-named

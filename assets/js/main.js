@@ -60,6 +60,27 @@
     });
   }
 
+  /* ---- Reel: swap poster for the YouTube embed on click ---- */
+  var reels = document.querySelectorAll(".reel[data-yt]");
+  reels.forEach(function (r) {
+    function play() {
+      var id = r.getAttribute("data-yt");
+      if (!id || r.dataset.played) return;
+      r.dataset.played = "1";
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0";
+      f.title = "Video player";
+      f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      f.allowFullscreen = true;
+      r.innerHTML = "";
+      r.appendChild(f);
+    }
+    r.addEventListener("click", play);
+    r.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); play(); }
+    });
+  });
+
   /* ---- Footer year ---- */
   var y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
