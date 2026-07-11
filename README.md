@@ -55,6 +55,19 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
+## Validate
+
+A dependency-free consistency check keeps the pages, links, and galleries in sync:
+
+```bash
+python3 tools/validate_site.py
+```
+
+It verifies internal links and anchors resolve, gallery keys match their JSON, and no
+template boilerplate slipped in. It does not fail on unfilled image slots (the
+placeholder system handles those) and reports them as `INFO`. CI runs the same check
+on every push and pull request (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+
 ## Deploy
 
 Any static host works: GitHub Pages, Netlify, Vercel, Cloudflare Pages, or Wix Studio.
