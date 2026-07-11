@@ -43,7 +43,7 @@ belief:
 selectedWork:
   eyebrow: "Selected work"
   heading: "The finished look is the easy part. The thinking is the work."
-  intro: "I open every project with three questions. What's the story? Who is telling it? And what do the clothes do to them? A few examples."
+  intro: "I open every project with the same three questions — what's the story, who's wearing the clothes, and what do the clothes do to them? Here's how that plays out."
   cards:
     - tag: "Enterprise"
       title: "Making an everyday brand feel intentional"
