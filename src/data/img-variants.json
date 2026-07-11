@@ -94,15 +94,16 @@
       683
     ]
   },
-  "assets/img/media-angela.jpg": {
-    "height": 360,
-    "width": 640,
+  "assets/img/media-bnc.jpg": {
+    "height": 608,
+    "width": 1080,
     "widths": [
       400,
-      640
+      800,
+      1080
     ]
   },
-  "assets/img/media-bnc.jpg": {
+  "assets/img/media-cali.jpg": {
     "height": 608,
     "width": 1080,
     "widths": [
