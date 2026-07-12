@@ -38,8 +38,12 @@ unchanged. The build is a static export deployed to GitHub Pages.
   (`work.html`, `assets/css/style.css`, `favicon.svg`) so the site works under both
   the GitHub Pages subpath and the apex domain. `base` stays `/`; do not switch to
   root-absolute asset paths.
-- **House voice uses em dashes** and all-caps letter-spaced labels. Match the existing
-  editorial tone; do not strip em dashes in this repo (content or code).
+- **Never use em dashes in copy** — not in page content, titles, metadata, alt text,
+  UI strings, or anything else that ships. Restructure the sentence instead: a comma,
+  colon, or period in prose, a pipe in titles. `tools/validate_site.py` fails CI on
+  any em dash (or `&mdash;` entity) in the built output. The house voice keeps the
+  all-caps letter-spaced labels and the editorial tone; it just makes its cuts with
+  other punctuation.
 - Keep metadata honest and present-day. No Wix boilerplate ("Mysite", "Cordan", lorem
   ipsum) — CI fails on it.
 
@@ -149,7 +153,8 @@ Two dependency-free validators guard the repo; they read the build output. Run
 (`.github/workflows/ci.yml`) builds then runs both on every push and PR:
 
 - `python3 tools/validate_site.py [dir]` — internal links and anchors resolve, gallery
-  keys match their JSON, no template junk. Reports unfilled `assets/img/` slots as INFO.
+  keys match their JSON, no template junk, and no em dashes (literal or entity) in any
+  shipped text file. Reports unfilled `assets/img/` slots as INFO.
 - `python3 tools/seo_check.py [dir]` — the SEO invariants (one `<title>`, meta
   description, canonical, required `og:*`/`name` meta, `og:image` resolves, favicon /
   manifest / stylesheet links, one `<h1>`, `alt` on every `<img>`, valid JSON-LD keyed
@@ -202,7 +207,18 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    happens.
 2. **Judge** each new post from its caption + image(s) *against what the site
    already shows*. The bar is the site's existing best content, and the default
-   verdict is **skip**. For a post that clears the bar, route it:
+   verdict is **skip**.
+
+   **Eligibility gate first, quality second.** Only content about Quentin's
+   professional creative work is eligible: fashion, styling, editorial and
+   campaign imagery, creative leadership, speaking, hosting, and press about that
+   work. Anything personal or off-topic — family, friends, relationships, travel,
+   food, fitness, humor/memes, politics, faith, celebrations, day-in-the-life —
+   is **excluded automatically, before any quality judgment**, no matter how
+   polished it looks. When a post mixes both (say, a personal caption on a styled
+   photo), it is eligible only if it stands on the professional content alone; if
+   the personal part is the point, skip it. For a post that clears the gate,
+   route it:
    - **Thought piece** (a style-POV caption, a lesson, a press mention — most recent
      reels are this) → a `{ title, body }` item under `notes.items` in
      `content/ideas.yaml` (title = the hook, body = the idea, lightly edited from the
@@ -212,7 +228,8 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
      (keys: `editorial`, `menswear`, `celebrity`, …); for a headline piece, a case in
      `content/work.yaml`.
    - **Hosting / on-camera** (Sheen Talk Live, panels, TV) → `content/speak.yaml`.
-   - **Personal, off-brand, low-quality, or redundant** → skip.
+   - **Off-brand, low-quality, or redundant** → skip (personal/off-topic posts
+     never reach this point — they fail the eligibility gate above).
 
    When the target section is at its budget (below), the incorporation is a
    **replacement**: the new item goes in and the section's weakest item comes out in
@@ -282,8 +299,9 @@ for unattended growth, not targets to fill:
   unattended run: open a PR describing the proposal instead, and say why, so a human
   decides.
 - On-brand and professional only; honor the personal-site / no-employer and
-  no-confidential-work rules above, and keep the house voice (em dashes, editorial
-  tone). No private individuals without clear professional context.
+  no-confidential-work rules above, and keep the house voice (editorial tone, all-caps
+  labels, and no em dashes — restructure the sentence instead). No private individuals
+  without clear professional context.
 - Idempotent via the ledger. Prefer skipping when unsure — a weekly cadence makes a
   miss harmless, and a skipped post can still be incorporated by a later run if it
   keeps mattering.
@@ -297,7 +315,8 @@ for unattended growth, not targets to fill:
   ship to the browser.)
 - Do not switch internal links/assets to root-absolute paths; keep them relative so
   the subpath and apex domain both work.
-- Do not strip em dashes; they are the house voice here.
+- Do not use em dashes in copy or in anything that ships to `dist/`; restructure the
+  sentence instead. CI (`tools/validate_site.py`) fails on them.
 - Do not hand-write or desync the `<head>`, JSON-LD, or sitemap when adding pages; the
   head is generated by `BaseLayout` and keyed to the canonical origin.
 - Do not present Quentin as speaking for an employer in metadata or structured data,
