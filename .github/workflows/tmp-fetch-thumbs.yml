@@ -1,0 +1,26 @@
+name: tmp-fetch-thumbs
+
+on:
+  push:
+    branches: [claude/site-updates-not-visible-iath3s]
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download YouTube thumbnails
+        run: |
+          mkdir thumbs
+          for pair in "cali 8mQbKjS_8VA" "bnc AxFFn_2NdVI"; do
+            set -- $pair
+            curl -fsSL -o "thumbs/$1.jpg" "https://img.youtube.com/vi/$2/maxresdefault.jpg" \
+              || curl -fsSL -o "thumbs/$1.jpg" "https://img.youtube.com/vi/$2/hqdefault.jpg"
+          done
+          ls -la thumbs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: thumbs
+          path: thumbs/
