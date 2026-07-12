@@ -279,7 +279,7 @@ button { font: inherit; cursor: pointer; }
   .proof__item + .proof__item { border-top: 1px solid var(--line); }
 }
 .proof__num { font-family: var(--serif); font-size: 1.1rem; color: var(--accent); margin-bottom: 0.9rem; }
-.proof__item h3 { font-family: var(--serif); font-size: clamp(1.3rem, 2vw, 1.7rem); margin-bottom: 0.6rem; }
+.proof__item h2 { font-family: var(--serif); font-size: clamp(1.3rem, 2vw, 1.7rem); margin-bottom: 0.6rem; }
 .proof__item p { color: var(--ink-soft); font-size: 0.98rem; margin: 0; }
 
 /* ============================================================
@@ -321,7 +321,7 @@ button { font: inherit; cursor: pointer; }
 .case__kicker { display: flex; gap: 1rem; align-items: baseline; margin-bottom: 1.1rem; }
 .case__idx { font-family: var(--serif); font-size: 1.1rem; color: var(--accent); }
 .case__tag { text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.68rem; font-weight: 600; color: var(--ink-faint); }
-.case h3 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.08; margin-bottom: 1.1rem; }
+.case h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.08; margin-bottom: 1.1rem; }
 .case__meta { display: grid; gap: 0.85rem; margin: 1.4rem 0 1.6rem; }
 .case__meta div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; padding-bottom: 0.85rem; border-bottom: 1px solid var(--line); }
 .case__meta dt { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.66rem; font-weight: 700; color: var(--ink-faint); padding-top: 0.15rem; }
