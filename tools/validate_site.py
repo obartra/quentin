@@ -9,8 +9,9 @@ What it checks (hard failures):
   1. Structural links resolve. Every local href/src that is NOT a content image
      (assets/img/...) points at a file that exists: page-to-page nav, the
      stylesheet, and the scripts.
-  2. In-page anchors resolve. href="page.html#frag" / href="#frag" targets an
-     element that actually has id="frag".
+  2. In-page anchors resolve. href="page#frag" / href="#frag" targets an
+     element that actually has id="frag". Page links are extensionless
+     ("work" -> work.html, the clean URL the static host serves).
   3. Galleries are wired. Every data-gallery="key" has a matching key in that
      page's <script id="gallery-data"> JSON (and vice-versa the JSON is valid).
   4. No leftover template junk (Wix boilerplate like "Mysite" / "Cordan" /
@@ -104,15 +105,19 @@ def check_page(name: str, pages: dict[str, str]) -> None:
                 info.append(f"{name}: image slot not yet filled -> {path_part}")
             continue
 
+        # Page link. Internal links are extensionless ("work"); the static hosts
+        # (GitHub Pages, Netlify) serve work.html for /work. Accept the .html
+        # form too so legacy links stay valid.
+        page_target = path_part if path_part.endswith(".html") else path_part + ".html"
+        if page_target in pages:
+            if frag and frag not in ids_in(pages[page_target]):
+                errors.append(f'{name}: anchor "{path_part}#{frag}" has no matching id')
+            continue
+
         target = os.path.join(ROOT, path_part)
         if not os.path.exists(target):
             errors.append(f"{name}: broken link -> {path_part}")
             continue
-
-        # Cross-page anchor into another local HTML file.
-        if frag and path_part.endswith(".html") and path_part in pages:
-            if frag not in ids_in(pages[path_part]):
-                errors.append(f'{name}: anchor "{path_part}#{frag}" has no matching id')
 
     check_galleries(name, text)
     for junk in JUNK_STRINGS:

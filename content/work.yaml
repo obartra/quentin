@@ -48,7 +48,7 @@ cases:
         dd: "A point of view on dress, identity, and perception that people still repeat back to me. The seed of a keynote."
     footerKind: "link"
     footerText: "Read the full idea"
-    footerHref: "ideas.html"
+    footerHref: "ideas"
   - tag: "Editorial · Art direction"
     title: "Styling as a mini-play"
     image:
@@ -139,4 +139,4 @@ cta:
   heading: "I take on a few brand projects at a time."
   body: "Creative direction, visual strategy, and campaign work for brands and agencies."
   buttonLabel: "Start a project"
-  buttonHref: "contact.html"
+  buttonHref: "contact"

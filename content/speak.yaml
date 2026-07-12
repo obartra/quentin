@@ -90,4 +90,4 @@ cta:
   heading: "Programming an event?"
   body: "Send the audience, date, and format. I'll come back with topics and availability."
   buttonLabel: "Book to speak"
-  buttonHref: "contact.html"
+  buttonHref: "contact"

@@ -45,4 +45,4 @@ cta:
   heading: "Work with me."
   body: "Creative direction, visual strategy, speaking, hosting, or personal styling."
   buttonLabel: "Get in touch"
-  buttonHref: "contact.html"
+  buttonHref: "contact"

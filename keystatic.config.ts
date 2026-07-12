@@ -50,7 +50,7 @@ const cta = () =>
       heading: fields.text({ label: 'Heading' }),
       body: fields.text({ label: 'Body', multiline: true }),
       buttonLabel: fields.text({ label: 'Button label' }),
-      buttonHref: fields.text({ label: 'Button link', description: 'e.g. contact.html' }),
+      buttonHref: fields.text({ label: 'Button link', description: 'e.g. contact' }),
     },
     { label: 'Closing call-to-action' }
   );

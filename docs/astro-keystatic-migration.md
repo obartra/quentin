@@ -68,8 +68,10 @@ separate `build:admin` output on Netlify.
 
 ## Invariants preserved
 
-- **Flat URLs.** `build.format: 'file'` emits `about.html`, `work.html`, ... so
-  canonical/`og:url`, the sitemap, and internal links are unchanged.
+- **Flat files, clean URLs.** `build.format: 'file'` emits `about.html`,
+  `work.html`, ... but internal links, canonical/`og:url`, and the sitemap use the
+  extensionless form (`/work`); the static host serves `work.html` for it and the
+  `.html` URLs still resolve.
 - **Relative links.** Every internal link and asset ref stays relative, so the site
   works both under the GitHub Pages subpath (`obartra.github.io/quentin/`) and at
   the apex domain. `base` stays `/`.

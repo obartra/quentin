@@ -10,11 +10,11 @@ hero:
   philosophy: "I help brands and people use style to show the world not just who they are, but who they're becoming. I spent a decade proving it look by look. Now I direct the vision."
   buttons:
     - label: "Start a project"
-      href: "contact.html"
+      href: "contact"
       external: false
       solid: true
     - label: "Book a talk"
-      href: "speak.html"
+      href: "speak"
       external: false
       solid: false
     - label: "Follow"
@@ -48,23 +48,23 @@ selectedWork:
     - tag: "Enterprise"
       title: "Making an everyday brand feel intentional"
       body: "I turn business goals into a visual language across campaigns, store floors, and the teams who build them."
-      href: "work.html"
+      href: "work"
     - tag: "Point of view"
       title: "The office dress code, after it broke"
       body: "When offices reopened, the old rules were dead. I said so in TIME, and people still repeat it back to me."
-      href: "ideas.html"
+      href: "ideas"
     - tag: "Editorial"
       title: "Styling as a mini-play"
       body: "I treat a shoot like a role: story, character, and what the clothes do to the person wearing them."
-      href: "work.html"
+      href: "work"
   moreLabel: "See the full body of work"
-  moreHref: "work.html"
+  moreHref: "work"
 speakTeaser:
   eyebrow: "Speak & host"
   heading: "Put me on a stage and I'll make style make sense."
   lead: "Keynotes, panels, workshops, hosting. On how style shapes perception, how to dress with intent, and how I moved from doing the work to directing it. I've done it on stage for the 100 Black Men of America, on camera with Tommy Hilfiger, on Sheen Talk Live, and for Black News Channel."
   linkLabel: "Talk topics & booking"
-  linkHref: "speak.html"
+  linkHref: "speak"
   image:
     src: "assets/img/speak-still.jpg"
     alt: "Quentin Fears on camera"
@@ -99,4 +99,4 @@ cta:
   heading: "Let's make sure you're read the way you intend."
   body: "Creative direction, speaking, media, or personal styling. Tell me what you're building."
   buttonLabel: "Get in touch"
-  buttonHref: "contact.html"
+  buttonHref: "contact"
