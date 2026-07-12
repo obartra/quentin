@@ -7,7 +7,7 @@ seo:
 hero:
   eyebrow: "Ideas"
   heading: "Style is a language."
-  intro: "Here's what I believe, and it runs through everything I do: what you wear changes how people read you before you speak. Style is how you tell them who you're becoming."
+  intro: "One belief runs through everything I do: what you wear changes how people read you before you speak. Style is how you tell them who you're becoming."
 timeFeature:
   image:
     src: "assets/img/idea-time.jpg"
@@ -77,7 +77,7 @@ formats:
       body: "I take a finished piece of work apart: the problem, the story, the constraints, the calls I made."
     - tag: "Series 03"
       title: "The Come-Up"
-      body: "Letters to people starting out in fashion, and the working notebook for a book I'm going to write."
+      body: "Letters to people starting out in fashion, and the working notebook for the book to come."
 cta:
   heading: "I bring these ideas to stages, panels, and classrooms."
   body: "Keynotes, panels, and workshops built from this point of view."

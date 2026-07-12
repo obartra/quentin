@@ -72,6 +72,7 @@ direction — since the current site shows almost everyone except him in that ro
 | `assets/img/speak-stage.jpg` | Speak (`stage` section) | Quentin speaking on stage (100 Black Men of America conference). |
 | `assets/img/media-bnc.jpg` | Speak (`media` credits) | Still from the BNC holiday-shopping segment with Marcel Clarke (16:9). |
 | `assets/img/media-cali.jpg` | Speak (`media` credits) | Still from the California Live fashion-trends segment (16:9). |
+| `assets/img/media-glamour.jpg` | Speak (`media` credits) | Poster frame for Glamour's styling competition *Dress to Kill* (16:9). Source video: https://www.youtube.com/watch?v=_KzZ2pqT_6g |
 | `assets/img/about-portrait.jpg` | About | A strong editorial portrait of Quentin. |
 
 ## Video — the speaking reel

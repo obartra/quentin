@@ -112,6 +112,15 @@
       1080
     ]
   },
+  "assets/img/media-glamour.jpg": {
+    "height": 608,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
   "assets/img/media-larry.jpg": {
     "height": 360,
     "width": 640,

@@ -27,7 +27,7 @@ cases:
       - dt: "The result"
         dd: "Execution that holds the vision at scale. Led, not just staffed."
     footerKind: "note"
-    footerText: "I keep the specifics generic out of respect for my employer. Happy to say more with approval."
+    footerText: "I keep the specifics generic out of respect for my employer. The detail comes in conversation."
     footerHref: ""
   - tag: "Cultural commentary"
     title: "The office dress code, after it broke"
@@ -83,7 +83,7 @@ cases:
       - dt: "The story"
         dd: "I dress the person, not the trend, so the look says something true about who they are and where they're headed."
       - dt: "What I did"
-        dd: "Sourcing, fittings, and on-the-day calls under real limits of time, body, and press."
+        dd: "Sourcing, fittings, and on-the-day calls under real pressure: the clock, the fit, and the cameras waiting."
       - dt: "The result"
         dd: "Work for Macy Gray, Skai Jackson, Norman Reedus, Keesha Sharp, EJ Johnson, and Garcelle Beauvais, plus covers including Sheen."
     footerKind: "none"
@@ -92,7 +92,7 @@ cases:
 archive:
   eyebrow: "Selected styling archive"
   heading: "A decade of execution."
-  intro: "Celebrity, red carpet, editorial, commercial. It's here so you know the opinions are earned. I've done the work they're built on."
+  intro: "Celebrity, red carpet, editorial, commercial. It's here so you know the point of view is earned. I've done the work it's built on."
   items:
     - src: "assets/img/archive-01.jpg"
       alt: "Menswear styling"
@@ -133,7 +133,7 @@ archive:
       alt: "Editorial styling"
       gallery: "editorial"
       capTitle: "Editorial"
-      capSub: "Colour & movement"
+      capSub: "Color & movement"
   footnote: "A selection from a decade of work. Full archive available on request."
 cta:
   heading: "I take on a few brand projects at a time."

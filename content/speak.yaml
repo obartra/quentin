@@ -79,6 +79,12 @@ media:
       tag: "Black News Channel"
       title: "Holiday shopping, Black designers"
       body: "Cyber Monday and Black Friday tips with BNC's Marcel Clarke, spotlighting Black designers."
+    - href: "https://www.youtube.com/watch?v=_KzZ2pqT_6g"
+      thumbSrc: "assets/img/media-glamour.jpg"
+      thumbAlt: "Title card for Glamour's styling competition Dress to Kill"
+      tag: "Glamour"
+      title: "Dress to Kill"
+      body: "Styling under the clock on Glamour's competition series."
   footnote: "Also on camera: an interview with Tommy Hilfiger."
 cta:
   heading: "Programming an event?"

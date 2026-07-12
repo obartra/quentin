@@ -5,7 +5,7 @@ seo:
   ogDescription: "Helping brands and people communicate who they are, and who they're becoming, through style."
   ogType: "website"
 hero:
-  eyebrow: "Fashion creative leadership & visual strategy"
+  eyebrow: "Style, read the way you intend"
   role: "Fashion creative leader, visual strategist, speaker & host."
   philosophy: "I help brands and people use style to show the world not just who they are, but who they're becoming. I spent a decade proving it look by look. Now I direct the vision."
   buttons:
@@ -29,10 +29,10 @@ hero:
 proof:
   - num: "01"
     title: "I lead at scale"
-    body: "I direct visual merchandising and styling in enterprise fashion at Walmart, the largest retailer in the world."
+    body: "I direct visual merchandising and styling in enterprise fashion at a Fortune 1 retailer."
   - num: "02"
-    title: "I'm quoted on it"
-    body: "TIME and Glamour have come to me on how what you wear changes the way you're read at work."
+    title: "I'm the one they quote"
+    body: "When TIME needed someone to explain how dress changes the way you're read at work, they called me."
   - num: "03"
     title: "I've done the work"
     body: "I've dressed red carpets, directed editorials, and shot campaigns. I know what it takes to make the picture."
@@ -62,7 +62,7 @@ selectedWork:
 speakTeaser:
   eyebrow: "Speak & host"
   heading: "Put me on a stage and I'll make style make sense."
-  lead: "Keynotes, panels, workshops, hosting. On how style shapes perception, how to dress with intent, and how I moved from doing the work to directing it. I've done it on camera with Tommy Hilfiger, on Sheen Talk Live, and for Black News Channel."
+  lead: "Keynotes, panels, workshops, hosting. On how style shapes perception, how to dress with intent, and how I moved from doing the work to directing it. I've done it on stage for the 100 Black Men of America, on camera with Tommy Hilfiger, on Sheen Talk Live, and for Black News Channel."
   linkLabel: "Talk topics & booking"
   linkHref: "speak.html"
   image:
@@ -72,7 +72,7 @@ speakTeaser:
     label: "Speaking & on-camera reel"
 testimonials:
   eyebrow: "In their words"
-  heading: "The people I've worked with say it better than I could."
+  heading: "The people I've worked with say it best."
   items:
     - quote: "He listens first, then translates exactly what you're trying to say into something you can see and wear."
       name: "Santana Dempsey"
