@@ -9,11 +9,25 @@ const work = await reader.singletons.work.readOrThrow();
 const galleries = await reader.singletons.galleries.readOrThrow();
 const O = SITE_ORIGIN;
 
-// Build the lightbox JSON from the galleries singleton, keyed by gallery key.
+// Build the lightbox JSON from the galleries singleton, keyed by category key.
+// Each category holds its photo shoots; each shoot holds its own ordered image
+// list (the first image doubles as the shoot's thumbnail in the category view).
 const galleryData = Object.fromEntries(
-  galleries.sets.map((set) => [set.key, set.images.map((im) => ({ src: im.src, cap: im.cap }))])
+  galleries.sets.map((set) => [
+    set.key,
+    {
+      title: set.title,
+      shoots: set.shoots.map((sh) => ({
+        slug: sh.slug,
+        title: sh.title,
+        images: sh.images.map((im) => ({ src: im.src, cap: im.cap })),
+      })),
+    },
+  ])
 );
 const galleryJson = JSON.stringify(galleryData);
+const galleryTitle = (key: string) =>
+  galleries.sets.find((s) => s.key === key)?.title || key;
 
 const pad = (n: number) => String(n).padStart(2, '0');
 
@@ -61,7 +75,7 @@ const jsonLd = {
       {work.cases.map((c, i) => (
         <article class={i % 2 === 1 ? 'case case--flip reveal' : 'case reveal'}>
           <figure class="ph ph--portrait case__media" data-tag={c.image.tag} data-label={c.image.label}>
-            <Picture src={c.image.src} alt={c.image.alt} loading="lazy" sizes="(min-width: 820px) 48vw, 92vw" onerror="this.remove()" />{c.gallery && <button type="button" class="ph-link" data-gallery={c.gallery} aria-label={`Open ${c.gallery} gallery`}><span class="go">View</span></button>}
+            <Picture src={c.image.src} alt={c.image.alt} loading="lazy" sizes="(min-width: 820px) 48vw, 92vw" onerror="this.remove()" />{c.gallery && <button type="button" class="ph-link" data-gallery={c.gallery} aria-label={`Open the ${galleryTitle(c.gallery)} gallery`}><span class="go">View</span></button>}
           </figure>
           <div>
             <div class="case__kicker"><span class="case__idx">{pad(i + 1)}</span><span class="case__tag">{c.tag}</span></div>
@@ -91,7 +105,7 @@ const jsonLd = {
       </div>
       <div class="archive">
         {work.archive.items.map((it) => (
-          <figure class="ph ph--tall reveal"><Picture src={it.src} alt={it.alt} loading="lazy" sizes="(min-width: 1000px) 23vw, (min-width: 680px) 31vw, 46vw" /><button type="button" class="ph-link" data-gallery={it.gallery} aria-label={`Open ${it.gallery} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
+          <figure class="ph ph--tall reveal"><Picture src={it.src} alt={it.alt} loading="lazy" sizes="(min-width: 1000px) 23vw, (min-width: 680px) 31vw, 46vw" /><button type="button" class="ph-link" data-gallery={it.gallery} data-shoot={it.shoot || undefined} aria-label={it.shoot ? `Open the ${it.capSub} shoot` : `Open the ${galleryTitle(it.gallery)} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
         ))}
       </div>
       <p style="margin-top:2rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{work.archive.footnote}</p>

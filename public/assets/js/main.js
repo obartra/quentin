@@ -124,7 +124,11 @@
     });
   });
 
-  /* ---- Lightbox galleries (Work page) ---- */
+  /* ---- Lightbox galleries (Work page) ----
+     Two levels: a category is a list of photo shoots; a shoot is an ordered
+     list of images. Opening a category shows one thumbnail per shoot; opening
+     a shoot shows its images, and prev/next stay inside that shoot. Back
+     returns to the category view with the last-viewed shoot focused. ---- */
   var galData = document.getElementById("gallery-data");
   var triggers = document.querySelectorAll("[data-gallery]");
   if (galData && triggers.length) {
@@ -135,22 +139,51 @@
     lb.className = "lb";
     lb.setAttribute("role", "dialog");
     lb.setAttribute("aria-modal", "true");
-    lb.setAttribute("aria-label", "Image gallery");
+    lb.setAttribute("aria-label", "Portfolio galleries");
     lb.innerHTML =
       '<div class="lb__stage">' +
       '<button class="lb__close" aria-label="Close">✕</button>' +
-      '<button class="lb__nav lb__nav--prev" aria-label="Previous">‹</button>' +
+      '<div class="lb__index" hidden>' +
+      '<div class="lb__head"><span class="lb__cat"></span><span class="lb__total"></span></div>' +
+      '<div class="lb__grid"></div>' +
+      "</div>" +
+      '<div class="lb__viewer" hidden>' +
+      '<button class="lb__back"><span aria-hidden="true">&lsaquo;</span> <span class="lb__back-label"></span></button>' +
+      '<button class="lb__nav lb__nav--prev" aria-label="Previous image">‹</button>' +
       '<img class="lb__img" alt="">' +
-      '<button class="lb__nav lb__nav--next" aria-label="Next">›</button>' +
+      '<button class="lb__nav lb__nav--next" aria-label="Next image">›</button>' +
       '<div class="lb__bar"><span class="lb__cap"></span><span class="lb__count"></span></div>' +
+      "</div>" +
       "</div>";
     document.body.appendChild(lb);
 
+    var indexEl = lb.querySelector(".lb__index");
+    var viewerEl = lb.querySelector(".lb__viewer");
+    var gridEl = lb.querySelector(".lb__grid");
+    var catEl = lb.querySelector(".lb__cat");
+    var totalEl = lb.querySelector(".lb__total");
+    var backEl = lb.querySelector(".lb__back");
+    var backLabelEl = lb.querySelector(".lb__back-label");
+    var prevEl = lb.querySelector(".lb__nav--prev");
+    var nextEl = lb.querySelector(".lb__nav--next");
     var imgEl = lb.querySelector(".lb__img");
     var capEl = lb.querySelector(".lb__cap");
     var countEl = lb.querySelector(".lb__count");
-    var items = [], i = 0, lastFocus = null;
+    var curKey = null, curShoot = -1, items = [], i = 0, lastFocus = null;
 
+    function openBox() {
+      if (lb.classList.contains("open")) return;
+      lastFocus = document.activeElement;
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeBox() {
+      lb.classList.remove("open");
+      document.body.style.overflow = "";
+      imgEl.src = "";
+      items = []; curKey = null; curShoot = -1;
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
     function render() {
       var it = items[i];
       if (!it) return;
@@ -159,39 +192,78 @@
       capEl.textContent = it.cap || "";
       countEl.textContent = (i + 1) + " / " + items.length;
     }
-    function openGal(key, start) {
-      items = galleries[key] || [];
-      if (!items.length) return;
-      i = start || 0;
-      lastFocus = document.activeElement;
-      render();
-      lb.classList.add("open");
-      document.body.style.overflow = "hidden";
-      lb.querySelector(".lb__close").focus();
+    /* Category view: one thumbnail per shoot. focusShoot (optional) receives
+       focus, so coming back from a shoot preserves the browsing position. */
+    function showIndex(key, focusShoot) {
+      var g = galleries[key];
+      if (!g || !g.shoots || !g.shoots.length) return;
+      curKey = key; curShoot = -1; items = [];
+      catEl.textContent = g.title || key;
+      totalEl.textContent = g.shoots.length + (g.shoots.length === 1 ? " photo shoot" : " photo shoots");
+      gridEl.innerHTML = "";
+      g.shoots.forEach(function (sh, idx) {
+        var n = (sh.images || []).length;
+        if (!n) return;
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "lb__shoot";
+        b.innerHTML = '<img alt="" loading="lazy"><span class="lb__shoot-name"></span><span class="lb__shoot-count"></span>';
+        b.querySelector("img").src = sh.images[0].src;
+        b.querySelector(".lb__shoot-name").textContent = sh.title || "Shoot " + (idx + 1);
+        b.querySelector(".lb__shoot-count").textContent = n + (n === 1 ? " photo" : " photos");
+        b.addEventListener("click", function () { showShoot(key, idx, 0); });
+        gridEl.appendChild(b);
+      });
+      viewerEl.hidden = true;
+      indexEl.hidden = false;
+      openBox();
+      var target = typeof focusShoot === "number" && gridEl.children[focusShoot];
+      (target || lb.querySelector(".lb__close")).focus();
     }
-    function closeGal() {
-      lb.classList.remove("open");
-      document.body.style.overflow = "";
-      imgEl.src = "";
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    /* Shoot view: prev/next wrap within this shoot only. */
+    function showShoot(key, shootIdx, start) {
+      var g = galleries[key];
+      var sh = g && g.shoots && g.shoots[shootIdx];
+      if (!sh || !sh.images || !sh.images.length) return;
+      curKey = key; curShoot = shootIdx;
+      items = sh.images;
+      i = start || 0;
+      backLabelEl.textContent = "All " + (g.title || key) + " shoots";
+      var single = items.length < 2;
+      prevEl.hidden = single;
+      nextEl.hidden = single;
+      render();
+      indexEl.hidden = true;
+      viewerEl.hidden = false;
+      openBox();
+      lb.querySelector(".lb__close").focus();
     }
     function step(d) { i = (i + d + items.length) % items.length; render(); }
 
     triggers.forEach(function (t) {
       t.addEventListener("click", function (e) {
         e.preventDefault();
-        openGal(t.getAttribute("data-gallery"), +(t.getAttribute("data-start") || 0));
+        var key = t.getAttribute("data-gallery");
+        var slug = t.getAttribute("data-shoot");
+        var g = galleries[key];
+        if (!g || !g.shoots) return;
+        var idx = -1;
+        if (slug) g.shoots.forEach(function (sh, j) { if (sh.slug === slug) idx = j; });
+        if (idx >= 0) showShoot(key, idx, 0);
+        else showIndex(key);
       });
     });
-    lb.querySelector(".lb__close").addEventListener("click", closeGal);
-    lb.querySelector(".lb__nav--prev").addEventListener("click", function () { step(-1); });
-    lb.querySelector(".lb__nav--next").addEventListener("click", function () { step(1); });
-    lb.addEventListener("click", function (e) { if (e.target === lb) closeGal(); });
+    backEl.addEventListener("click", function () { showIndex(curKey, curShoot); });
+    lb.querySelector(".lb__close").addEventListener("click", closeBox);
+    prevEl.addEventListener("click", function () { step(-1); });
+    nextEl.addEventListener("click", function () { step(1); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) closeBox(); });
     document.addEventListener("keydown", function (e) {
       if (!lb.classList.contains("open")) return;
-      if (e.key === "Escape") closeGal();
-      else if (e.key === "ArrowRight") step(1);
-      else if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "Escape") closeBox();
+      else if (viewerEl.hidden) return;
+      else if (e.key === "ArrowRight" && items.length > 1) step(1);
+      else if (e.key === "ArrowLeft" && items.length > 1) step(-1);
     });
   }
 

@@ -1,41 +1,85 @@
 sets:
+  - key: "celebrity-women"
+    title: "Celebrity women"
+    shoots:
+      - slug: "glamour-cover"
+        title: "Glamour cover story"
+        images:
+          - { src: "assets/img/gallery/g-celebrity-1.jpg", cap: "Glamour digital edition cover" }
+          - { src: "assets/img/gallery/g-celebrity-2.jpg", cap: "Glamour cover story" }
+          - { src: "assets/img/work-celebrity.jpg", cap: "Glamour cover story" }
+      - slug: "event-dressing"
+        title: "Event dressing"
+        images:
+          - { src: "assets/img/archive-07.jpg", cap: "Event dressing" }
+  - key: "celebrity-men"
+    title: "Celebrity men"
+    shoots:
+      - slug: "menswear-styling"
+        title: "Menswear styling"
+        images:
+          - { src: "assets/img/gallery/g-celebrity-5.jpg", cap: "Menswear styling" }
+          - { src: "assets/img/gallery/g-celebrity-6.jpg", cap: "Menswear styling" }
+          - { src: "assets/img/gallery/g-celebrity-7.jpg", cap: "Menswear styling" }
+          - { src: "assets/img/gallery/g-celebrity-8.jpg", cap: "Menswear styling" }
+      - slug: "norman-reedus"
+        title: "Norman Reedus"
+        images:
+          - { src: "assets/img/archive-05.jpg", cap: "Norman Reedus" }
   - key: "editorial"
-    images:
-      - { src: "assets/img/gallery/g-editorial-1.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-2.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-3.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-4.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-5.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-6.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-7.jpg", cap: "Editorial" }
-      - { src: "assets/img/gallery/g-editorial-8.jpg", cap: "Editorial" }
+    title: "Editorial"
+    shoots:
+      - slug: "poolside-story"
+        title: "Poolside story"
+        images:
+          - { src: "assets/img/gallery/g-editorial-1.jpg", cap: "Poolside story" }
+          - { src: "assets/img/gallery/g-editorial-3.jpg", cap: "Poolside story" }
+          - { src: "assets/img/gallery/g-editorial-2.jpg", cap: "Poolside story" }
+          - { src: "assets/img/gallery/g-editorial-4.jpg", cap: "Poolside story" }
+          - { src: "assets/img/gallery/g-editorial-8.jpg", cap: "Poolside story" }
+      - slug: "color-movement"
+        title: "Color & movement"
+        images:
+          - { src: "assets/img/gallery/g-editorial-5.jpg", cap: "Color & movement" }
+          - { src: "assets/img/gallery/g-editorial-6.jpg", cap: "Color & movement" }
+          - { src: "assets/img/gallery/g-editorial-7.jpg", cap: "Color & movement" }
   - key: "menswear"
-    images:
-      - { src: "assets/img/gallery/g-menswear-1.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-2.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-3.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-4.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-5.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-6.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-7.jpg", cap: "Menswear editorial" }
-      - { src: "assets/img/gallery/g-menswear-8.jpg", cap: "Menswear editorial" }
-  - key: "celebrity"
-    images:
-      - { src: "assets/img/gallery/g-celebrity-1.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-2.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-3.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-4.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-5.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-6.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-7.jpg", cap: "Celebrity & red carpet" }
-      - { src: "assets/img/gallery/g-celebrity-8.jpg", cap: "Celebrity & red carpet" }
+    title: "Menswear editorial"
+    shoots:
+      - slug: "studio"
+        title: "In the studio"
+        images:
+          - { src: "assets/img/gallery/g-menswear-1.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-2.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-3.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-4.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-5.jpg", cap: "Menswear editorial" }
+      - slug: "on-location"
+        title: "On location"
+        images:
+          - { src: "assets/img/gallery/g-menswear-6.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-7.jpg", cap: "Menswear editorial" }
+          - { src: "assets/img/gallery/g-menswear-8.jpg", cap: "Menswear editorial" }
   - key: "commercial"
-    images:
-      - { src: "assets/img/gallery/g-commercial-1.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-2.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-3.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-4.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-5.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-6.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-7.jpg", cap: "Campaign & commercial" }
-      - { src: "assets/img/gallery/g-commercial-8.jpg", cap: "Campaign & commercial" }
+    title: "Campaign & commercial"
+    shoots:
+      - slug: "swim-campaign"
+        title: "Swim campaign"
+        images:
+          - { src: "assets/img/gallery/g-commercial-1.jpg", cap: "Swim campaign" }
+          - { src: "assets/img/gallery/g-commercial-2.jpg", cap: "Swim campaign" }
+          - { src: "assets/img/gallery/g-commercial-3.jpg", cap: "Swim campaign" }
+          - { src: "assets/img/gallery/g-commercial-6.jpg", cap: "Swim campaign" }
+          - { src: "assets/img/gallery/g-commercial-7.jpg", cap: "Swim campaign" }
+      - slug: "print-commercial"
+        title: "Print & commercial"
+        images:
+          - { src: "assets/img/gallery/g-commercial-5.jpg", cap: "Print & commercial" }
+      - slug: "evening-wear"
+        title: "Evening wear"
+        images:
+          - { src: "assets/img/gallery/g-commercial-4.jpg", cap: "Evening wear campaign" }
+      - slug: "studio-lookbook"
+        title: "Studio lookbook"
+        images:
+          - { src: "assets/img/gallery/g-commercial-8.jpg", cap: "Studio lookbook" }

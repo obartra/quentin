@@ -86,8 +86,10 @@ separate `build:admin` output on Netlify.
   save. Or edit the matching `content/*.yaml` by hand.
 - **Add a case study / talk topic / timeline entry:** open the page in the admin,
   add an array item.
-- **Add a gallery:** edit the `Galleries` singleton — add a set with a `key`, then
-  reference that key from a Work case or archive item's "gallery" field.
+- **Add a gallery:** edit the `Galleries` singleton — a set is a portfolio category
+  (`key`, `title`) containing photo shoots (`slug`, `title`, `images`). Reference the
+  category key from a Work case or archive item's "gallery" field; an archive item's
+  "shoot" field deep-links to one shoot's image set.
 - **Add a whole new page:** add a singleton to `keystatic.config.ts`, a
   `content/<page>.yaml`, and a `src/pages/<page>.astro` that renders it through
   `BaseLayout` (which supplies the SEO/JSON-LD); add the URL to
