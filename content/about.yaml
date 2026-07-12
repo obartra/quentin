@@ -1,31 +1,31 @@
 seo:
-  title: "About — Quentin Fears | From actor to fashion creative leader"
-  description: "How Quentin Fears went from actor to celebrity stylist to a creative leader in enterprise fashion — a method rooted in story and character."
-  ogTitle: "About — Quentin Fears"
-  ogDescription: "From actor to fashion creative leader — a method rooted in story and character."
+  title: "About | Quentin Fears | From actor to fashion creative leader"
+  description: "How Quentin Fears went from actor to celebrity stylist to a creative leader in enterprise fashion, with a method rooted in story and character."
+  ogTitle: "About | Quentin Fears"
+  ogDescription: "From actor to fashion creative leader, with a method rooted in story and character."
   ogType: "profile"
 hero:
   eyebrow: "About"
   heading: "I've mastered the execution.<br>Now I lead the vision."
-  intro: "I didn't set out to be a stylist. I trained as an actor — which is exactly why my work has always been about story before surface."
+  intro: "I didn't set out to be a stylist. I trained as an actor, which is exactly why my work has always been about story before surface."
 portrait:
   src: "assets/img/about-portrait.jpg"
   alt: "Portrait of Quentin Fears"
   tag: "Portrait"
   label: "Quentin Fears"
 prose: |
-  <p><span class="drop">I</span> earned a BFA in acting before I ever pulled a rack of clothes. When I fell into fashion, I fell hard — and I brought the actor's toolkit with me. I still work a shoot the way I'd work a role, asking three questions: <strong>what story am I telling, who is the person wearing the clothes, and how do the clothes change them?</strong> An editorial isn't an outfit. It's a mini-play.</p>
-  <p>That instinct got noticed early. Nikki Fowler, editor-in-chief of Glitter Magazine, was the first to believe in me as an editorial stylist — she let me style the spreads, art direct, and produce the shoots. I joined the developmental creative team at <strong>Ladygunn</strong>, sharpened my styling and my art direction, and became <strong>fashion editor at Sheen Magazine</strong> and host of <em>The Journey</em> on Sheen Talk Live.</p>
+  <p><span class="drop">I</span> earned a BFA in acting before I ever pulled a rack of clothes. When I fell into fashion, I fell hard, and I brought the actor's toolkit with me. I still work a shoot the way I'd work a role, asking three questions: <strong>what story am I telling, who is the person wearing the clothes, and how do the clothes change them?</strong> An editorial isn't an outfit. It's a mini-play.</p>
+  <p>That instinct got noticed early. Nikki Fowler, editor-in-chief of Glitter Magazine, was the first to believe in me as an editorial stylist. She let me style the spreads, art direct, and produce the shoots. I joined the developmental creative team at <strong>Ladygunn</strong>, sharpened my styling and my art direction, and became <strong>fashion editor at Sheen Magazine</strong> and host of <em>The Journey</em> on Sheen Talk Live.</p>
   <p>Then came the work most people know me for: <strong>celebrity and red-carpet styling</strong> for Macy Gray, Skai Jackson, Norman Reedus, Keesha Sharp, EJ Johnson, and Garcelle Beauvais; editorial and commercial campaigns; and commentary in <strong>TIME</strong> and <strong>Glamour</strong> on how clothes shape the way we're read.</p>
-  <p>These days I work upstream. I lead <strong>visual merchandising and styling in enterprise fashion at Walmart</strong> — the largest retailer in the world. I develop the central concept, set the point of view, turn business goals into a visual language, and direct the teams that execute it at national scale. I didn't leave styling behind. I built on top of it. The years of sourcing, fitting, and producing are exactly what make my direction credible: I know what it takes to turn an idea into clothes, sets, people, stores, and campaigns.</p>
-  <p>The through-line hasn't changed since the acting classroom. <strong>Style is how people and brands tell the world who they are — and who they intend to become.</strong> My job is to help them tell it well.</p>
+  <p>These days I work upstream. I lead <strong>visual merchandising and styling in enterprise fashion at Walmart</strong>, the largest retailer in the world. I develop the central concept, set the point of view, turn business goals into a visual language, and direct the teams that execute it at national scale. I didn't leave styling behind. I built on top of it. The years of sourcing, fitting, and producing are exactly what make my direction credible: I know what it takes to turn an idea into clothes, sets, people, stores, and campaigns.</p>
+  <p>The through-line hasn't changed since the acting classroom. <strong>Style is how people and brands tell the world who they are, and who they intend to become.</strong> My job is to help them tell it well.</p>
 arc:
   eyebrow: "The arc"
   heading: "Executor to leader."
   items:
     - year: "Start"
       title: "Trained as an actor"
-      body: "BFA in acting — the origin of a story-first method."
+      body: "BFA in acting: the origin of a story-first method."
     - year: "Editorial"
       title: "Glitter Magazine"
       body: "First championed as an editorial stylist, art director, and producer by EIC Nikki Fowler."
@@ -34,13 +34,13 @@ arc:
       body: "Honed styling and art direction on the developmental creative team."
     - year: "Voice"
       title: "Sheen Magazine & Sheen Talk Live"
-      body: "Fashion editor, and host of <em>The Journey</em> — building the on-camera voice."
+      body: "Fashion editor, and host of <em>The Journey</em>, building the on-camera voice."
     - year: "Profile"
       title: "Celebrity styling · TIME · Glamour"
       body: "Red-carpet and editorial work, plus national commentary on style and perception."
     - year: "Now"
       title: "Enterprise fashion leadership"
-      body: "I lead visual merchandising and styling at Walmart — creative direction at national retail scale."
+      body: "I lead visual merchandising and styling at Walmart: creative direction at national retail scale."
 cta:
   heading: "Work with me."
   body: "Creative direction, visual strategy, speaking, hosting, or personal styling."
