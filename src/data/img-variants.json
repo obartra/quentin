@@ -94,23 +94,25 @@
       683
     ]
   },
-  "assets/img/media-angela.jpg": {
-    "height": 360,
-    "width": 640,
+  "assets/img/media-bnc.jpg": {
+    "height": 608,
+    "width": 1080,
     "widths": [
       400,
-      640
+      800,
+      1080
+    ]
+  },
+  "assets/img/media-cali.jpg": {
+    "height": 608,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
     ]
   },
   "assets/img/media-larry.jpg": {
-    "height": 360,
-    "width": 640,
-    "widths": [
-      400,
-      640
-    ]
-  },
-  "assets/img/media-tanisha.jpg": {
     "height": 360,
     "width": 640,
     "widths": [

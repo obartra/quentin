@@ -389,6 +389,11 @@ export default config({
         ),
         stage: fields.object(
           {
+            youtubeId: fields.text({
+              label: 'YouTube video id',
+              description: 'Optional — when set, the photo becomes a click-to-play video poster',
+            }),
+            ariaLabel: fields.text({ label: 'Accessible label' }),
             image: photo('On-stage photo'),
             caption: fields.text({ label: 'Caption', multiline: true }),
           },
