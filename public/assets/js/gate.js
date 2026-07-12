@@ -1,5 +1,5 @@
 /* Soft password gate. NOTE: this is a client-side gate for keeping a
-   work-in-progress out of casual view — it is NOT real security. The password
+   work-in-progress out of casual view; it is NOT real security. The password
    is present in this file, so anyone who reads the source can bypass it. For
    true protection, use host-level auth (Cloudflare Access, Netlify password,
    a server, etc.). */

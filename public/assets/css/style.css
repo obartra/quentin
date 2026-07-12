@@ -1,5 +1,5 @@
 /* ============================================================
-   Quentin Fears — repositioned site
+   Quentin Fears repositioned site
    Design system: dark editorial base carried over from the
    current site, elevated for a creative-leadership platform.
    Self-contained: system font stacks, no external dependencies.
@@ -416,7 +416,7 @@ button { font: inherit; cursor: pointer; }
 .reel__play svg { width: 22px; height: 22px; margin-left: 3px; }
 .reel:hover .reel__play svg path { fill: #0b0b0c; }
 
-/* Reels: vertical cards — self-hosted video (curated) or a link to Instagram */
+/* Reels: vertical cards, self-hosted video (curated) or a link to Instagram */
 .reels { display: grid; gap: 1.4rem 1rem; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 640px) { .reels { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 900px) { .reels { grid-template-columns: repeat(4, 1fr); } }
@@ -531,7 +531,7 @@ button { font: inherit; cursor: pointer; }
    Reveal on scroll
    ============================================================ */
 /* Reveal is a progressive enhancement: only hidden once JS confirms support
-   (html.js). Without JS — or with reduced motion — everything is visible. */
+   (html.js). Without JS, or with reduced motion, everything is visible. */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
 .js .reveal.is-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
@@ -544,7 +544,7 @@ button { font: inherit; cursor: pointer; }
 .skip:focus { left: 0.5rem; top: 0.5rem; }
 
 /* ============================================================
-   Portfolio link overlay — click a tile to see more on the site
+   Portfolio link overlay: click a tile to see more on the site
    ============================================================ */
 .ph-link { position: absolute; inset: 0; z-index: 4; cursor: pointer; display: block;
   background: none; border: 0; padding: 0; width: 100%; height: 100%; font: inherit; color: inherit; }
@@ -592,7 +592,7 @@ button { font: inherit; cursor: pointer; }
 }
 
 /* ============================================================
-   Password gate (soft, client-side — not real security)
+   Password gate (soft, client-side, not real security)
    ============================================================ */
 .locked body { overflow: hidden; }
 .locked .site-head, .locked main, .locked .site-foot { visibility: hidden; }

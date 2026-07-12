@@ -15,6 +15,10 @@ What it checks (hard failures):
      page's <script id="gallery-data"> JSON (and vice-versa the JSON is valid).
   4. No leftover template junk (Wix boilerplate like "Mysite" / "Cordan" /
      "lorem ipsum").
+  5. No em dashes in anything that ships. Copy policy: restructure the sentence
+     (comma, colon, period, or a pipe in titles) instead of an em dash. Checked
+     across every text file in the output (HTML, CSS, JS, XML, JSON, MD, SVG,
+     TXT, webmanifest), including the literal character and its HTML entities.
 
 What it deliberately does NOT fail on:
   - Missing content images under assets/img/. The site uses an image-slot system:
@@ -52,6 +56,14 @@ GALLERY_DATA = re.compile(
 
 EXTERNAL_PREFIXES = ("http://", "https://", "//", "mailto:", "tel:", "data:", "javascript:")
 JUNK_STRINGS = ("lorem ipsum", "mysite", "cordan")
+
+EM_DASH = "—"
+EM_DASH_ENTITIES = ("&mdash;", "&#8212;", "&#x2014;")
+TEXT_EXTENSIONS = (
+    ".html", ".css", ".js", ".mjs", ".xml", ".json", ".md", ".txt",
+    ".webmanifest", ".svg",
+)
+SKIP_DIRS = {"node_modules", ".git", ".astro"}
 
 errors: list[str] = []
 info: list[str] = []
@@ -126,6 +138,24 @@ def check_galleries(name: str, text: str) -> None:
         errors.append(f'{name}: data-gallery={sorted(missing)} has no entry in gallery-data')
 
 
+def check_em_dashes() -> None:
+    """No em dashes in any shipped text file: restructure the sentence instead."""
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        for filename in sorted(filenames):
+            if not filename.lower().endswith(TEXT_EXTENSIONS):
+                continue
+            path = os.path.join(dirpath, filename)
+            rel = os.path.relpath(path, ROOT)
+            with open(path, encoding="utf-8", errors="replace") as fh:
+                for lineno, line in enumerate(fh, 1):
+                    low = line.lower()
+                    if EM_DASH in line or any(e in low for e in EM_DASH_ENTITIES):
+                        errors.append(
+                            f"{rel}:{lineno}: em dash in shipped copy (restructure the sentence instead)"
+                        )
+
+
 def main() -> int:
     pages = {name: open(os.path.join(ROOT, name), encoding="utf-8").read() for name in html_files()}
     if not pages:
@@ -134,6 +164,8 @@ def main() -> int:
 
     for name in pages:
         check_page(name, pages)
+
+    check_em_dashes()
 
     for line in info:
         print(f"INFO  {line}")
