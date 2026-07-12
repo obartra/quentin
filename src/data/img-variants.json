@@ -104,12 +104,11 @@
     ]
   },
   "assets/img/media-cali.jpg": {
-    "height": 608,
-    "width": 1080,
+    "height": 360,
+    "width": 640,
     "widths": [
       400,
-      800,
-      1080
+      640
     ]
   },
   "assets/img/media-larry.jpg": {
