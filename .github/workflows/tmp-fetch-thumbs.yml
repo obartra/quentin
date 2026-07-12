@@ -5,22 +5,25 @@ on:
     branches: [claude/site-updates-not-visible-iath3s]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Download YouTube thumbnails
+      - uses: actions/checkout@v4
+      - name: Download YouTube thumbnails and commit them
         run: |
-          mkdir thumbs
+          [ -f tmp-thumbs/cali.jpg ] && exit 0
+          mkdir -p tmp-thumbs
           for pair in "cali 8mQbKjS_8VA" "bnc AxFFn_2NdVI"; do
             set -- $pair
-            curl -fsSL -o "thumbs/$1.jpg" "https://img.youtube.com/vi/$2/maxresdefault.jpg" \
-              || curl -fsSL -o "thumbs/$1.jpg" "https://img.youtube.com/vi/$2/hqdefault.jpg"
+            curl -fsSL -o "tmp-thumbs/$1.jpg" "https://img.youtube.com/vi/$2/maxresdefault.jpg" \
+              || curl -fsSL -o "tmp-thumbs/$1.jpg" "https://img.youtube.com/vi/$2/hqdefault.jpg"
           done
-          ls -la thumbs
-      - uses: actions/upload-artifact@v4
-        with:
-          name: thumbs
-          path: thumbs/
+          ls -la tmp-thumbs
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add tmp-thumbs
+          git commit -m "temp: youtube thumbnails (removed before merge)"
+          git push
