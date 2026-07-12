@@ -14,8 +14,8 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'ProfilePage',
-      '@id': `${O}/about.html#webpage`,
-      url: `${O}/about.html`,
+      '@id': `${O}/about#webpage`,
+      url: `${O}/about`,
       name: about.seo.ogTitle,
       isPartOf: { '@id': `${O}/#website` },
       about: { '@id': `${O}/#person` },
@@ -25,13 +25,13 @@ const jsonLd = {
     personMinimal({ sameAs: [s.instagram, s.linkedin] }),
     breadcrumb([
       { name: 'Home', item: `${O}/` },
-      { name: 'About', item: `${O}/about.html` },
+      { name: 'About', item: `${O}/about` },
     ]),
   ],
 };
 ---
 <BaseLayout
-  pagePath="about.html"
+  pagePath="about"
   title={about.seo.title}
   description={about.seo.description}
   ogTitle={about.seo.ogTitle}

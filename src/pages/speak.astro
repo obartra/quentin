@@ -14,8 +14,8 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'WebPage',
-      '@id': `${O}/speak.html#webpage`,
-      url: `${O}/speak.html`,
+      '@id': `${O}/speak#webpage`,
+      url: `${O}/speak`,
       name: speak.seo.ogTitle,
       isPartOf: { '@id': `${O}/#website` },
       about: { '@id': `${O}/#person` },
@@ -26,13 +26,13 @@ const jsonLd = {
     }),
     breadcrumb([
       { name: 'Home', item: `${O}/` },
-      { name: 'Speak & Host', item: `${O}/speak.html` },
+      { name: 'Speak & Host', item: `${O}/speak` },
     ]),
   ],
 };
 ---
 <BaseLayout
-  pagePath="speak.html"
+  pagePath="speak"
   title={speak.seo.title}
   description={speak.seo.description}
   ogTitle={speak.seo.ogTitle}
@@ -48,7 +48,7 @@ const jsonLd = {
       <h1>{speak.hero.heading}</h1>
       <p>{speak.hero.intro}</p>
       <div class="btn-row" style="margin-top:2rem">
-        <a class="btn btn--solid" href="contact.html">{speak.hero.buttonLabel} <span class="btn__arrow">&rarr;</span></a>
+        <a class="btn btn--solid" href="contact">{speak.hero.buttonLabel} <span class="btn__arrow">&rarr;</span></a>
       </div>
     </div>
   </section>

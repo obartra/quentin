@@ -100,7 +100,10 @@ def head_of(html):
 
 
 def expected_url(page):
-    return BASE + "/" if page == "index.html" else BASE + "/" + page
+    # Clean URLs: about.html is served, canonicalised, and sitemapped as /about.
+    if page == "index.html":
+        return BASE + "/"
+    return BASE + "/" + re.sub(r"\.html$", "", page)
 
 
 # ---- Per-page checks --------------------------------------------------------

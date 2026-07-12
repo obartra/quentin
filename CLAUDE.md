@@ -22,7 +22,9 @@ unchanged. The build is a static export deployed to GitHub Pages.
 
 - **Astro** (static output, `build.format: 'file'` → flat `about.html`, `work.html`,
   …). `npm run build` emits `dist/`; that is what deploys and what the validators
-  check.
+  check. URLs are extensionless: links, canonicals, and the sitemap say `work`, and
+  the static host (GitHub Pages, Netlify, and Astro's dev/preview servers) serves
+  `work.html` for it. The old `.html` URLs still resolve since the files exist.
 - **Content is data.** Editable text and image paths live in `content/*.yaml`, one
   singleton per page plus a `galleries` singleton. The schema and the `/keystatic`
   admin are defined in [keystatic.config.ts](keystatic.config.ts). Pages read it at
@@ -35,9 +37,10 @@ unchanged. The build is a static export deployed to GitHub Pages.
   it must keep working offline and under a strict CSP. Pages stay legible with
   JavaScript disabled. Everything in `public/` ships verbatim into `dist/`.
 - **Keep links relative.** Every internal link and asset reference is relative
-  (`work.html`, `assets/css/style.css`, `favicon.svg`) so the site works under both
+  (`work`, `assets/css/style.css`, `favicon.svg`) so the site works under both
   the GitHub Pages subpath and the apex domain. `base` stays `/`; do not switch to
-  root-absolute asset paths.
+  root-absolute asset paths. Page links are extensionless (`work`, not `work.html`);
+  the home link is `./`.
 - **Never use em dashes in copy** — not in page content, titles, metadata, alt text,
   UI strings, or anything else that ships. Restructure the sentence instead: a comma,
   colon, or period in prose, a pipe in titles. `tools/validate_site.py` fails CI on
@@ -119,7 +122,7 @@ Everything is keyed to `https://quentinfears.com` as the single source of truth.
 1. Add a singleton to `keystatic.config.ts` (reuse the `seo()` helper) and a
    `content/<page>.yaml` with its copy.
 2. Add `src/pages/<page>.astro`: read the singleton and render its sections, wrapped
-   in `BaseLayout` with `pagePath="<page>.html"`, the `seo.*` props, a `navCurrent`,
+   in `BaseLayout` with `pagePath="<page>"` (extensionless), the `seo.*` props, a `navCurrent`,
    and a `jsonLd` graph (use `personMinimal` + `breadcrumb` from `src/lib/jsonld.ts`).
    `BaseLayout` supplies the rest of the `<head>` — do not hand-write it.
 3. Use exactly one `<h1>` and give every `<img>` an `alt`.

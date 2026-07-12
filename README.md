@@ -110,7 +110,7 @@ builds and publishes `dist/` on every push to `main` (currently at
 ## Before launch — checklist
 
 - [ ] Add real images to `assets/img/` (see `ASSETS.md`), especially the leader-mode hero portrait.
-- [ ] Embed the two-minute speaking reel on `speak.html`.
+- [ ] Embed the two-minute speaking reel on the Speak page.
 - [ ] Replace testimonial quotes with verbatim wording from the existing site.
 - [ ] Have Quentin's manager/comms review the Walmart bio language.
 - [ ] Set the contact form endpoint and update the contact email.
