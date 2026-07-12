@@ -36,10 +36,13 @@ this twice:
   home page, not a gallery, so it no longer opens one.
 - **Shoot grouping** within each category was reconstructed by visual audit (same
   model, wardrobe, location, session) because no per-image record survived (see
-  below). Duplicate frames were removed: `archive-01/03/05/06/07`,
-  `work-enterprise`, and `work-editorial` are crops of frames already in
-  `assets/img/gallery/`; only `work-celebrity.jpg` is a distinct frame and joined
-  its shoot's set.
+  below). Duplicate frames were removed: `archive-01/03/05/06`, `work-enterprise`,
+  and `work-editorial` are crops of frames already in `assets/img/gallery/`;
+  `work-celebrity.jpg` and `archive-07.jpg` are distinct frames and joined their
+  shoot's set. The Glamour cover, the feather looks, and the lavender "Event
+  dressing" gown are one session (same model, same staircase location), so they
+  form a single Celebrity women shoot; the "Event dressing" tile deep-links into
+  it starting on the gown frame.
 - **Lightbox** (`main.js`): two levels. A category opens a grid of shoot thumbnails
   (title + photo count); a shoot opens its own image list, and prev/next wrap
   **within that shoot only**. Back returns to the category grid with the
@@ -58,14 +61,15 @@ Machine were both unreachable from the sandbox (network policy denies
 (2024 onward) has no overlap with the old portfolio, so:
 
 - **Missing shoot images could not be restored.** Several shoots survive as a
-  single frame (Norman Reedus, Event dressing, Print & commercial, Evening wear,
-  Studio lookbook) although the old site very likely showed more.
+  single frame (Norman Reedus, Print & commercial, Evening wear, Studio lookbook)
+  although the old site very likely showed more.
 - **Per-image category records are gone** for the 32 pooled gallery images, so
   shoot grouping and the split of the pooled images between Celebrity men and
   Celebrity women rest on visual identification plus the tile mapping recovered
   from git history.
 - **Old shoot titles are unknown** beyond the eight tile captions; the two menswear
-  shoots ("In the studio", "On location") carry descriptive stand-in titles.
+  shoots ("Fringe & harness", "Roadside Americana") carry descriptive stand-in
+  titles that name what is in the pictures, not recovered publication names.
 
 To recover the rest: re-run `python3 tools/fetch_site_images.py` from a machine
 that can reach quentinfears.com (it re-pushes the `site-images` branch with the

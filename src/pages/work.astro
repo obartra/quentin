@@ -105,7 +105,7 @@ const jsonLd = {
       </div>
       <div class="archive">
         {work.archive.items.map((it) => (
-          <figure class="ph ph--tall reveal"><Picture src={it.src} alt={it.alt} loading="lazy" sizes="(min-width: 1000px) 23vw, (min-width: 680px) 31vw, 46vw" /><button type="button" class="ph-link" data-gallery={it.gallery} data-shoot={it.shoot || undefined} aria-label={it.shoot ? `Open the ${it.capSub} shoot` : `Open the ${galleryTitle(it.gallery)} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
+          <figure class="ph ph--tall reveal"><Picture src={it.src} alt={it.alt} loading="lazy" sizes="(min-width: 1000px) 23vw, (min-width: 680px) 31vw, 46vw" /><button type="button" class="ph-link" data-gallery={it.gallery} data-shoot={it.shoot || undefined} data-src={it.src} aria-label={it.shoot ? `Open the ${it.capSub} shoot` : `Open the ${galleryTitle(it.gallery)} gallery`}><span class="go">View</span></button><figcaption class="cap"><b>{it.capTitle}</b><span>{it.capSub}</span></figcaption></figure>
         ))}
       </div>
       <p style="margin-top:2rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{work.archive.footnote}</p>

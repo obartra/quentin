@@ -8,9 +8,6 @@ sets:
           - { src: "assets/img/gallery/g-celebrity-1.jpg", cap: "Glamour digital edition cover" }
           - { src: "assets/img/gallery/g-celebrity-2.jpg", cap: "Glamour cover story" }
           - { src: "assets/img/work-celebrity.jpg", cap: "Glamour cover story" }
-      - slug: "event-dressing"
-        title: "Event dressing"
-        images:
           - { src: "assets/img/archive-07.jpg", cap: "Event dressing" }
   - key: "celebrity-men"
     title: "Celebrity men"
@@ -46,16 +43,16 @@ sets:
   - key: "menswear"
     title: "Menswear editorial"
     shoots:
-      - slug: "studio"
-        title: "In the studio"
+      - slug: "fringe-harness"
+        title: "Fringe & harness"
         images:
           - { src: "assets/img/gallery/g-menswear-1.jpg", cap: "Menswear editorial" }
           - { src: "assets/img/gallery/g-menswear-2.jpg", cap: "Menswear editorial" }
           - { src: "assets/img/gallery/g-menswear-3.jpg", cap: "Menswear editorial" }
           - { src: "assets/img/gallery/g-menswear-4.jpg", cap: "Menswear editorial" }
           - { src: "assets/img/gallery/g-menswear-5.jpg", cap: "Menswear editorial" }
-      - slug: "on-location"
-        title: "On location"
+      - slug: "roadside-americana"
+        title: "Roadside Americana"
         images:
           - { src: "assets/img/gallery/g-menswear-6.jpg", cap: "Menswear editorial" }
           - { src: "assets/img/gallery/g-menswear-7.jpg", cap: "Menswear editorial" }

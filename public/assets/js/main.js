@@ -220,7 +220,8 @@
       var target = typeof focusShoot === "number" && gridEl.children[focusShoot];
       (target || lb.querySelector(".lb__close")).focus();
     }
-    /* Shoot view: prev/next wrap within this shoot only. */
+    /* Shoot view: prev/next wrap within this shoot only. The back button is
+       hidden when the category has just one shoot (there is no index view). */
     function showShoot(key, shootIdx, start) {
       var g = galleries[key];
       var sh = g && g.shoots && g.shoots[shootIdx];
@@ -229,6 +230,7 @@
       items = sh.images;
       i = start || 0;
       backLabelEl.textContent = "All " + (g.title || key) + " shoots";
+      backEl.hidden = g.shoots.length < 2;
       var single = items.length < 2;
       prevEl.hidden = single;
       nextEl.hidden = single;
@@ -246,11 +248,19 @@
         var key = t.getAttribute("data-gallery");
         var slug = t.getAttribute("data-shoot");
         var g = galleries[key];
-        if (!g || !g.shoots) return;
+        if (!g || !g.shoots || !g.shoots.length) return;
         var idx = -1;
         if (slug) g.shoots.forEach(function (sh, j) { if (sh.slug === slug) idx = j; });
-        if (idx >= 0) showShoot(key, idx, 0);
-        else showIndex(key);
+        /* A category with a single shoot opens that shoot directly. */
+        if (idx < 0 && g.shoots.length === 1) idx = 0;
+        if (idx >= 0) {
+          /* If the tile's own image is part of the shoot, start on that frame. */
+          var src = t.getAttribute("data-src"), start = 0;
+          if (src) g.shoots[idx].images.forEach(function (im, j) { if (im.src === src) start = j; });
+          showShoot(key, idx, start);
+        } else {
+          showIndex(key);
+        }
       });
     });
     backEl.addEventListener("click", function () { showIndex(curKey, curShoot); });
