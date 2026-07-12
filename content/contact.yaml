@@ -7,7 +7,7 @@ seo:
 hero:
   eyebrow: "Contact & book"
   heading: "Tell me what you have in mind."
-  intro: "Shaping a brand, programming an event, casting a host, or investing in how you show up. Whatever it is, tell me about it and I'll come back to you."
+  intro: "Shaping a brand, programming an event, casting a host, or investing in how you show up. Whatever it is, tell me about it and I'll get back to you."
 inquiries:
   - asideTitle: "Corporate & enterprise"
     asideBody: "Creative direction, visual strategy, and campaign consulting."
@@ -18,7 +18,7 @@ inquiries:
     radioValue: "Speaking"
     radioLabel: "Speaking"
   - asideTitle: "Media & hosting"
-    asideBody: "On-camera hosting, correspondence, and interviews."
+    asideBody: "On-camera hosting, correspondent work, and interviews."
     radioValue: "Media & hosting"
     radioLabel: "Media & hosting"
   - asideTitle: "Personal styling"
