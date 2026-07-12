@@ -22,6 +22,8 @@ Editor's browser ──▶ Netlify (SSR) ──▶ /keystatic admin
 - **Admin:** one small Netlify deploy of the *same* repo, built with
   `npm run build:admin` (already wired in `netlify.toml`). It serves the Keystatic
   admin at `/keystatic` as a serverless function and does nothing else important.
+  The memorable URL is **`/admin`**, which redirects there (a `netlify.toml`
+  redirect — Keystatic's own routes can't be moved).
 - **Auth + writes:** a GitHub App. Only people with write access to the repo can
   edit. Secrets live in Netlify's env, never in the repo.
 

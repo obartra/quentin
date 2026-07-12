@@ -12,3 +12,17 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Memorable alias: /admin forwards to the Keystatic admin. The Keystatic Astro
+# integration hardcodes its routes at /keystatic, so this is a redirect, not a
+# rename — /keystatic keeps working. 302 (not 301) so browsers don't cache it
+# permanently if the admin ever moves.
+[[redirects]]
+  from = "/admin"
+  to = "/keystatic"
+  status = 302
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/keystatic/:splat"
+  status = 302
