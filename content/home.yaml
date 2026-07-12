@@ -74,6 +74,9 @@ testimonials:
   eyebrow: "In their words"
   heading: "The people I've worked with say it better than I could."
   items:
+    - quote: "He styled me perfectly! He was also so much fun to work with. He will match whatever your energy is. I can't wait to work with him on more things."
+      name: "Loren Lott"
+      role: "Singer, actor & client"
     - quote: "He listens first, then translates exactly what you're trying to say into something you can see and wear."
       name: "Santana Dempsey"
       role: "Actor & client"
