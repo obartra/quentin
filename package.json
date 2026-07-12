@@ -13,7 +13,7 @@
     "preview": "astro preview",
     "validate": "python3 tools/validate_site.py dist && python3 tools/seo_check.py dist",
     "check": "npm run build && npm run validate",
-    "lh": "npm run build && python3 tools/build_lighthouse_snapshot.py dist && lhci autorun"
+    "lh": "npm run build && lhci autorun"
   },
   "dependencies": {
     "@astrojs/netlify": "^6.6.5",

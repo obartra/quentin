@@ -47,11 +47,10 @@ const heroAvifSrcset = heroInfo
   ? heroInfo.widths.map((w) => `assets/img/${heroBase}-${w}.avif ${w}w`).join(', ')
   : '';
 
-// The gate/interaction scripts are shipped as-is from public/assets and must stay
-// relative so they resolve under both the GitHub Pages subpath and the apex
+// The interaction script is shipped as-is from public/assets and must stay
+// relative so it resolves under both the GitHub Pages subpath and the apex
 // domain. Passing the src as an expression keeps Vite's dev-time module scanner
-// from trying to resolve them as bundled imports; the emitted HTML is identical.
-const gateSrc = 'assets/js/gate.js';
+// from trying to resolve it as a bundled import; the emitted HTML is identical.
 const mainSrc = 'assets/js/main.js';
 ---
 <!DOCTYPE html>
@@ -59,7 +58,7 @@ const mainSrc = 'assets/js/main.js';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script is:inline>document.documentElement.classList.add('js');if(sessionStorage.getItem('qf-access')!=='1')document.documentElement.classList.add('locked');</script>
+  <script is:inline>document.documentElement.classList.add('js');</script>
   <title>{title}</title>
   <meta name="description" content={description}>
   {author && <meta name="author" content={author}>}
@@ -78,8 +77,7 @@ const mainSrc = 'assets/js/main.js';
   <meta name="twitter:description" content={ogDescription}>
   <meta name="twitter:image" content={OG_IMAGE}>
   <meta name="twitter:image:alt" content="Quentin Fears | Fashion Creative Leader">
-  <!-- Private preview: noindex while the password gate is up. At launch, remove the gate and restore: content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" -->
-  <meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="theme-color" content="#0b0b0c">
   <link rel="canonical" href={canonical}>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -102,7 +100,6 @@ const mainSrc = 'assets/js/main.js';
 <Footer />
 
 <slot name="after-footer" />
-<script src={gateSrc} is:inline></script>
 <script src={mainSrc} is:inline></script>
 </body>
 </html>
