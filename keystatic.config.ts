@@ -10,8 +10,8 @@ import { config, fields, singleton } from '@keystatic/core';
  * no-code-editable at /keystatic.
  *
  * Storage selects automatically:
- *   - `astro dev` (local editing): `local` — edits write the content/ files here.
- *   - any build (the hosted admin): `github` — commits straight to the repo via the
+ *   - `astro dev` (local editing): `local`; edits write the content/ files here.
+ *   - any build (the hosted admin): `github`; commits straight to the repo via the
  *     GitHub App, which triggers the GitHub Pages deploy. See docs/hosted-admin.md.
  *
  * This uses `import.meta.env.DEV` (not process.env): Vite inlines it into the
@@ -87,7 +87,7 @@ const textItem = (label = 'Value') => fields.text({ label });
 export default config({
   storage,
   ui: {
-    brand: { name: 'Quentin Fears — site content' },
+    brand: { name: 'Quentin Fears site content' },
     navigation: {
       Pages: ['home', 'work', 'ideas', 'speak', 'about', 'contact'],
       Shared: ['settings', 'galleries'],
@@ -339,7 +339,7 @@ export default config({
                 caption: fields.text({ label: 'Caption / idea', multiline: true }),
                 permalink: fields.text({
                   label: 'Instagram permalink',
-                  description: 'https://www.instagram.com/p/<code>/ — used as the link when no self-hosted video is set',
+                  description: 'https://www.instagram.com/p/<code>/, used as the link when no self-hosted video is set',
                 }),
                 videoSrc: fields.text({
                   label: 'Self-hosted video path (optional)',

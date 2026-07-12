@@ -60,12 +60,12 @@ const jsonLd = {
       </aside>
 
       <form id="contact-form" class="reveal" action={`https://formsubmit.co/${s.email}`} method="POST">
-        <!-- Backend: FormSubmit (formsubmit.co) — no account or key needed. Submissions
+        <!-- Backend: FormSubmit (formsubmit.co); no account or key needed. Submissions
              are emailed to the address in the action above; change it via settings.email.
-             The FIRST submission triggers a one-time activation email to that address —
+             The FIRST submission triggers a one-time activation email to that address;
              click its link once to confirm, then it's live. JS posts to the /ajax/
              endpoint for inline success; with JS off, it submits normally. See ASSETS.md. -->
-        <input type="hidden" name="_subject" value="New inquiry — quentinfears.com">
+        <input type="hidden" name="_subject" value="New inquiry via quentinfears.com">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <!-- honeypot: bots fill this; humans never see it -->
