@@ -25,7 +25,7 @@ hero:
     src: "assets/img/hero-portrait.jpg"
     alt: "Quentin Fears"
     tag: "Portrait"
-    label: "Quentin Fears directing on set"
+    label: "Quentin Fears studio portrait"
 proof:
   - num: "01"
     title: "I lead at scale"
