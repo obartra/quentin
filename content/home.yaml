@@ -35,7 +35,7 @@ proof:
     body: "When TIME needed someone to explain how dress changes the way you're read at work, they called me."
   - num: "03"
     title: "I've done the work"
-    body: "I've dressed red carpets, directed editorials, and shot campaigns. I know what it takes to make the picture."
+    body: "I've dressed red carpets, directed editorials, and shot campaigns. I know what it takes to get the perfect shot."
 belief:
   eyebrow: "The idea"
   quote: "What you wear changes how people <span class=\"accent\">read</span> you before you speak. Style is how you tell them who you're becoming."
@@ -74,6 +74,9 @@ testimonials:
   eyebrow: "In their words"
   heading: "The people I've worked with say it best."
   items:
+    - quote: "He styled me perfectly! He was also so much fun to work with. He will match whatever your energy is. I can't wait to work with him on more things."
+      name: "Loren Lott"
+      role: "Singer, actor & client"
     - quote: "He listens first, then translates exactly what you're trying to say into something you can see and wear."
       name: "Santana Dempsey"
       role: "Actor & client"
