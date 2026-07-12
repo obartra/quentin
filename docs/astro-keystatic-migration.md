@@ -9,7 +9,7 @@ paths into editable content files**, with a form-based admin (Keystatic) on top,
 so a non-technical editor can maintain the site without touching code.
 
 The design system (`public/assets/css/style.css`), the behavior
-(`public/assets/js/*.js`), the SEO layer, the password gate, and the galleries are
+(`public/assets/js/*.js`), the SEO layer, and the galleries are
 all preserved unchanged. The build reproduces the same flat `*.html` pages, so the
 canonical URLs, the sitemap, and both validators keep passing.
 
@@ -19,7 +19,7 @@ canonical URLs, the sitemap, and both validators keep passing.
 content/*.yaml            <- the editable content (words + image paths)
 keystatic.config.ts       <- schema: what fields exist + the admin UI
 src/lib/content.ts        <- build-time reader over content/ (no server)
-src/layouts/BaseLayout.astro   <- per-page <head>: SEO, OG, JSON-LD, gate, favicons
+src/layouts/BaseLayout.astro   <- per-page <head>: SEO, OG, JSON-LD, favicons
 src/components/*.astro     <- Header, Footer, Cta
 src/pages/*.astro          <- one per page; renders content into the original markup
 public/                    <- assets/css, assets/js, assets/img, favicons, manifest,
@@ -73,8 +73,9 @@ separate `build:admin` output on Netlify.
 - **Relative links.** Every internal link and asset ref stays relative, so the site
   works both under the GitHub Pages subpath (`obartra.github.io/quentin/`) and at
   the apex domain. `base` stays `/`.
-- **Gate <-> indexing coupling.** Pages ship the gate inline script + `gate.js` and
-  `robots: noindex`, exactly as before. `tools/seo_check.py` still enforces this.
+- **Gate <-> indexing coupling.** The password gate has been removed and pages ship
+  `robots: index, follow`. `tools/seo_check.py` still enforces the coupling, so a
+  gated page can never be left indexable (or an ungated page `noindex`).
 - **Validators.** `tools/validate_site.py` and `tools/seo_check.py` now take an
   optional target dir and default to `dist/` when present. CI builds, then runs both
   against `dist/`. `deploy.yml` builds and publishes `dist/`.

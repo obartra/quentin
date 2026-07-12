@@ -99,5 +99,5 @@ variables above.
 - **Cost:** the GitHub App and GitHub Pages are free. Netlify's free tier easily
   covers a single-editor admin. Nothing here is a paid dependency.
 - **Security:** only repo collaborators can sign in and commit. The Netlify URL also
-  renders a gated copy of the site; the canonical site remains GitHub Pages. Do not
+  renders a copy of the site; the canonical site remains GitHub Pages. Do not
   put the Netlify secrets in the repo.

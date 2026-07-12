@@ -30,10 +30,10 @@ design is unchanged — Astro renders the same markup and reuses the same CSS/JS
 content/*.yaml          The editable content (words + image paths), one file per page
 keystatic.config.ts     Content schema + the /keystatic admin UI
 src/pages/*.astro       Home, Work, Ideas, Speak, About, Contact (render the content)
-src/layouts/BaseLayout.astro   Shared <head>: SEO, Open Graph, JSON-LD, gate, favicons
+src/layouts/BaseLayout.astro   Shared <head>: SEO, Open Graph, JSON-LD, favicons
 src/components/*.astro  Header, Footer, Cta
 public/assets/css/style.css    Design system (self-contained, no external fonts)
-public/assets/js/*.js   Mobile nav, scroll reveal, gallery lightbox, gate, footer year
+public/assets/js/*.js   Mobile nav, scroll reveal, gallery lightbox, footer year
 public/assets/img/      Photos (see ASSETS.md); everything in public/ ships verbatim
 dist/                   Build output (git-ignored): the static site that deploys
 ```
@@ -105,8 +105,7 @@ editing tool and is not part of the deployed site.
 
 This repo is wired for **GitHub Pages**: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 builds and publishes `dist/` on every push to `main` (currently at
-`https://obartra.github.io/quentin/`, behind a lightweight access gate while it's
-pre-launch).
+`https://obartra.github.io/quentin/`).
 
 ## Before launch — checklist
 
@@ -118,10 +117,8 @@ pre-launch).
 - [x] Set the real domain in the `og:` / canonical / sitemap tags (`https://quentinfears.com`). If the
       site launches on a different domain, find-and-replace `quentinfears.com` across the HTML,
       `robots.txt`, and `sitemap.xml`.
-- [ ] **Flip indexing on at launch.** While the password gate is up the pages are
-      `robots: noindex, nofollow` (a private preview should not be indexed). When the gate
-      comes off, restore `index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`
-      on all six pages (the exact string is in an HTML comment next to each `robots` tag).
+- [x] **Flip indexing on at launch.** The password gate has been removed and every page
+      ships `robots: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`.
 - [ ] Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools after launch.
 - [ ] Optional: replace the generated `assets/img/og-cover.jpg` share card and the JSON-LD
       `Person.image` with a real photo of Quentin once the leader-mode portrait exists.
@@ -131,8 +128,8 @@ pre-launch).
 Technical SEO is built in and self-contained (no external calls):
 
 - **Per page:** unique `<title>` + meta description, canonical URL, Open Graph + Twitter Card
-  tags, and a `robots` directive. While the site is behind the password gate this is
-  `noindex, nofollow`; flip it to `index, follow, max-image-preview:large` at launch.
+  tags, and a `robots` directive (`index, follow, max-image-preview:large, max-snippet:-1,
+  max-video-preview:-1`).
 - **Structured data:** JSON-LD on every page — a shared `Person` entity (`#person`) plus
   `WebSite`, `ProfilePage` (about), `ContactPage` (contact), `CollectionPage` (work), and
   `BreadcrumbList` on subpages.

@@ -590,25 +590,3 @@ button { font: inherit; cursor: pointer; }
   .lb__nav--prev { left: 0.2rem; } .lb__nav--next { right: 0.2rem; }
   .lb__close { top: -2.6rem; }
 }
-
-/* ============================================================
-   Password gate (soft, client-side, not real security)
-   ============================================================ */
-.locked body { overflow: hidden; }
-.locked .site-head, .locked main, .locked .site-foot { visibility: hidden; }
-.gate {
-  position: fixed; inset: 0; z-index: 9999;
-  background: radial-gradient(120% 90% at 30% 8%, rgba(247,44,156,0.12), transparent 55%), var(--bg);
-  display: flex; align-items: center; justify-content: center; padding: var(--gut);
-}
-.gate__card { max-width: 400px; width: 100%; text-align: center; }
-.gate__card .eyebrow { color: var(--accent); }
-.gate__card h1 { font-family: var(--serif); font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; margin: 0.3rem 0 0.9rem; }
-.gate__card > p { color: var(--ink-soft); margin-bottom: 1.8rem; }
-.gate form { display: flex; gap: 0.6rem; }
-.gate input {
-  flex: 1; background: var(--bg-2); border: 1px solid var(--line-2); color: var(--ink);
-  padding: 0.85rem 1rem; font: inherit; border-radius: 4px;
-}
-.gate input:focus { outline: none; border-color: var(--accent); }
-.gate__err { color: #ff6a4d; font-size: 0.85rem; margin-top: 0.9rem; min-height: 1.2em; }

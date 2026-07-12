@@ -25,7 +25,5 @@ jobs:
           python-version: '3.x'
       - name: Build site (Astro -> dist/)
         run: npm run build
-      - name: De-gate dist for measurement
-        run: python3 tools/build_lighthouse_snapshot.py dist
       - name: Run Lighthouse CI (asserts performance/SEO/a11y budgets)
         run: npx lhci autorun

@@ -15,7 +15,7 @@ visual strategist, speaker, and host. Six pages (`index`, `work`, `ideas`, `spea
 It is built with **Astro**, and all copy lives in editable content files managed by a
 **Keystatic** admin, so the site is maintainable with no code. Astro renders the
 content into the same markup the site shipped by hand and reuses the same
-self-contained CSS/JS, so the output, the SEO layer, the gate, and the galleries are
+self-contained CSS/JS, so the output, the SEO layer, and the galleries are
 unchanged. The build is a static export deployed to GitHub Pages.
 
 ## Stack & conventions
@@ -30,8 +30,8 @@ unchanged. The build is a static export deployed to GitHub Pages.
   no server or database.
 - **The design system and behavior are unchanged and self-contained.** CSS in
   `public/assets/css/style.css`; behavior in `public/assets/js/main.js` (mobile nav,
-  scroll-reveal, gallery lightbox, contact-form FormSubmit AJAX handler, footer year) and
-  `public/assets/js/gate.js` (the access gate). No external fonts, scripts, or CDNs —
+  scroll-reveal, gallery lightbox, contact-form FormSubmit AJAX handler, footer
+  year). No external fonts, scripts, or CDNs —
   it must keep working offline and under a strict CSP. Pages stay legible with
   JavaScript disabled. Everything in `public/` ships verbatim into `dist/`.
 - **Keep links relative.** Every internal link and asset reference is relative
@@ -135,16 +135,14 @@ Everything is keyed to `https://quentinfears.com` as the single source of truth.
 GitHub Pages at `https://obartra.github.io/quentin/`; the canonical/`og:` URLs
 intentionally point at the launch domain `quentinfears.com`.
 
-### Private preview vs launch (indexing)
+### Indexing
 
-The site sits behind the client-side password gate (`public/assets/js/gate.js`), so it
-is a private preview. While the gate is up, `BaseLayout` emits `robots: noindex,
-nofollow` on every page (the exact launch directive is in the comment beside the
-`robots` tag). **At launch:** remove the gate and flip the `robots` content in
-`BaseLayout.astro` back to
-`index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`, then
-submit the sitemap. `tools/seo_check.py` warns if a gated page is left indexable, or an
-ungated page is left `noindex`, so the two stay coupled.
+The password gate that guarded the private preview has been removed; the site is
+public and `BaseLayout` emits
+`robots: index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`
+on every page. `tools/seo_check.py` warns if a gated page is left indexable, or an
+ungated page is left `noindex`, so if a gate ever returns, indexing must be turned
+off with it.
 
 ## Keep things in sync
 
@@ -165,18 +163,15 @@ Both default to `dist/` when it exists (else the repo root). CI passes `dist`
 explicitly.
 
 The README hero (`docs/preview.jpg`) is a rendered screenshot of the home page.
-Regenerate it when the hero changes: serve the build, set
-`sessionStorage.setItem("qf-access","1")` to pass the gate, screenshot the top of the
+Regenerate it when the hero changes: serve the build, screenshot the top of the
 home page, then re-optimize (JPEG, ~2400px wide).
 
 ## Run & deploy
 
 - Preview locally: `npm run dev` (site at http://localhost:4321, admin at
-  `/keystatic`). Or `npm run build && npm run preview` for the production build. The
-  site is access-gated via `sessionStorage["qf-access"]`; `gate.js` handles it.
+  `/keystatic`). Or `npm run build && npm run preview` for the production build.
 - Deploy: pushing to `main` builds and publishes `dist/` to GitHub Pages via
-  `.github/workflows/deploy.yml`. Live (gated, pre-launch) at
-  https://obartra.github.io/quentin/.
+  `.github/workflows/deploy.yml`. Live at https://obartra.github.io/quentin/.
 
 ## Weekly routine: curate the site from new @mrqfears Instagram content
 
