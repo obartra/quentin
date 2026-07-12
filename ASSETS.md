@@ -53,7 +53,7 @@ direction — since the current site shows almost everyone except him in that ro
 
 | File | Page | What to use |
 |---|---|---|
-| `assets/img/hero-portrait.jpg` | Home hero | **New portrait** — Quentin directing/on set, leader mode. The single most important image. |
+| `assets/img/hero-portrait.jpg` | Home hero | **Filled** — current studio headshot (smile, glasses, striped knit, wood backdrop; IG 3432270796993228309). The single most important image. |
 | `assets/img/speak-still.jpg` | Home (speak teaser) | On-camera still from Sheen Talk Live / BNC / Hilfiger footage. |
 | `assets/img/work-enterprise.jpg` | Work — case 01 | A generic, non-confidential retail/campaign visual (no unreleased Walmart work). |
 | `assets/img/work-time.jpg` | Work — case 02 | The TIME feature screenshot or a related office-dressing image. |
