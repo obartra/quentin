@@ -103,18 +103,32 @@ export default config({
         sets: fields.array(
           fields.object({
             key: fields.text({
-              label: 'Gallery key',
+              label: 'Category key',
               description: 'Referenced by Work-page buttons via data-gallery, e.g. editorial',
             }),
-            images: fields.array(
+            title: fields.text({
+              label: 'Category title',
+              description: 'Shown in the lightbox, e.g. Celebrity women',
+            }),
+            shoots: fields.array(
               fields.object({
-                src: fields.text({ label: 'Image path' }),
-                cap: fields.text({ label: 'Caption' }),
+                slug: fields.text({
+                  label: 'Shoot slug',
+                  description: 'Referenced by Work-page tiles via data-shoot, e.g. norman-reedus',
+                }),
+                title: fields.text({ label: 'Shoot title' }),
+                images: fields.array(
+                  fields.object({
+                    src: fields.text({ label: 'Image path' }),
+                    cap: fields.text({ label: 'Caption' }),
+                  }),
+                  { label: 'Images (first one is the shoot thumbnail)', itemLabel: (p) => p.fields.src.value || 'Image' }
+                ),
               }),
-              { label: 'Images', itemLabel: (p) => p.fields.src.value || 'Image' }
+              { label: 'Photo shoots', itemLabel: (p) => p.fields.title.value || p.fields.slug.value }
             ),
           }),
-          { label: 'Galleries', itemLabel: (p) => p.fields.key.value }
+          { label: 'Portfolio categories', itemLabel: (p) => p.fields.title.value || p.fields.key.value }
         ),
       },
     }),
@@ -243,7 +257,7 @@ export default config({
             tag: fields.text({ label: 'Kicker tag' }),
             title: fields.text({ label: 'Title' }),
             image: photo('Case photo'),
-            gallery: fields.text({ label: 'Gallery key to open', description: 'A galleries key, or blank for no button' }),
+            gallery: fields.text({ label: 'Gallery category to open', description: 'A galleries category key, or blank for no button' }),
             meta: fields.array(
               fields.object({
                 dt: fields.text({ label: 'Label' }),
@@ -274,7 +288,11 @@ export default config({
               fields.object({
                 src: fields.text({ label: 'Image path' }),
                 alt: fields.text({ label: 'Alt text' }),
-                gallery: fields.text({ label: 'Gallery key' }),
+                gallery: fields.text({ label: 'Gallery category key' }),
+                shoot: fields.text({
+                  label: 'Shoot slug',
+                  description: 'Opens this shoot directly; blank opens the category overview',
+                }),
                 capTitle: fields.text({ label: 'Caption title' }),
                 capSub: fields.text({ label: 'Caption subtitle' }),
               }),

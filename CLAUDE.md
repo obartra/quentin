@@ -92,10 +92,16 @@ slot, update [ASSETS.md](ASSETS.md) so the manifest stays in sync. Bulk-download
 originals with `python3 tools/fetch_site_images.py`.
 
 Work-page galleries are data-driven from the `galleries` singleton
-(`content/galleries.yaml`). Each set has a `key`; Work cases and archive items
-reference a key via their `gallery` field, and `work.astro` emits the
-`<script id="gallery-data">` JSON the lightbox reads. Keep the referenced keys and the
-gallery keys in sync (CI checks this).
+(`content/galleries.yaml`) and mirror the old site's portfolio structure:
+each set is a **category** (`key`, `title`) holding **photo shoots**
+(`slug`, `title`), and each shoot holds its own ordered `images` list, whose first
+image is the shoot's thumbnail in the lightbox category view. Work cases reference a
+category via `gallery`; archive items also set `shoot` to deep-link into one shoot.
+`work.astro` emits the `<script id="gallery-data">` JSON the lightbox reads, and the
+lightbox keeps prev/next navigation inside the open shoot. Keep the referenced
+category keys and shoot slugs in sync with the YAML (CI checks the keys). Never merge
+shoots from different categories into one set: Celebrity men and Celebrity women are
+separate categories, as they were on the old site.
 
 ## SEO layer
 
@@ -222,9 +228,11 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
      `content/ideas.yaml` (title = the hook, body = the idea, lightly edited from the
      caption).
    - **Photoshoot / styled images** → image(s) in `public/assets/img/gallery/`
-     and `{ src, cap }` entries in the matching set in `content/galleries.yaml`
-     (keys: `editorial`, `menswear`, `celebrity`, …); for a headline piece, a case in
-     `content/work.yaml`.
+     and `{ src, cap }` entries in `content/galleries.yaml`, inside the right
+     **shoot** of the right **category** (keys: `celebrity-women`, `celebrity-men`,
+     `editorial`, `menswear`, `commercial`). A genuinely new shoot gets its own
+     `{ slug, title, images }` entry in its category; never append unrelated images
+     to an existing shoot. For a headline piece, a case in `content/work.yaml`.
    - **Hosting / on-camera** (Sheen Talk Live, panels, TV) → `content/speak.yaml`.
    - **Off-brand, low-quality, or redundant** → skip (personal/off-topic posts
      never reach this point — they fail the eligibility gate above).
@@ -281,7 +289,8 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
 Steady-state sizes — the signal to replace rather than append. These are ceilings
 for unattended growth, not targets to fill:
 
-- Gallery sets (`content/galleries.yaml`): **8 images each**
+- Gallery categories (`content/galleries.yaml`): **8 images each**, across that
+  category's shoots
 - Ideas notes (`content/ideas.yaml` `notes.items`): **4–6** · Ideas reels
   (`reels.items`): **3–4**
 - Work cases (`content/work.yaml`): **4** · styling archive: **8**
