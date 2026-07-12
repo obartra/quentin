@@ -1,4 +1,4 @@
-/* Quentin Fears — site interactions. Dependency-free, progressive. */
+/* Quentin Fears site interactions. Dependency-free, progressive. */
 (function () {
   "use strict";
 
@@ -57,7 +57,7 @@
       }
       var btn = form.querySelector('button[type="submit"]');
       var data = new FormData(form);
-      data.set("_subject", "[" + (data.get("inquiry") || "General") + "] New inquiry — quentinfears.com");
+      data.set("_subject", "[" + (data.get("inquiry") || "General") + "] New inquiry via quentinfears.com");
       var label = btn ? btn.innerHTML : "";
       if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
       if (status) { status.textContent = ""; status.className = "form-status"; }
@@ -66,11 +66,11 @@
         .then(function (res) {
           if (res && (res.success === true || res.success === "true")) {
             form.reset();
-            if (status) { status.textContent = "Thanks — your message is on its way. I'll be in touch soon."; status.className = "form-status form-status--ok"; }
+            if (status) { status.textContent = "Thanks, your message is on its way. I'll be in touch soon."; status.className = "form-status form-status--ok"; }
           } else { throw new Error((res && res.message) || "failed"); }
         })
         .catch(function () {
-          if (status) { status.textContent = "Something went wrong — please email hello@quentinfears.com directly."; status.className = "form-status form-status--err"; }
+          if (status) { status.textContent = "Something went wrong. Please email hello@quentinfears.com directly."; status.className = "form-status form-status--err"; }
         })
         .finally(function () { if (btn) { btn.disabled = false; btn.innerHTML = label; } });
     });

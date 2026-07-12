@@ -56,9 +56,18 @@ const jsonLd = {
   <!-- ON STAGE -->
   <section class="section--tight" style="padding-top:clamp(1.5rem,3vw,2.5rem);padding-bottom:0">
     <div class="wrap">
-      <figure class="ph ph--wide reveal" data-tag={speak.stage.image.tag} data-label={speak.stage.image.label}>
-        <Picture src={speak.stage.image.src} alt={speak.stage.image.alt} sizes="(min-width: 1180px) 1080px, 92vw" />
-      </figure>
+      {speak.stage.youtubeId ? (
+        <div class="reel reveal" data-yt={speak.stage.youtubeId} role="button" tabindex="0" aria-label={speak.stage.ariaLabel}>
+          <figure class="ph ph--wide" data-tag={speak.stage.image.tag} data-label={speak.stage.image.label}>
+            <Picture src={speak.stage.image.src} alt={speak.stage.image.alt} sizes="(min-width: 1180px) 1080px, 92vw" />
+          </figure>
+          <span class="reel__play"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#f3efe6"/></svg></span></span>
+        </div>
+      ) : (
+        <figure class="ph ph--wide reveal" data-tag={speak.stage.image.tag} data-label={speak.stage.image.label}>
+          <Picture src={speak.stage.image.src} alt={speak.stage.image.alt} sizes="(min-width: 1180px) 1080px, 92vw" />
+        </figure>
+      )}
       <p style="margin-top:1rem;color:var(--ink-faint);font-size:0.9rem" class="reveal">{speak.stage.caption}</p>
     </div>
   </section>
@@ -126,7 +135,7 @@ const jsonLd = {
       <div class="grid cols-3">
         {speak.media.episodes.map((e) => (
           <a class="fcard media-card reveal" href={e.href} target="_blank" rel="noopener">
-            <figure class="ph media-card__thumb" data-tag="Episode"><Picture src={e.thumbSrc} alt={e.thumbAlt} loading="lazy" sizes="(min-width: 760px) 30vw, 46vw" /></figure>
+            <figure class="ph media-card__thumb" data-tag="Episode"><Picture src={e.thumbSrc} alt={e.thumbAlt} loading="lazy" sizes="(min-width: 760px) 30vw, 46vw" onerror="this.remove()" /></figure>
             <span class="fcard__tag">{e.tag}</span>
             <h3>{e.title}</h3>
             <p>{e.body}</p>

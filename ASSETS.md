@@ -70,6 +70,8 @@ direction — since the current site shows almost everyone except him in that ro
 | `assets/img/idea-time.jpg` | Ideas | Portrait or TIME feature visual. |
 | `assets/img/speak-reel.jpg` | Speak | Poster frame for the speaking reel. |
 | `assets/img/speak-stage.jpg` | Speak (`stage` section) | Quentin speaking on stage (100 Black Men of America conference). |
+| `assets/img/media-bnc.jpg` | Speak (`media` credits) | Still from the BNC holiday-shopping segment with Marcel Clarke (16:9). |
+| `assets/img/media-cali.jpg` | Speak (`media` credits) | Still from the California Live fashion-trends segment (16:9). |
 | `assets/img/about-portrait.jpg` | About | A strong editorial portrait of Quentin. |
 
 ## Video — the speaking reel
