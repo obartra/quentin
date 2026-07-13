@@ -1,7 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_ORIGIN, OG_IMAGE } from '../lib/content';
+import { SITE_ORIGIN, OG_IMAGE, GA_MEASUREMENT_ID } from '../lib/content';
 import variants from '../data/img-variants.json';
 
 interface Props {
@@ -52,6 +52,26 @@ const heroAvifSrcset = heroInfo
 // domain. Passing the src as an expression keeps Vite's dev-time module scanner
 // from trying to resolve it as a bundled import; the emitted HTML is identical.
 const mainSrc = 'assets/js/main.js';
+
+// Google Analytics 4. Enabled on production builds only, so local `astro dev`
+// never sends hits. This is the site's one sanctioned third-party script (see
+// CLAUDE.md). The gtag.js library is loaded lazily, after the page has painted
+// (load -> requestIdleCallback), so it never competes with the LCP hero image
+// and the strict Lighthouse speed budget (performance >= 0.95, LCP <= 2000ms)
+// still holds. The config/js commands queue in dataLayer immediately and fire
+// once the library arrives, so the pageview is not lost. Passed via set:html so
+// the braces emit verbatim; the loader URL and gtag('config', ...) stay as
+// literals in the markup so tools/seo_check.py can enforce the tag on every
+// page. Pages render and stay legible even if the request is blocked.
+const gaEnabled = import.meta.env.PROD;
+const gaInline =
+  `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}` +
+  `gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');` +
+  `(function(){function l(){var s=document.createElement('script');s.async=1;` +
+  `s.src='https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}';` +
+  `document.head.appendChild(s);}function w(){'requestIdleCallback'in window?` +
+  `requestIdleCallback(l):setTimeout(l,2000);}` +
+  `document.readyState==='complete'?w():addEventListener('load',w);})();`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +79,7 @@ const mainSrc = 'assets/js/main.js';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script is:inline>document.documentElement.classList.add('js');</script>
+  {gaEnabled && <script is:inline set:html={gaInline}></script>}
   <title>{title}</title>
   <meta name="description" content={description}>
   {author && <meta name="author" content={author}>}
