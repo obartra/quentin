@@ -96,7 +96,7 @@ const jsonLd = {
     </div>
   </section>
 
-  <!-- REELS: self-hosted vertical video (curated) or a link out to Instagram -->
+  <!-- REELS: self-hosted vertical video (curated) or a link out to Instagram/YouTube -->
   {ideas.reels && ideas.reels.items.length > 0 && (
     <Fragment>
       <hr class="rule">
@@ -108,8 +108,9 @@ const jsonLd = {
             {ideas.reels.intro && <p>{ideas.reels.intro}</p>}
           </div>
           <div class="reels">
-            {ideas.reels.items.map((r) => (
-              r.videoSrc ? (
+            {ideas.reels.items.map((r) => {
+              const platform = r.permalink && /youtu\.?be/i.test(r.permalink) ? 'YouTube' : 'Instagram';
+              return r.videoSrc ? (
                 <figure class="reel-card reveal" data-video={r.videoSrc} data-poster={r.poster.src} role="button" tabindex="0" aria-label={`Play reel: ${r.caption}`}>
                   <div class="ph reel-card__media" data-tag={r.poster.tag} data-label={r.poster.label}>
                     <Picture src={r.poster.src} alt={r.poster.alt} sizes="(min-width: 900px) 25vw, (min-width: 640px) 33vw, 46vw" loading="lazy" onerror="this.remove()" />
@@ -119,14 +120,14 @@ const jsonLd = {
                 </figure>
               ) : (
                 <figure class="reel-card reveal">
-                  <a class="ph reel-card__media" href={r.permalink} target="_blank" rel="noopener" aria-label={`Watch on Instagram: ${r.caption}`} data-tag={r.poster.tag} data-label={r.poster.label}>
+                  <a class="ph reel-card__media" href={r.permalink} target="_blank" rel="noopener" aria-label={`Watch on ${platform}: ${r.caption}`} data-tag={r.poster.tag} data-label={r.poster.label}>
                     <Picture src={r.poster.src} alt={r.poster.alt} sizes="(min-width: 900px) 25vw, (min-width: 640px) 33vw, 46vw" loading="lazy" onerror="this.remove()" />
-                    <span class="reel-card__ig">Watch on Instagram ↗</span>
+                    <span class="reel-card__ig">Watch on {platform} ↗</span>
                   </a>
                   <figcaption class="reel-card__cap">{r.caption}</figcaption>
                 </figure>
-              )
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

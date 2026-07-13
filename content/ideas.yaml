@@ -64,6 +64,14 @@ reels:
       caption: "Sometimes making room in your closet is the first step to making room in your life."
       permalink: "https://www.instagram.com/p/DaDUZ38xI72/"
       videoSrc: ""
+    - poster:
+        src: "assets/img/reel-colorblock.jpg"
+        alt: "Quentin Fears reel: color blocking made easy, pro stylist secrets"
+        tag: "Reel"
+        label: "YouTube Short"
+      caption: "Color blocking, made easy. A few pro rules for wearing bold color with intent."
+      permalink: "https://www.youtube.com/shorts/xfVdj6AzXIw"
+      videoSrc: ""
 formats:
   eyebrow: "Signature formats"
   heading: "Three series I keep coming back to."
