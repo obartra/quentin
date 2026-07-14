@@ -187,9 +187,9 @@ Everything is keyed to `https://quentinfears.com` as the single source of truth.
 `https://quentinfears.com` is the single source of truth. Update `SITE_ORIGIN` in
 [src/lib/content.ts](src/lib/content.ts), `BASE` in
 [tools/seo_check.py](tools/seo_check.py), and find-and-replace the domain in
-`public/robots.txt` and `public/sitemap.xml`. The site is *served* pre-launch from
-GitHub Pages at `https://qafears.github.io/website/`; the canonical/`og:` URLs
-intentionally point at the launch domain `quentinfears.com`.
+`public/robots.txt` and `public/sitemap.xml`. The public site is `https://quentinfears.com`;
+GitHub Pages publishes it at `https://qafears.github.io/website/` (the publish URL), and
+the canonical/`og:` URLs intentionally point at `quentinfears.com`.
 
 ### Indexing
 
@@ -227,7 +227,8 @@ home page, then re-optimize (JPEG, ~2400px wide).
 - Preview locally: `npm run dev` (site at http://localhost:4321, admin at
   `/keystatic`). Or `npm run build && npm run preview` for the production build.
 - Deploy: pushing to `main` builds and publishes `dist/` to GitHub Pages via
-  `.github/workflows/deploy.yml`. Live at https://qafears.github.io/website/.
+  `.github/workflows/deploy.yml`. The public site is https://quentinfears.com; GitHub
+  Pages serves it at https://qafears.github.io/website/ (the publish URL, not the front door).
 
 ## Weekly routine: curate the site from new @mrqfears Instagram content
 
