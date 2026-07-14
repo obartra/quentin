@@ -104,8 +104,8 @@ both on every push and pull request (see [`.github/workflows/ci.yml`](.github/wo
 editing tool and is not part of the deployed site.
 
 This repo is wired for **GitHub Pages**: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
-builds and publishes `dist/` on every push to `main` (currently at
-`https://obartra.github.io/quentin/`).
+builds and publishes `dist/` on every push to `main`. The public site is
+`https://quentinfears.com`; GitHub Pages publishes it at `https://qafears.github.io/website/`.
 
 ## Before launch — checklist
 

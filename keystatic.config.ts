@@ -20,7 +20,7 @@ import { config, fields, singleton } from '@keystatic/core';
  */
 const storage = import.meta.env.DEV
   ? ({ kind: 'local' } as const)
-  : ({ kind: 'github', repo: 'obartra/quentin' } as const);
+  : ({ kind: 'github', repo: 'qafears/website' } as const);
 
 // --- Reusable field groups ---------------------------------------------------
 

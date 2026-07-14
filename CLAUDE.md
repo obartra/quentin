@@ -18,6 +18,53 @@ content into the same markup the site shipped by hand and reuses the same
 self-contained CSS/JS, so the output, the SEO layer, and the galleries are
 unchanged. The build is a static export deployed to GitHub Pages.
 
+## How you work: owner-driven and autonomous
+
+The site owner is non-technical and runs everything by plain-language request. They
+should never have to know or say the words "branch", "commit", "PR", or "merge", and
+should never have to open a terminal or know one exists — that plumbing is your job.
+Their part is to say what they want and to approve the result; your part is everything
+else, end to end, including getting it live.
+
+Follow this loop for every change, without being asked for each step:
+
+1. **Work on a branch.** Never push to `main` directly: it is protected and rejects
+   direct pushes. Changes reach it only through a pull request.
+2. **Validate thoroughly before showing it.** `npm run build`, then
+   `python3 tools/validate_site.py dist` and `python3 tools/seo_check.py dist`; both
+   must pass clean. Re-run until green. For anything visible, look at the built page,
+   not just the YAML.
+3. **Show the owner and get approval, without ever sending them to a terminal.** They
+   should not have to run anything or know the command line exists. Preview the change
+   *for* them: build and open the site in the pre-installed browser (Chromium via
+   Playwright), capture screenshots of the affected pages, and send those; or point
+   them at the PR's live Netlify deploy-preview link, which they can just click.
+   Describe in plain terms what changed. They approve *what* changed, not the
+   mechanics. Skip this only when they already approved the change in the same request.
+4. **Open a pull request** and let CI run both validators on it.
+5. **Merge it yourself once CI is green and the owner has approved.** Merging into
+   `main` is what deploys the site to GitHub Pages, so a change is not done until it
+   is merged and the deploy succeeds. Never leave an approved, green PR sitting
+   unmerged waiting for the owner to click a button: they may not know to. Then
+   report back with the live result.
+
+If anything blocks the loop (missing access, a check you cannot fix, a genuinely
+ambiguous request), stop and say so in one plain sentence with one direct question.
+Do not narrate the plumbing; report outcomes.
+
+**Maintain this file as you go.** When the owner gives feedback about how you should
+work, fold it into CLAUDE.md immediately, in the section it belongs to. Keep the file
+lean: group related guidance, trim redundancy, and delete anything no longer true.
+Treat length as a cost, and prefer editing an existing line over adding a new one; a
+short, current file beats a growing one.
+
+This depends on two things staying set up (see [docs/hosted-admin.md](docs/hosted-admin.md)):
+
+- The **Claude GitHub App** installed on `qafears/website` with **Contents: Read &
+  write**. Without it, every push and merge fails with a 403.
+- `main` protected so changes must go through a PR. That is deliberate; keep it. It is
+  also why the flow above is always PR-then-merge, never a direct push.
+
 ## Stack & conventions
 
 - **Astro** (static output, `build.format: 'file'` → flat `about.html`, `work.html`,
@@ -140,9 +187,10 @@ Everything is keyed to `https://quentinfears.com` as the single source of truth.
 `https://quentinfears.com` is the single source of truth. Update `SITE_ORIGIN` in
 [src/lib/content.ts](src/lib/content.ts), `BASE` in
 [tools/seo_check.py](tools/seo_check.py), and find-and-replace the domain in
-`public/robots.txt` and `public/sitemap.xml`. The site is *served* pre-launch from
-GitHub Pages at `https://obartra.github.io/quentin/`; the canonical/`og:` URLs
-intentionally point at the launch domain `quentinfears.com`.
+`public/robots.txt`, `public/sitemap.xml`, and `public/CNAME` (the Pages custom-domain
+pin, served verbatim as `dist/CNAME`). The public site is `https://quentinfears.com`;
+GitHub Pages publishes it at `https://qafears.github.io/website/` (the publish URL), and
+the canonical/`og:` URLs intentionally point at `quentinfears.com`.
 
 ### Indexing
 
@@ -180,7 +228,8 @@ home page, then re-optimize (JPEG, ~2400px wide).
 - Preview locally: `npm run dev` (site at http://localhost:4321, admin at
   `/keystatic`). Or `npm run build && npm run preview` for the production build.
 - Deploy: pushing to `main` builds and publishes `dist/` to GitHub Pages via
-  `.github/workflows/deploy.yml`. Live at https://obartra.github.io/quentin/.
+  `.github/workflows/deploy.yml`. The public site is https://quentinfears.com; GitHub
+  Pages serves it at https://qafears.github.io/website/ (the publish URL, not the front door).
 
 ## Weekly routine: curate the site from new @mrqfears Instagram content
 
@@ -190,8 +239,11 @@ The weekly run is an editorial pass over the whole site with the new material in
 hand — not an ingest job. Nothing gets in just because it is new; new work competes
 with what is already there, and the run is as much about replacing and trimming as
 adding. Ship mode is auto-merge to live for content edits: content lives in
-Keystatic collections under `content/*.yaml`, and pushing to `main` builds and
-deploys, so the routine edits the YAML directly and commits to `main` — no PR.
+Keystatic collections under `content/*.yaml`, and merging to `main` builds and
+deploys, so the routine edits the YAML directly and lands it through a pull request it
+validates and merges itself. ("Auto-merge" means you open the PR and merge your own
+green PR without a human approval step, not that you push straight to `main`: `main`
+is protected and takes changes only through a PR.)
 `instagram-ledger.json` (repo root) is the source of truth for what has already
 been considered; never process the same post twice.
 
@@ -280,8 +332,8 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    step 3 that are not tied to a post go under `trimmed` with the same shape.
    Advance `reviewed_through`.
 7. **Publish:** `npm run build`, then `python3 tools/validate_site.py dist` and
-   `python3 tools/seo_check.py dist` (same as CI); commit to `main` and confirm the
-   Pages deploy succeeds. The commit message summarizes adds, replacements, and
+   `python3 tools/seo_check.py dist` (same as CI); open a PR, let CI run both
+   validators, then merge it to `main` and confirm the Pages deploy succeeds. The commit message summarizes adds, replacements, and
    trims so the week's editorial decisions are auditable at a glance.
 
 ### Section budgets
@@ -300,8 +352,10 @@ for unattended growth, not targets to fill:
 - **≤ 3 content changes per run** (adds + replacements + trims combined). The bias
   is toward doing less: a run that changes nothing is a valid outcome, not a
   failure.
-- **Content only auto-merges.** YAML edits and optimized images commit straight to
-  `main`. Anything structural — a new page or section, removing a whole case study,
+- **Content only auto-merges.** YAML edits and optimized images go in through a PR you
+  validate and merge yourself (no human approval needed for on-brand content); `main`
+  is protected, so there is never a direct push. Anything structural — a new page or
+  section, removing a whole case study,
   layout/code/CSS changes, reworking a page's story — is out of scope for the
   unattended run: open a PR describing the proposal instead, and say why, so a human
   decides.
@@ -317,19 +371,12 @@ for unattended growth, not targets to fill:
 
 ## What not to do
 
-- Do not add external fonts, scripts, or CDNs to the site. It breaks the offline /
-  CSP-safe guarantee. (Astro/Keystatic build-time dependencies are fine; they do not
-  ship to the browser.)
-- Do not switch internal links/assets to root-absolute paths; keep them relative so
-  the subpath and apex domain both work.
-- Do not use em dashes in copy or in anything that ships to `dist/`; restructure the
-  sentence instead. CI (`tools/validate_site.py`) fails on them.
-- Do not hand-write or desync the `<head>`, JSON-LD, or sitemap when adding pages; the
-  head is generated by `BaseLayout` and keyed to the canonical origin.
-- Do not present Quentin as speaking for an employer in metadata or structured data,
-  or put an employer name in any `seo.*` field.
-- Keep the **public** build (`npm run build`) static and adapter-free — that is what
-  ships to GitHub Pages. The Netlify adapter is intentional but belongs only to the
-  separate hosted-admin build (`npm run build:admin`); do not merge the two.
-- Rename/move the crawl files or validators only alongside updates to
-  `tools/seo_check.py`, `tools/validate_site.py`, and `.github/workflows/`.
+Quick guardrail recap; the reasoning is in the sections above.
+
+- No external fonts, scripts, or CDNs (breaks the offline / CSP guarantee). Build-time deps are fine.
+- No root-absolute internal links or assets; keep them relative.
+- No em dashes in anything shipped to `dist/`; restructure instead. CI fails on them.
+- Do not hand-write or desync the `<head>`, JSON-LD, or sitemap; `BaseLayout` generates them.
+- No employer claim in metadata or any `seo.*` field.
+- Keep the public `npm run build` static and adapter-free; the Netlify adapter belongs only to `build:admin`.
+- Move or rename the crawl files or validators only alongside `tools/*.py` and `.github/workflows/` updates.
