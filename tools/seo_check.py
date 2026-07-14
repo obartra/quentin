@@ -24,6 +24,12 @@ import xml.etree.ElementTree as ET
 # changes, update this and find-and-replace across the HTML / robots / sitemap.
 BASE = "https://quentinfears.com"
 
+# Google Analytics 4 measurement ID. BaseLayout emits the gtag.js snippet on
+# every production page; this check fails CI if a page ever ships without it, so
+# new pages/layouts keep analytics wired. Keep in sync with GA_MEASUREMENT_ID in
+# src/lib/content.ts.
+GA_MEASUREMENT_ID = "G-1WEVVZN8TV"
+
 # This is a personal site. It must not present Quentin as an official
 # representative or spokesperson of an employer in machine-readable metadata.
 # These terms are allowed in visible body copy (his own first-person words)
@@ -233,6 +239,17 @@ def check_page(page, html, sitemap_locs):
                 f"personal site and must not assert an employer in machine-readable "
                 f"tags (body copy is fine)",
             )
+
+    # Google Analytics must be wired on every page. Check both halves of the
+    # gtag snippet: the async loader from Google and the config call that fires
+    # the pageview, so a half-removed tag is caught too.
+    if f"gtag/js?id={GA_MEASUREMENT_ID}" not in head:
+        err(page, f"missing Google Analytics loader for {GA_MEASUREMENT_ID} in <head>")
+    if not re.search(
+        r"gtag\(\s*['\"]config['\"]\s*,\s*['\"]" + re.escape(GA_MEASUREMENT_ID) + r"['\"]",
+        head,
+    ):
+        err(page, f"missing gtag('config', '{GA_MEASUREMENT_ID}') call in <head>")
 
     # Page must be listed in the sitemap
     if exp not in sitemap_locs:

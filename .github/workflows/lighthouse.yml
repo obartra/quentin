@@ -10,8 +10,30 @@ permissions:
   contents: read
 
 jobs:
-  lighthouse:
+  # The 6 pages are split across two shards that run on separate runners.
+  # Lighthouse measures timing under CPU/network throttling, so its numbers are
+  # only accurate when a single Lighthouse instance has the machine to itself;
+  # never run the URLs concurrently on one runner. Sharding across isolated
+  # runner VMs keeps each measurement contention-free while roughly halving
+  # wall-clock time. Assertions/settings stay in lighthouserc.json; each shard
+  # overrides only the URL list via repeated --collect.url flags.
+  lighthouse-shard:
+    name: Lighthouse shard ${{ matrix.name }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: A
+            urls: >-
+              --collect.url=http://localhost:8299/index.html
+              --collect.url=http://localhost:8299/work.html
+              --collect.url=http://localhost:8299/ideas.html
+          - name: B
+            urls: >-
+              --collect.url=http://localhost:8299/speak.html
+              --collect.url=http://localhost:8299/about.html
+              --collect.url=http://localhost:8299/contact.html
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,4 +48,21 @@ jobs:
       - name: Build site (Astro -> dist/)
         run: npm run build
       - name: Run Lighthouse CI (asserts performance/SEO/a11y budgets)
-        run: npx lhci autorun
+        run: npx lhci autorun ${{ matrix.urls }}
+
+  # Single required-status-friendly gate: stays green only if every shard
+  # passed. Keep this job named "lighthouse" so branch protection that requires
+  # a "lighthouse" check keeps working after the split.
+  lighthouse:
+    name: lighthouse
+    needs: lighthouse-shard
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require all Lighthouse shards to pass
+        run: |
+          if [ "${{ needs.lighthouse-shard.result }}" != "success" ]; then
+            echo "One or more Lighthouse shards failed."
+            exit 1
+          fi
+          echo "All Lighthouse shards passed."

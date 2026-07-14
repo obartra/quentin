@@ -28,8 +28,13 @@ else, end to end, including getting it live.
 
 Follow this loop for every change, without being asked for each step:
 
-1. **Work on a branch.** Never push to `main` directly: it is protected and rejects
-   direct pushes. Changes reach it only through a pull request.
+1. **Work on a branch, always cut from the latest `main`.** Never push to `main`
+   directly: it is protected and rejects direct pushes. Changes reach it only through a
+   pull request. Keeping current with `main` is your job, never the owner's to ask
+   about: `git fetch origin main` before you start, and before you merge, rebase your
+   branch onto the latest `main` (`git rebase origin/main`) and resolve any conflicts
+   yourself so the PR always merges cleanly. If `main` moves while a PR is open, rebase
+   again rather than letting it go stale.
 2. **Validate thoroughly before showing it.** `npm run build`, then
    `python3 tools/validate_site.py dist` and `python3 tools/seo_check.py dist`; both
    must pass clean. Re-run until green. For anything visible, look at the built page,
@@ -80,9 +85,11 @@ This depends on two things staying set up (see [docs/hosted-admin.md](docs/hoste
 - **The design system and behavior are unchanged and self-contained.** CSS in
   `public/assets/css/style.css`; behavior in `public/assets/js/main.js` (mobile nav,
   scroll-reveal, gallery lightbox, contact-form FormSubmit AJAX handler, footer
-  year). No external fonts, scripts, or CDNs —
-  it must keep working offline and under a strict CSP. Pages stay legible with
-  JavaScript disabled. Everything in `public/` ships verbatim into `dist/`.
+  year). No external fonts, scripts, or CDNs, with **one sanctioned exception:
+  Google Analytics** (see "Analytics" below). Everything else must keep working
+  offline and CSP-safe. Pages stay legible with JavaScript disabled, and they
+  render fine even when the GA request is blocked. Everything in `public/` ships
+  verbatim into `dist/`.
 - **Keep links relative.** Every internal link and asset reference is relative
   (`work`, `assets/css/style.css`, `favicon.svg`) so the site works under both
   the GitHub Pages subpath and the apex domain. `base` stays `/`; do not switch to
@@ -170,6 +177,45 @@ consistent. Editable per page: `seo.title`, `seo.description`, `seo.ogTitle`,
 
 Everything is keyed to `https://quentinfears.com` as the single source of truth.
 
+## Analytics
+
+The site uses **Google Analytics 4** (`gtag.js`, stream `Quentin Fears`,
+measurement ID `G-1WEVVZN8TV`). This is the **one deliberate exception** to the
+no-external-scripts rule: an owner-approved third-party tag, wired so it stays
+contained.
+
+- **Single source of truth:** `GA_MEASUREMENT_ID` in
+  [src/lib/content.ts](src/lib/content.ts). To change the ID, update it there
+  *and* `GA_MEASUREMENT_ID` in [tools/seo_check.py](tools/seo_check.py).
+- **Emitted by [BaseLayout.astro](src/layouts/BaseLayout.astro), not per page,**
+  so every page (current and future) gets the tag automatically. Do not paste
+  the snippet into individual pages.
+- **Production only.** The tag is gated behind `import.meta.env.PROD`, so
+  `npm run build` (and `build:admin`) include it but `npm run dev` does not, and
+  local editing never sends hits to the live property.
+- **CI enforces it.** `tools/seo_check.py` fails the build if any page ships
+  without both halves of the snippet (the `gtag/js?id=…` loader and the
+  `gtag('config', …)` call). New pages/layouts must keep analytics wired; do not
+  remove or gut the tag. This is the intended behaviour even though it loads a
+  CDN script, so do not "fix" it back out to restore the offline guarantee.
+- **Lazy-loaded on purpose.** The `gtag.js` library is injected only after the
+  page paints (`load` → `requestIdleCallback`), so it stays off the main thread
+  during render and the strict `total-blocking-time ≤ 200ms` gate in
+  [lighthouserc.json](lighthouserc.json) still passes. The `gtag('config', …)` call
+  queues in `dataLayer` immediately and fires when the library arrives, so no
+  pageview is lost. Do not "simplify" this back to an eager `<script async src>` in
+  `<head>`: that puts the third-party cost on the main thread during render and can
+  fail the TBT gate.
+- **Perf budget accepts GA's cost.** The owner accepts the small performance hit
+  analytics brings, so `categories:performance` and `largest-contentful-paint` in
+  [lighthouserc.json](lighthouserc.json) are **warnings**, not errors (they also
+  swing widely on shared CI runners, so they were noisy gates anyway). The
+  deterministic gates stay hard errors: `seo = 1.0`, `accessibility ≥ 0.95`,
+  `best-practices ≥ 0.95` (still guards third-party/cookie issues), `CLS ≤ 0.05`,
+  `TBT ≤ 200ms`, and the image audits. Keep it that way.
+- Pages still render and stay legible if the GA request is blocked (no dependency),
+  so the offline-friendly experience holds.
+
 ### When you add a new page
 
 1. Add a singleton to `keystatic.config.ts` (reuse the `seo()` helper) and a
@@ -213,8 +259,9 @@ Two dependency-free validators guard the repo; they read the build output. Run
 - `python3 tools/seo_check.py [dir]` — the SEO invariants (one `<title>`, meta
   description, canonical, required `og:*`/`name` meta, `og:image` resolves, favicon /
   manifest / stylesheet links, one `<h1>`, `alt` on every `<img>`, valid JSON-LD keyed
-  to the canonical origin, sitemap membership, gate ↔ indexing coupling, and no employer
-  name in `<head>`), plus `robots.txt` → sitemap and manifest/asset existence.
+  to the canonical origin, sitemap membership, gate ↔ indexing coupling, the Google
+  Analytics tag on every page, and no employer name in `<head>`), plus `robots.txt` →
+  sitemap and manifest/asset existence.
 
 Both default to `dist/` when it exists (else the repo root). CI passes `dist`
 explicitly.
@@ -373,7 +420,7 @@ for unattended growth, not targets to fill:
 
 Quick guardrail recap; the reasoning is in the sections above.
 
-- No external fonts, scripts, or CDNs (breaks the offline / CSP guarantee). Build-time deps are fine.
+- No external fonts, scripts, or CDNs (breaks the offline / CSP guarantee). Build-time deps are fine. The one sanctioned exception is Google Analytics (see "Analytics"); do not add others, and do not remove GA to "restore" the offline rule.
 - No root-absolute internal links or assets; keep them relative.
 - No em dashes in anything shipped to `dist/`; restructure instead. CI fails on them.
 - Do not hand-write or desync the `<head>`, JSON-LD, or sitemap; `BaseLayout` generates them.
