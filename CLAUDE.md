@@ -199,13 +199,20 @@ contained.
   remove or gut the tag. This is the intended behaviour even though it loads a
   CDN script, so do not "fix" it back out to restore the offline guarantee.
 - **Lazy-loaded on purpose.** The `gtag.js` library is injected only after the
-  page paints (`load` → `requestIdleCallback`), so it never competes with the LCP
-  hero image and the strict Lighthouse budget (`performance ≥ 0.95`, `LCP ≤ 2000ms`
-  in [lighthouserc.json](lighthouserc.json)) still passes. The `gtag('config', …)`
-  call queues in `dataLayer` immediately and fires when the library arrives, so no
+  page paints (`load` → `requestIdleCallback`), so it stays off the main thread
+  during render and the strict `total-blocking-time ≤ 200ms` gate in
+  [lighthouserc.json](lighthouserc.json) still passes. The `gtag('config', …)` call
+  queues in `dataLayer` immediately and fires when the library arrives, so no
   pageview is lost. Do not "simplify" this back to an eager `<script async src>` in
-  `<head>`: that reintroduces the third-party cost into the critical path and fails
-  the Lighthouse CI check.
+  `<head>`: that puts the third-party cost on the main thread during render and can
+  fail the TBT gate.
+- **Perf budget accepts GA's cost.** The owner accepts the small performance hit
+  analytics brings, so `categories:performance` and `largest-contentful-paint` in
+  [lighthouserc.json](lighthouserc.json) are **warnings**, not errors (they also
+  swing widely on shared CI runners, so they were noisy gates anyway). The
+  deterministic gates stay hard errors: `seo = 1.0`, `accessibility ≥ 0.95`,
+  `best-practices ≥ 0.95` (still guards third-party/cookie issues), `CLS ≤ 0.05`,
+  `TBT ≤ 200ms`, and the image audits. Keep it that way.
 - Pages still render and stay legible if the GA request is blocked (no dependency),
   so the offline-friendly experience holds.
 

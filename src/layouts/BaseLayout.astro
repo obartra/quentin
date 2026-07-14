@@ -56,10 +56,12 @@ const mainSrc = 'assets/js/main.js';
 // Google Analytics 4. Enabled on production builds only, so local `astro dev`
 // never sends hits. This is the site's one sanctioned third-party script (see
 // CLAUDE.md). The gtag.js library is loaded lazily, after the page has painted
-// (load -> requestIdleCallback), so it never competes with the LCP hero image
-// and the strict Lighthouse speed budget (performance >= 0.95, LCP <= 2000ms)
-// still holds. The config/js commands queue in dataLayer immediately and fire
-// once the library arrives, so the pageview is not lost. Passed via set:html so
+// (load -> requestIdleCallback), so it stays off the main thread during the
+// initial render and the strict total-blocking-time budget (<= 200ms in
+// lighthouserc.json) still passes; owner accepts the small residual performance
+// cost, so the perf-score and LCP assertions are warnings. The config/js
+// commands queue in dataLayer immediately and fire once the library arrives, so
+// the pageview is not lost. Passed via set:html so
 // the braces emit verbatim; the loader URL and gtag('config', ...) stay as
 // literals in the markup so tools/seo_check.py can enforce the tag on every
 // page. Pages render and stay legible even if the request is blocked.
