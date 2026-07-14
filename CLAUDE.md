@@ -18,6 +18,43 @@ content into the same markup the site shipped by hand and reuses the same
 self-contained CSS/JS, so the output, the SEO layer, and the galleries are
 unchanged. The build is a static export deployed to GitHub Pages.
 
+## How you work: owner-driven and autonomous
+
+The site owner is non-technical and runs everything by plain-language request. They
+should never have to know or say the words "branch", "commit", "PR", or "merge" —
+that plumbing is your job. Their part is to say what they want and to approve the
+result; your part is everything else, end to end, including getting it live.
+
+Follow this loop for every change, without being asked for each step:
+
+1. **Work on a branch.** Never push to `main` directly: it is protected and rejects
+   direct pushes. Changes reach it only through a pull request.
+2. **Validate thoroughly before showing it.** `npm run build`, then
+   `python3 tools/validate_site.py dist` and `python3 tools/seo_check.py dist`; both
+   must pass clean. Re-run until green. For anything visible, look at the built page,
+   not just the YAML.
+3. **Show the owner and get approval.** Describe the change in plain terms and, when
+   it helps, point them at the local preview (`npm run dev` or `npm run preview`).
+   They approve *what* changed, not the mechanics. Skip this only when they already
+   approved the change in the same request.
+4. **Open a pull request** and let CI run both validators on it.
+5. **Merge it yourself once CI is green and the owner has approved.** Merging into
+   `main` is what deploys the site to GitHub Pages, so a change is not done until it
+   is merged and the deploy succeeds. Never leave an approved, green PR sitting
+   unmerged waiting for the owner to click a button: they may not know to. Then
+   report back with the live result.
+
+If anything blocks the loop (missing access, a check you cannot fix, a genuinely
+ambiguous request), stop and say so in one plain sentence with one direct question.
+Do not narrate the plumbing; report outcomes.
+
+This depends on two things staying set up (see [docs/hosted-admin.md](docs/hosted-admin.md)):
+
+- The **Claude GitHub App** installed on `qafears/website` with **Contents: Read &
+  write**. Without it, every push and merge fails with a 403.
+- `main` protected so changes must go through a PR. That is deliberate; keep it. It is
+  also why the flow above is always PR-then-merge, never a direct push.
+
 ## Stack & conventions
 
 - **Astro** (static output, `build.format: 'file'` → flat `about.html`, `work.html`,
@@ -190,8 +227,11 @@ The weekly run is an editorial pass over the whole site with the new material in
 hand — not an ingest job. Nothing gets in just because it is new; new work competes
 with what is already there, and the run is as much about replacing and trimming as
 adding. Ship mode is auto-merge to live for content edits: content lives in
-Keystatic collections under `content/*.yaml`, and pushing to `main` builds and
-deploys, so the routine edits the YAML directly and commits to `main` — no PR.
+Keystatic collections under `content/*.yaml`, and merging to `main` builds and
+deploys, so the routine edits the YAML directly and lands it through a pull request it
+validates and merges itself. ("Auto-merge" means you open the PR and merge your own
+green PR without a human approval step, not that you push straight to `main`: `main`
+is protected and takes changes only through a PR.)
 `instagram-ledger.json` (repo root) is the source of truth for what has already
 been considered; never process the same post twice.
 
@@ -280,8 +320,8 @@ Instagram tooling in `tools/` (stdlib-only except the authed one):
    step 3 that are not tied to a post go under `trimmed` with the same shape.
    Advance `reviewed_through`.
 7. **Publish:** `npm run build`, then `python3 tools/validate_site.py dist` and
-   `python3 tools/seo_check.py dist` (same as CI); commit to `main` and confirm the
-   Pages deploy succeeds. The commit message summarizes adds, replacements, and
+   `python3 tools/seo_check.py dist` (same as CI); open a PR, let CI run both
+   validators, then merge it to `main` and confirm the Pages deploy succeeds. The commit message summarizes adds, replacements, and
    trims so the week's editorial decisions are auditable at a glance.
 
 ### Section budgets
@@ -300,8 +340,10 @@ for unattended growth, not targets to fill:
 - **≤ 3 content changes per run** (adds + replacements + trims combined). The bias
   is toward doing less: a run that changes nothing is a valid outcome, not a
   failure.
-- **Content only auto-merges.** YAML edits and optimized images commit straight to
-  `main`. Anything structural — a new page or section, removing a whole case study,
+- **Content only auto-merges.** YAML edits and optimized images go in through a PR you
+  validate and merge yourself (no human approval needed for on-brand content); `main`
+  is protected, so there is never a direct push. Anything structural — a new page or
+  section, removing a whole case study,
   layout/code/CSS changes, reworking a page's story — is out of scope for the
   unattended run: open a PR describing the proposal instead, and say why, so a human
   decides.
