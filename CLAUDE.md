@@ -21,9 +21,10 @@ unchanged. The build is a static export deployed to GitHub Pages.
 ## How you work: owner-driven and autonomous
 
 The site owner is non-technical and runs everything by plain-language request. They
-should never have to know or say the words "branch", "commit", "PR", or "merge" —
-that plumbing is your job. Their part is to say what they want and to approve the
-result; your part is everything else, end to end, including getting it live.
+should never have to know or say the words "branch", "commit", "PR", or "merge", and
+should never have to open a terminal or know one exists — that plumbing is your job.
+Their part is to say what they want and to approve the result; your part is everything
+else, end to end, including getting it live.
 
 Follow this loop for every change, without being asked for each step:
 
@@ -33,10 +34,13 @@ Follow this loop for every change, without being asked for each step:
    `python3 tools/validate_site.py dist` and `python3 tools/seo_check.py dist`; both
    must pass clean. Re-run until green. For anything visible, look at the built page,
    not just the YAML.
-3. **Show the owner and get approval.** Describe the change in plain terms and, when
-   it helps, point them at the local preview (`npm run dev` or `npm run preview`).
-   They approve *what* changed, not the mechanics. Skip this only when they already
-   approved the change in the same request.
+3. **Show the owner and get approval, without ever sending them to a terminal.** They
+   should not have to run anything or know the command line exists. Preview the change
+   *for* them: build and open the site in the pre-installed browser (Chromium via
+   Playwright), capture screenshots of the affected pages, and send those; or point
+   them at the PR's live Netlify deploy-preview link, which they can just click.
+   Describe in plain terms what changed. They approve *what* changed, not the
+   mechanics. Skip this only when they already approved the change in the same request.
 4. **Open a pull request** and let CI run both validators on it.
 5. **Merge it yourself once CI is green and the owner has approved.** Merging into
    `main` is what deploys the site to GitHub Pages, so a change is not done until it
