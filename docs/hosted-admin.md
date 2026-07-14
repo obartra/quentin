@@ -10,7 +10,7 @@ repo, which triggers the GitHub Pages deploy of the public site.
 Editor's browser ──▶ Netlify (SSR) ──▶ /keystatic admin
                                           │  Save
                                           ▼
-                        commit to  github.com/obartra/quentin (main)
+                        commit to  github.com/qafears/website (main)
                                           │
                                           ▼
                    .github/workflows/deploy.yml builds + publishes
@@ -39,7 +39,7 @@ Two builds, one project:
 ### 1. Create the Netlify site
 
 1. Netlify → **Add new site → Import an existing project** → pick
-   `obartra/quentin`.
+   `qafears/website`.
 2. Netlify reads `netlify.toml`, so the build command (`npm run build:admin`),
    publish dir (`dist`), and Node version are already set. Deploy once. It will
    build but the admin won't authenticate yet — that's expected until step 2.
@@ -53,7 +53,7 @@ Keystatic can create the GitHub App for you:
    App"** prompt. It sends you to GitHub with the correct permissions and callback
    pre-filled.
 2. On GitHub, set the callback / homepage to your Netlify URL, create the app, then
-   **Install** it on the `obartra/quentin` repository.
+   **Install** it on the `qafears/website` repository.
 3. GitHub shows the app's **Client ID**, a generated **Client secret**, and the app
    **slug**. Keystatic hands these back to paste into Netlify (next step).
 
@@ -88,7 +88,7 @@ variables above.
 ## Notes
 
 - **The config already points at the repo.** `keystatic.config.ts` uses
-  `repo: 'obartra/quentin'` for GitHub storage. Change it if the repo moves.
+  `repo: 'qafears/website'` for GitHub storage. Change it if the repo moves.
 - **Local editing still works** with no setup: `npm run dev` → `/keystatic` uses
   local file storage and never touches GitHub. Contributors who have the repo checked
   out can use that instead of the hosted admin.

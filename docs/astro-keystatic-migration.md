@@ -73,7 +73,7 @@ separate `build:admin` output on Netlify.
   extensionless form (`/work`); the static host serves `work.html` for it and the
   `.html` URLs still resolve.
 - **Relative links.** Every internal link and asset ref stays relative, so the site
-  works both under the GitHub Pages subpath (`obartra.github.io/quentin/`) and at
+  works both under the GitHub Pages subpath (`qafears.github.io/website/`) and at
   the apex domain. `base` stays `/`.
 - **Gate <-> indexing coupling.** The password gate has been removed and pages ship
   `robots: index, follow`. `tools/seo_check.py` still enforces the coupling, so a

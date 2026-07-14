@@ -105,7 +105,7 @@ editing tool and is not part of the deployed site.
 
 This repo is wired for **GitHub Pages**: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 builds and publishes `dist/` on every push to `main` (currently at
-`https://obartra.github.io/quentin/`).
+`https://qafears.github.io/website/`).
 
 ## Before launch — checklist
 
