@@ -187,7 +187,8 @@ Everything is keyed to `https://quentinfears.com` as the single source of truth.
 `https://quentinfears.com` is the single source of truth. Update `SITE_ORIGIN` in
 [src/lib/content.ts](src/lib/content.ts), `BASE` in
 [tools/seo_check.py](tools/seo_check.py), and find-and-replace the domain in
-`public/robots.txt` and `public/sitemap.xml`. The public site is `https://quentinfears.com`;
+`public/robots.txt`, `public/sitemap.xml`, and `public/CNAME` (the Pages custom-domain
+pin, served verbatim as `dist/CNAME`). The public site is `https://quentinfears.com`;
 GitHub Pages publishes it at `https://qafears.github.io/website/` (the publish URL), and
 the canonical/`og:` URLs intentionally point at `quentinfears.com`.
 
