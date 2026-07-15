@@ -113,6 +113,44 @@ const jsonLd = {
     </div>
   </section>
 
+  <!-- VIDEO: self-hosted vertical video (curated) or a link out to YouTube/Instagram -->
+  {work.video && work.video.items.length > 0 && (
+    <Fragment>
+      <hr class="rule">
+      <section class="section">
+        <div class="wrap">
+          <div class="sec-head reveal">
+            <p class="eyebrow">{work.video.eyebrow}</p>
+            <h2>{work.video.heading}</h2>
+            {work.video.intro && <p>{work.video.intro}</p>}
+          </div>
+          <div class="reels">
+            {work.video.items.map((r) => {
+              const platform = r.permalink && /youtu\.?be/i.test(r.permalink) ? 'YouTube' : 'Instagram';
+              return r.videoSrc ? (
+                <figure class="reel-card reveal" data-video={r.videoSrc} data-poster={r.poster.src} role="button" tabindex="0" aria-label={`Play video: ${r.caption}`}>
+                  <div class="ph reel-card__media" data-tag={r.poster.tag} data-label={r.poster.label}>
+                    <Picture src={r.poster.src} alt={r.poster.alt} sizes="(min-width: 900px) 25vw, (min-width: 640px) 33vw, 46vw" loading="lazy" onerror="this.remove()" />
+                    <span class="reel__play"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#f3efe6"/></svg></span></span>
+                  </div>
+                  <figcaption class="reel-card__cap">{r.caption}</figcaption>
+                </figure>
+              ) : (
+                <figure class="reel-card reveal">
+                  <a class="ph reel-card__media" href={r.permalink} target="_blank" rel="noopener" aria-label={`Watch on ${platform}: ${r.caption}`} data-tag={r.poster.tag} data-label={r.poster.label}>
+                    <Picture src={r.poster.src} alt={r.poster.alt} sizes="(min-width: 900px) 25vw, (min-width: 640px) 33vw, 46vw" loading="lazy" onerror="this.remove()" />
+                    <span class="reel-card__ig">Watch on {platform} ↗</span>
+                  </a>
+                  <figcaption class="reel-card__cap">{r.caption}</figcaption>
+                </figure>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </Fragment>
+  )}
+
   <Cta
     heading={work.cta.heading}
     body={work.cta.body}
