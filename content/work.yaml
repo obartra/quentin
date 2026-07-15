@@ -143,6 +143,19 @@ archive:
       capTitle: "Editorial"
       capSub: "Color & movement"
   footnote: "A selection from a decade of work. Full archive available on request."
+video:
+  eyebrow: "In motion"
+  heading: "On the floor"
+  intro: "The work moving, not just the finished frame. Tap to watch."
+  items:
+    - poster:
+        src: "assets/img/work-popup-shop.jpg"
+        alt: "Quentin Fears styling a New York City pop-up shop"
+        tag: "Video"
+        label: "YouTube Short"
+      caption: "Styling a New York City pop-up shop for Walmart. Brandon Maxwell gives the team a shout-out."
+      permalink: "https://youtube.com/shorts/PXC-BWog7-Q"
+      videoSrc: ""
 cta:
   heading: "I take on a few brand projects at a time."
   body: "Creative direction, visual strategy, and campaign work for brands and agencies."

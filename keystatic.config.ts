@@ -302,6 +302,30 @@ export default config({
           },
           { label: 'Styling archive' }
         ),
+        video: fields.object(
+          {
+            eyebrow: fields.text({ label: 'Eyebrow' }),
+            heading: fields.text({ label: 'Heading' }),
+            intro: fields.text({ label: 'Intro', multiline: true }),
+            items: fields.array(
+              fields.object({
+                poster: photo('Poster still (vertical, ~1080x1920)'),
+                caption: fields.text({ label: 'Caption', multiline: true }),
+                permalink: fields.text({
+                  label: 'Video permalink',
+                  description: 'YouTube or Instagram URL, used as the link when no self-hosted video is set',
+                }),
+                videoSrc: fields.text({
+                  label: 'Self-hosted video path (optional)',
+                  description:
+                    'e.g. assets/video/clip-x.mp4 (produced by tools/prepare_reel.py). Blank = the poster links out to the permalink instead.',
+                }),
+              }),
+              { label: 'Videos', itemLabel: (p) => (p.fields.caption.value || 'Video').slice(0, 48) }
+            ),
+          },
+          { label: 'Video' }
+        ),
         cta: cta(),
       },
     }),

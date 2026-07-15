@@ -215,6 +215,15 @@
       1080
     ]
   },
+  "assets/img/work-popup-shop.jpg": {
+    "height": 1920,
+    "width": 1080,
+    "widths": [
+      400,
+      800,
+      1080
+    ]
+  },
   "assets/img/work-time.jpg": {
     "height": 988,
     "width": 791,
