@@ -20,6 +20,13 @@ What it checks (hard failures):
      (comma, colon, period, or a pipe in titles) instead of an em dash. Checked
      across every text file in the output (HTML, CSS, JS, XML, JSON, MD, SVG,
      TXT, webmanifest), including the literal character and its HTML entities.
+  6. Newsletter + consent integrity. The signup box must stay wired to the
+     configured provider and stay paired with its consent line, so a future
+     redesign cannot quietly break subscriptions or drop the privacy link:
+       a. Every built newsletter form's action equals the formEndpoint set in
+          content/settings.yaml (the single source of truth for the URL).
+       b. Every newsletter form keeps its _honey honeypot field.
+       c. Every page that has an email input also links to the privacy note.
 
 What it deliberately does NOT fail on:
   - Missing content images under assets/img/. The site uses an image-slot system:
@@ -57,6 +64,26 @@ GALLERY_DATA = re.compile(
 
 EXTERNAL_PREFIXES = ("http://", "https://", "//", "mailto:", "tel:", "data:", "javascript:")
 JUNK_STRINGS = ("lorem ipsum", "mysite", "cordan")
+
+# Newsletter + consent guards. The signup box is a plain HTML form that posts to
+# the Loops endpoint stored in content/settings.yaml; these keep the built form
+# in sync with that config and paired with its privacy link.
+NEWSLETTER_FORM = re.compile(
+    r'(<form\b[^>]*id=["\']newsletter-form["\'][^>]*>)(.*?)</form>',
+    re.IGNORECASE | re.DOTALL,
+)
+ACTION_ATTR = re.compile(r'action\s*=\s*["\']([^"\']*)["\']', re.IGNORECASE)
+HONEYPOT = re.compile(r'name\s*=\s*["\']_honey["\']', re.IGNORECASE)
+EMAIL_INPUT = re.compile(r'<input\b[^>]*\btype\s*=\s*["\']email["\']', re.IGNORECASE)
+# A link to the privacy note: relative "privacy" (optionally ./ or with a
+# fragment/query) or the .html form.
+PRIVACY_LINK = re.compile(
+    r'href\s*=\s*["\']\.?/?privacy(?:\.html)?(?:[#?][^"\']*)?["\']', re.IGNORECASE
+)
+# Pull formEndpoint out of content/settings.yaml without a YAML dependency.
+SETTINGS_ENDPOINT = re.compile(
+    r'^\s*formEndpoint:\s*["\']?([^"\'\n]+?)["\']?\s*$', re.MULTILINE
+)
 
 EM_DASH = "—"
 EM_DASH_ENTITIES = ("&mdash;", "&#8212;", "&#x2014;")
@@ -143,6 +170,52 @@ def check_galleries(name: str, text: str) -> None:
         errors.append(f'{name}: data-gallery={sorted(missing)} has no entry in gallery-data')
 
 
+def settings_endpoint() -> str | None:
+    """The formEndpoint from content/settings.yaml (repo source, not the build)."""
+    path = os.path.join(_REPO_ROOT, "content", "settings.yaml")
+    try:
+        text = open(path, encoding="utf-8").read()
+    except FileNotFoundError:
+        return None
+    m = SETTINGS_ENDPOINT.search(text)
+    return m.group(1).strip() if m else None
+
+
+def check_newsletter_and_consent(pages: dict[str, str]) -> None:
+    """Signup form stays wired to settings.yaml and paired with the privacy link."""
+    endpoint = settings_endpoint()
+    if endpoint is None:
+        errors.append("settings.yaml: could not read newsletter.formEndpoint")
+
+    form_count = 0
+    for name, text in pages.items():
+        # (a) + (b): every newsletter form matches the endpoint and keeps the honeypot.
+        for open_tag, body in NEWSLETTER_FORM.findall(text):
+            form_count += 1
+            action_m = ACTION_ATTR.search(open_tag)
+            action = action_m.group(1).strip() if action_m else ""
+            if endpoint is not None and action != endpoint:
+                errors.append(
+                    f"{name}: newsletter form action \"{action}\" does not match "
+                    f"settings.yaml formEndpoint \"{endpoint}\""
+                )
+            if not HONEYPOT.search(open_tag + body):
+                errors.append(f"{name}: newsletter form is missing its _honey honeypot field")
+
+        # (c): any page collecting an email must link to the privacy note.
+        if EMAIL_INPUT.search(text) and not PRIVACY_LINK.search(text):
+            errors.append(
+                f"{name}: has an email input but does not link to the privacy note "
+                f"(the consent line may have been dropped)"
+            )
+
+    if form_count == 0:
+        errors.append(
+            "no newsletter signup form found in the build "
+            "(expected a <form id=\"newsletter-form\">)"
+        )
+
+
 def check_em_dashes() -> None:
     """No em dashes in any shipped text file: restructure the sentence instead."""
     for dirpath, dirnames, filenames in os.walk(ROOT):
@@ -170,6 +243,7 @@ def main() -> int:
     for name in pages:
         check_page(name, pages)
 
+    check_newsletter_and_consent(pages)
     check_em_dashes()
 
     for line in info:

@@ -218,6 +218,59 @@ contained.
 - Pages still render and stay legible if the GA request is blocked (no dependency),
   so the offline-friendly experience holds.
 
+## Newsletter
+
+Email capture and a monthly draft, on **Loops** (free plan). The signup box and the
+privacy note ship together: never one without the other.
+
+- **Signup box = a plain HTML form, no third-party JS.** This is why Loops was
+  chosen over every provider that wants a JS embed: it accepts a plain form POST to a
+  "custom form" endpoint, so it keeps the no-external-scripts rule (GA stays the one
+  exception). [Newsletter.astro](src/components/Newsletter.astro) posts to
+  `settings.newsletter.formEndpoint`; with JS off it is a normal full-page POST, and
+  [main.js](public/assets/js/main.js) enhances it to an inline AJAX submit (mirrors
+  the contact form, same `_honey` honeypot). Every string, and the endpoint, live in
+  the `newsletter` object of [content/settings.yaml](content/settings.yaml) (schema in
+  [keystatic.config.ts](keystatic.config.ts)), editable from `/keystatic`. Do **not**
+  hardcode the endpoint or paste a Loops JS snippet.
+- **Placement is one setting.** `settings.newsletter.placement` is `footer` (the band
+  above the footer, every page) or `ideas` (one block on the Ideas page). The Footer
+  and Ideas page each render `Newsletter` only for their mode.
+- **Double opt-in is on in Loops** (Settings → Sending). It applies only to the form
+  endpoint, so subscribers land unconfirmed until they click the email. Never add
+  contacts through the API and assume they are confirmed.
+- **Privacy + consent are load-bearing, not decoration.** [privacy.astro](src/pages/privacy.astro)
+  (`content/privacy.yaml`) is the plain-English note; the consent line next to every
+  email field links to it, and so does the contact form. `tools/validate_site.py`
+  fails CI if a built newsletter form's action drifts from `settings.yaml`, if the
+  honeypot is dropped, or if any page with an email input stops linking the privacy
+  note. That triad is what stops a redesign from quietly breaking subscriptions or
+  dropping consent. Keep it.
+- **CAN-SPAM address:** the physical mailing address required in the email footer is
+  set in **Loops account settings**, never in this repo. Do not commit a home address.
+
+### The monthly draft (never a send)
+
+[tools/newsletter_draft.py](tools/newsletter_draft.py), run monthly by
+[.github/workflows/newsletter.yml](.github/workflows/newsletter.yml), assembles a
+draft and creates it in Loops via `POST /v1/campaigns`. **It never sends.** A human
+opens Loops and hits send; silence is not approval.
+
+- The email leads with one styling idea (drawn from `content/ideas.yaml` notes, his
+  own words, rotated by month), then a short "what's new" built from
+  `instagram-ledger.json` and the git history of `content/*.yaml` (adds and
+  replacements; trims are not announced). Window is the previous calendar month.
+- **No news, no draft.** `build_draft` returns `None` when the month has nothing to
+  report, and the workflow opens no issue. A padded newsletter is worse than none.
+- The Loops API key is the `LOOPS_API_KEY` GitHub Actions secret. It never enters the
+  repo, the build, client code, a log, or a PR. `--dry-run` renders to
+  `newsletter-preview.txt` (gitignored) without touching the API.
+- Tests: `python3 tools/test_newsletter_draft.py` (in CI). The pure assembly logic is
+  dependency-free; only the CLI edges read YAML, shell out to git, and call Loops.
+- One caveat verified on first run: no Loops page states the Campaign API is on by
+  default for a new free team, so the first real call is the test. `create_loops_draft`
+  is the single place to adjust the request body if the live API differs from the docs.
+
 ### When you add a new page
 
 1. Add a singleton to `keystatic.config.ts` (reuse the `seo()` helper) and a

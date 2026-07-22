@@ -1,7 +1,10 @@
 ---
 import { reader } from '../lib/content';
+import Newsletter from './Newsletter.astro';
 const s = await reader.singletons.settings.readOrThrow();
+const showNewsletter = s.newsletter.placement === 'footer';
 ---
+{showNewsletter && <Newsletter variant="footer" />}
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-top">
@@ -27,7 +30,7 @@ const s = await reader.singletons.settings.readOrThrow();
     </div>
     <div class="foot-bottom">
       <p class="tagline">{s.tagline}</p>
-      <p>&copy; <span data-year>{s.copyrightYear}</span> {s.copyrightName}. All rights reserved.</p>
+      <p>&copy; <span data-year>{s.copyrightYear}</span> {s.copyrightName}. All rights reserved. <a href="privacy">Privacy</a></p>
     </div>
   </div>
 </footer>

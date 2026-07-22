@@ -568,6 +568,38 @@ button { font: inherit; cursor: pointer; }
 .form-status--err { color: #ff6a4d; }
 
 /* ============================================================
+   Newsletter signup
+   ============================================================ */
+.newsletter { border-top: 1px solid var(--line); padding-block: clamp(2.75rem, 6vw, 4.25rem); }
+.newsletter--section { background: var(--bg-2); }
+.newsletter__inner { display: grid; gap: clamp(1.5rem, 4vw, 3rem); align-items: start; }
+@media (min-width: 860px) {
+  .newsletter--footer .newsletter__inner { grid-template-columns: 1fr 1.1fr; align-items: center; }
+  .newsletter--section .newsletter__inner { grid-template-columns: 0.9fr 1.1fr; }
+}
+.newsletter__lead h2 { font-family: var(--serif); font-size: clamp(1.7rem, 3.4vw, 2.5rem); line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 0.9rem; }
+.newsletter__blurb { color: var(--ink-soft); max-width: 42ch; }
+.newsletter__form { max-width: 34rem; }
+.newsletter__row { display: flex; flex-wrap: wrap; align-items: end; gap: 0.9rem; }
+.newsletter__field { flex: 1 1 16rem; margin-bottom: 0; }
+.newsletter__btn { flex: 0 0 auto; white-space: nowrap; }
+.newsletter__field input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.newsletter__consent { margin: 1rem 0 0; font-size: 0.82rem; line-height: 1.5; color: var(--ink-faint); }
+.newsletter__consent a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.newsletter__status { min-height: 0; }
+.newsletter__status:empty { margin-top: 0; }
+
+/* ============================================================
+   Privacy note
+   ============================================================ */
+.privacy-updated { color: var(--ink-faint); font-size: 0.9rem; margin-top: 1rem; }
+.prose-narrow { max-width: 62ch; }
+.privacy-block { margin-bottom: 2rem; }
+.privacy-block h2 { font-family: var(--serif); font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin-bottom: 0.6rem; }
+.privacy-block p { color: var(--ink-soft); line-height: 1.7; }
+.privacy-block a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ============================================================
    Lightbox gallery
    ============================================================ */
 .lb { position: fixed; inset: 0; z-index: 9998; display: none;

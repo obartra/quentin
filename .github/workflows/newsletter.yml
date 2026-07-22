@@ -1,0 +1,89 @@
+name: Monthly newsletter draft
+
+# Assembles the monthly newsletter and creates it as a DRAFT in Loops, then
+# opens a GitHub issue so the owner knows it is ready to read and send. It never
+# sends anything: a human opens Loops and hits send. If a month has no news, the
+# tool writes nothing and no issue is opened.
+
+on:
+  schedule:
+    # 14:00 UTC on the 1st of each month. Covers the previous calendar month.
+    - cron: '0 14 1 * *'
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Target month YYYY-MM (blank = previous calendar month)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Render only, do not create a Loops draft'
+        type: boolean
+        required: false
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: newsletter
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Read enough history for the git-log "what's new" scan.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Assemble the draft
+        id: draft
+        env:
+          LOOPS_API_KEY: ${{ secrets.LOOPS_API_KEY }}
+        run: |
+          python3 tools/newsletter_draft.py \
+            ${{ github.event.inputs.month && format('--month {0}', github.event.inputs.month) || '' }} \
+            ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+
+      - name: Notify the owner
+        if: steps.draft.outputs.drafted == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const subject = process.env.SUBJECT || 'Newsletter draft ready';
+            const previewPath = process.env.PREVIEW || '';
+            let preview = '';
+            try { preview = fs.readFileSync(previewPath, 'utf8'); } catch (e) {}
+            const body = [
+              'Your monthly newsletter draft is ready in Loops. Nothing has been sent.',
+              '',
+              'To send it: open Loops, go to Campaigns, open this draft, read it, and',
+              'press Send when you are happy. Silence sends nothing.',
+              '',
+              '<details><summary>Preview of the draft</summary>',
+              '',
+              '```',
+              preview,
+              '```',
+              '',
+              '</details>',
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Newsletter draft ready: ${subject}`,
+              body,
+            });
+        env:
+          SUBJECT: ${{ steps.draft.outputs.subject }}
+          PREVIEW: ${{ steps.draft.outputs.preview }}
