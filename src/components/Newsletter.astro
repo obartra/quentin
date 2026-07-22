@@ -1,0 +1,52 @@
+---
+/**
+ * Newsletter signup box. A plain HTML form that posts to the Loops "custom form"
+ * endpoint (settings.newsletter.formEndpoint), so it adds no third-party
+ * JavaScript to the site: it works with JS disabled as a normal full-page POST,
+ * and public/assets/js/main.js progressively enhances it to an inline AJAX
+ * submit, mirroring the contact form. Every string is content-editable via the
+ * `newsletter` object in content/settings.yaml (Keystatic).
+ *
+ * `variant` only changes the wrapper styling:
+ *   - 'footer'  a full-width band shown above the site footer
+ *   - 'section' a standalone block on the Ideas page
+ */
+import { reader } from '../lib/content';
+
+interface Props {
+  variant?: 'footer' | 'section';
+}
+const { variant = 'footer' } = Astro.props;
+
+const s = await reader.singletons.settings.readOrThrow();
+const n = s.newsletter;
+---
+<section class={`newsletter newsletter--${variant}`} aria-labelledby="newsletter-heading">
+  <div class="wrap newsletter__inner reveal">
+    <div class="newsletter__lead">
+      {n.eyebrow && <p class="eyebrow">{n.eyebrow}</p>}
+      <h2 id="newsletter-heading">{n.heading}</h2>
+      {n.blurb && <p class="newsletter__blurb">{n.blurb}</p>}
+    </div>
+
+    <form id="newsletter-form" class="newsletter__form" action={n.formEndpoint} method="POST" data-ok={n.successMessage} data-err={n.errorMessage}>
+      <!-- Backend: Loops custom form (loops.so). The signup posts the email
+           straight to the endpoint above; no third-party script is loaded. With
+           JS off it submits normally; main.js posts it via fetch for an inline
+           message. Double opt-in is enabled in Loops, so a new subscriber gets a
+           confirmation email before they are added. Change the endpoint via
+           settings.newsletter.formEndpoint. -->
+      <!-- honeypot: bots fill this; humans never see it -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <div class="newsletter__row">
+        <div class="field newsletter__field">
+          <label for="newsletter-email">{n.emailLabel}</label>
+          <input type="email" id="newsletter-email" name="email" autocomplete="email" placeholder={n.emailPlaceholder} required>
+        </div>
+        <button type="submit" class="btn btn--gold newsletter__btn">{n.buttonLabel} <span class="btn__arrow">&rarr;</span></button>
+      </div>
+      <p class="newsletter__consent">{n.consentLead} <a href="privacy">{n.privacyLinkLabel}</a>.</p>
+      <p class="form-status newsletter__status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>

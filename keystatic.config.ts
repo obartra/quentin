@@ -89,7 +89,7 @@ export default config({
   ui: {
     brand: { name: 'Quentin Fears site content' },
     navigation: {
-      Pages: ['home', 'work', 'ideas', 'speak', 'about', 'contact'],
+      Pages: ['home', 'work', 'ideas', 'speak', 'about', 'contact', 'privacy'],
       Shared: ['settings', 'galleries'],
     },
   },
@@ -146,6 +146,48 @@ export default config({
         tagline: fields.text({ label: 'Footer tagline' }),
         copyrightName: fields.text({ label: 'Copyright name' }),
         copyrightYear: fields.text({ label: 'Copyright year (fallback)' }),
+        newsletter: fields.object(
+          {
+            // The signup box posts straight to this Loops "custom form" endpoint
+            // (a plain HTML form, no third-party JavaScript). Get the URL from
+            // Loops: Forms, then your form, then the custom-form embed. It looks
+            // like https://app.loops.so/api/newsletter-form/<FORM_ID>.
+            formEndpoint: fields.url({
+              label: 'Loops form endpoint',
+              description:
+                'The Loops custom-form URL, e.g. https://app.loops.so/api/newsletter-form/<FORM_ID>. The signup box posts here.',
+            }),
+            placement: fields.select({
+              label: 'Where the signup box appears',
+              description:
+                'Footer = on every page above the footer. Ideas page = one block on the Ideas page only.',
+              options: [
+                { label: 'Footer (every page)', value: 'footer' },
+                { label: 'Ideas page only', value: 'ideas' },
+              ],
+              defaultValue: 'footer',
+            }),
+            eyebrow: fields.text({ label: 'Eyebrow (small all-caps label)' }),
+            heading: fields.text({ label: 'Heading' }),
+            blurb: fields.text({ label: 'Blurb', multiline: true }),
+            emailLabel: fields.text({ label: 'Email field label' }),
+            emailPlaceholder: fields.text({ label: 'Email field placeholder' }),
+            buttonLabel: fields.text({ label: 'Button label' }),
+            consentLead: fields.text({
+              label: 'Consent line',
+              description:
+                'Shown next to the field. The privacy-note link is added after it automatically.',
+              multiline: true,
+            }),
+            privacyLinkLabel: fields.text({
+              label: 'Privacy-note link text',
+              description: 'The clickable words that link to the privacy note.',
+            }),
+            successMessage: fields.text({ label: 'Success message', multiline: true }),
+            errorMessage: fields.text({ label: 'Error message', multiline: true }),
+          },
+          { label: 'Newsletter signup' }
+        ),
       },
     }),
 
@@ -557,6 +599,27 @@ export default config({
           description: 'e.g. Prefer to reach me directly? Email <a href="...">...</a>.',
           multiline: true,
         }),
+      },
+    }),
+
+    privacy: singleton({
+      label: 'Privacy note',
+      path: 'content/privacy',
+      format: { data: 'yaml' },
+      schema: {
+        seo: seo(),
+        hero: eyebrowHeadingIntro(),
+        updated: fields.text({
+          label: 'Last updated',
+          description: 'Shown under the heading, e.g. July 2026.',
+        }),
+        sections: fields.array(
+          fields.object({
+            heading: fields.text({ label: 'Section heading' }),
+            body: fields.text({ label: 'Section body (HTML allowed)', multiline: true }),
+          }),
+          { label: 'Sections', itemLabel: (p) => p.fields.heading.value }
+        ),
       },
     }),
   },

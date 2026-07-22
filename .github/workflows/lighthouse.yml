@@ -34,6 +34,7 @@ jobs:
               --collect.url=http://localhost:8299/speak.html
               --collect.url=http://localhost:8299/about.html
               --collect.url=http://localhost:8299/contact.html
+              --collect.url=http://localhost:8299/privacy.html
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

@@ -31,3 +31,6 @@ jobs:
         run: python3 tools/seo_check.py dist
       - name: Validate image budget
         run: python3 tools/check_images.py
+
+      - name: Newsletter assembly unit tests
+        run: python3 tools/test_newsletter_draft.py

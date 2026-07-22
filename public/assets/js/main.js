@@ -76,6 +76,44 @@
     });
   }
 
+  /* ---- Newsletter form: post to the Loops custom-form endpoint via AJAX,
+     inline status. No-JS visitors get a normal POST to the same endpoint.
+     Double opt-in is on in Loops, so a confirmation email is what "success"
+     promises here. ---- */
+  var nl = document.getElementById("newsletter-form");
+  if (nl) {
+    var nlStatus = nl.querySelector(".form-status");
+    var nlAction = nl.getAttribute("action") || "";
+    nl.addEventListener("submit", function (e) {
+      // Only enhance real Loops endpoints; anything else submits normally.
+      if (nlAction.indexOf("loops.so") === -1) return;
+      var honey = nl.querySelector('[name="_honey"]');
+      if (honey && honey.value) { e.preventDefault(); return; } // bot: drop silently
+      // Let the browser show its own message for an empty/invalid email.
+      if (typeof nl.checkValidity === "function" && !nl.checkValidity()) return;
+      e.preventDefault();
+      var btn = nl.querySelector('button[type="submit"]');
+      var label = btn ? btn.innerHTML : "";
+      var data = new FormData(nl);
+      var okMsg = nl.getAttribute("data-ok") || "Thanks, please check your inbox to confirm.";
+      var errMsg = nl.getAttribute("data-err") || "Something went wrong. Please try again.";
+      if (btn) { btn.disabled = true; btn.textContent = "Subscribing…"; }
+      if (nlStatus) { nlStatus.textContent = ""; nlStatus.className = "form-status newsletter__status"; }
+      fetch(nlAction, { method: "POST", body: data, headers: { Accept: "application/json" } })
+        .then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
+        .then(function (res) {
+          if (res && (res.success === true || res.success === "true")) {
+            nl.reset();
+            if (nlStatus) { nlStatus.textContent = okMsg; nlStatus.className = "form-status newsletter__status form-status--ok"; }
+          } else { throw new Error((res && res.message) || "failed"); }
+        })
+        .catch(function () {
+          if (nlStatus) { nlStatus.textContent = errMsg; nlStatus.className = "form-status newsletter__status form-status--err"; }
+        })
+        .finally(function () { if (btn) { btn.disabled = false; btn.innerHTML = label; } });
+    });
+  }
+
   /* ---- Reel: swap poster for the YouTube embed on click ---- */
   var reels = document.querySelectorAll(".reel[data-yt]");
   reels.forEach(function (r) {

@@ -9,7 +9,8 @@
         "http://localhost:8299/ideas.html",
         "http://localhost:8299/speak.html",
         "http://localhost:8299/about.html",
-        "http://localhost:8299/contact.html"
+        "http://localhost:8299/contact.html",
+        "http://localhost:8299/privacy.html"
       ],
       "numberOfRuns": 3,
       "settings": {

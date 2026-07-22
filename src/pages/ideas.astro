@@ -2,10 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Cta from '../components/Cta.astro';
 import Picture from '../components/Picture.astro';
+import Newsletter from '../components/Newsletter.astro';
 import { reader, SITE_ORIGIN } from '../lib/content';
 import { personMinimal, breadcrumb } from '../lib/jsonld';
 
 const ideas = await reader.singletons.ideas.readOrThrow();
+const settings = await reader.singletons.settings.readOrThrow();
+const showNewsletter = settings.newsletter.placement === 'ideas';
 const O = SITE_ORIGIN;
 
 const jsonLd = {
@@ -155,6 +158,8 @@ const jsonLd = {
       </div>
     </div>
   </section>
+
+  {showNewsletter && <Newsletter variant="section" />}
 
   <Cta
     heading={ideas.cta.heading}
